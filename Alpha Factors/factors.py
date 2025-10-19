@@ -18,6 +18,7 @@ class Factor():
     
     def calc_rsi(self):
         df = yf.download(self.ticker,start=self.start_date,end=self.end_date)
+        st.dataframe(df)
 
     def calc_price_momentum(self):
         pass
