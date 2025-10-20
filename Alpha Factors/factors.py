@@ -46,4 +46,4 @@ elif st.session_state.alpha_factor == 'Price Momentum':
 else:
     pass
 
-get_price(ticker=st.session_state.ticker,start= st.session_state.start_date, end=st.session_state.end_date)
+get_price(ticker=st.session_state.ticker,start_date= st.session_state.start_date, end_date=st.session_state.end_date)
