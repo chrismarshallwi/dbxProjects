@@ -11,25 +11,39 @@ ticker = ['AAPL','MSFT']
 col1, col2, col3, col4 = st.columns(4)   
 
 with col1:
-    ticker = st.selectbox('Ticker',ticker)
-    if "ticker" not in st.session_state:
-        st.session_state.ticker = ticker
+    st.session_state.ticker = st.selectbox('Ticker',ticker)
 
 with col2:
-    alpha_factor = st.selectbox('Alpha Factor',factors)
-    if "alpha_factor" not in st.session_state:
-        st.session_state.alpha_factor = alpha_factor
+    st.session_state.alpha_factor = st.selectbox('Alpha Factor',factors)
 
 with col3: 
-    start_date = st.date_input('Start Date')
-    if "start_date" not in st.session_state:
-        st.session_state.start_date = start_date
+    st.session_state.start_date = st.date_input('Start Date')
 
 with col4:
     st.session_state.end_date = st.date_input('End Date')
-    # if "end_date" not in st.session_state:
-    #     st.session_state.end_date = end_date
 
-st.write(st.session_state.ticker, st.session_state.alpha_factor, st.session_state.start_date, st.session_state.end_date)
+st.write(st.session_state.ticker, 
+         st.session_state.alpha_factor, 
+         st.session_state.start_date,
+            st.session_state.end_date)
 
+###NEXT STEPS: Print some stock market data for which ever stock is selected in the st.session_state.ticker variable
 
+def get_price(ticker):
+    data = yf.download(ticker, start=self.start, end=self.end)
+    st.dataframe(data)
+
+def calculate_rsi():
+    pass
+
+def calculate_price_momentum():
+    pass
+
+if st.session_state.alpha_factor == 'Relative Strength Index (RSI)':
+    calculate_rsi()
+elif st.session_state.alpha_factor == 'Price Momentum':
+    calculate_price_momentum()
+else:
+    pass
+
+get_price(st.session_state.ticker)
