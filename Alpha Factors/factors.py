@@ -8,8 +8,6 @@ factors = ['Relative Strength Index (RSI)','Price Momentum']
 
 ticker = ['AAPL','MSFT']
 
-
-        
 col1, col2, col3, col4 = st.columns(4)   
 
 with col1:
@@ -28,9 +26,9 @@ with col3:
         st.session_state.start_date = start_date
 
 with col4:
-    end_date = st.date_input('End Date')
-    if "end_date" not in st.session_state:
-        st.session_state.end_date = end_date
+    st.session_state.end_date = st.date_input('End Date')
+    # if "end_date" not in st.session_state:
+    #     st.session_state.end_date = end_date
 
 st.write(st.session_state.ticker, st.session_state.alpha_factor, st.session_state.start_date, st.session_state.end_date)
 
