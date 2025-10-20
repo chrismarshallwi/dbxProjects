@@ -1,1 +1,1 @@
-command: ['streamlit','run','factors.py']
+command: ['streamlit','run','app.py']
