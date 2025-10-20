@@ -29,8 +29,8 @@ st.write(st.session_state.ticker,
 
 ###NEXT STEPS: Print some stock market data for which ever stock is selected in the st.session_state.ticker variable
 
-def get_price(ticker):
-    data = yf.download(ticker, start=self.start, end=self.end)
+def get_price(ticker,start_date,end_date):
+    data = yf.download(ticker, start=start_date, end=end_date)
     st.dataframe(data)
 
 def calculate_rsi():
@@ -46,4 +46,4 @@ elif st.session_state.alpha_factor == 'Price Momentum':
 else:
     pass
 
-get_price(st.session_state.ticker)
+get_price(ticker=st.session_state.ticker,start= st.session_state.start_date, end=st.session_state.end_date)
