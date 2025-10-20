@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import yfinance as yf
@@ -9,19 +8,7 @@ factors = ['Relative Strength Index (RSI)','Price Momentum']
 
 ticker = ['AAPL','MSFT']
 
-class Factor():
-    def __init__(self,factor,ticker,start_date,end_date):
-        self.factor = factor
-        self.ticker = ticker
-        self.start_date = start_date
-        self.end_date = end_date
-    
-    def calc_rsi(self):
-        df = yf.download(self.ticker,start=self.start_date,end=self.end_date)
-        st.dataframe(df)
 
-    def calc_price_momentum(self):
-        pass
         
 col1, col2, col3, col4 = st.columns(4)   
 
@@ -45,8 +32,6 @@ with col4:
     if "end_date" not in st.session_state:
         st.session_state.end_date = end_date
 
-observation = Factor(factor = st.session_state.alpha_factor,ticker = st.session_state.ticker,start_date = st.session_state.start_date,end_date = st.session_state.end_date)
-
-observation.calc_rsi()
+st.write(st.session_state.ticker, st.session_state.alpha_factor, st.session_state.start_date, st.session_state.end_date)
 
 
