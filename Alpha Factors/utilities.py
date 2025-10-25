@@ -12,12 +12,12 @@ class Market():
     #     return data
     
     def get_price(self):
-    data = yf.download(self.tickers, start=self.start, end=self.end, group_by='ticker')
+        data = yf.download(self.tickers, start=self.start, end=self.end, group_by='ticker')
 
-    all_data = []
-    for ticker in self.tickers:
-        df = data[ticker].copy()
-        df.insert(0, 'Symbol', ticker)
-        all_data.append(df)
+        all_data = []
+        for ticker in self.tickers:
+            df = data[ticker].copy()
+            df.insert(0, 'Symbol', ticker)
+            all_data.append(df)
 
-    return pd.concat(all_data)
+        return pd.concat(all_data)
