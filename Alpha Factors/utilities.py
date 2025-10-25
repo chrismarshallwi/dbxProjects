@@ -2,7 +2,7 @@ import pandas as pd
 import yfinance as yf
 
 class Market():
-    def __init__(self, ticker, start, end):
+    def __init__(self, tickers, start, end):
         self.tickers = tickers #what market are we creating?
         self.start = start #Start date 
         self.end = end #end date
