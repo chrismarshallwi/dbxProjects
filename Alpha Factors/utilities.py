@@ -8,5 +8,5 @@ class Market():
         self.end = end #end date
 
     def get_price(self):
-        data = yf.download(ticker=self.ticker, start=self.start, end=self.end)
+        data = yf.download(tickers=self.ticker, start=self.start, end=self.end)
         return data
