@@ -10,7 +10,7 @@ def read_yaml_file(file_path):
         data = yaml.safe_load(file)
     return data
 
-yaml_path = '.gitignore/connections.yaml'
+yaml_path = '/Workspace/Users/chrismarshall.wi@icloud.com/dbxProjects/Alpha Factors/.gitignore/connections.yaml'
 config_data = read_yaml_file(yaml_path)
 url_sp = config_data.get('spurl')
 
