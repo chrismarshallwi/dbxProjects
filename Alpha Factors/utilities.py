@@ -18,7 +18,7 @@ url_sp = config_data.get('spurl')
 
 class Market():
     def __init__(self, tickers, start, end):
-        self.tickers = tickers #what market are we creating?
+        self.tickers = tickers #what market are we creating? (Investment Universe)
         self.start = start #Start date 
         self.end = end #end date
     
@@ -28,22 +28,16 @@ class Market():
         all_data = []
         for ticker in self.tickers:
             df = data[ticker].copy()
+            df = df.reset_index()
             df.insert(0, 'Symbol', ticker)
             all_data.append(df)
 
-        return pd.concat(all_data)
+        final_df = pd.concat(all_data, ignore_index=True)
+        return final_df
 
 class Tickers():
     def __init__(self):
         pass
-
-    # def get_tickers_sp():
-    #     '''
-    #     SP 500 Tickers
-    #     '''
-    #     ticker_list = []
-    #     tickers = pd.read_html(url_sp)[0].Symbol.to_list()
-    #     return tickers
 
     def get_tickers_sp():
     
@@ -57,4 +51,18 @@ class Tickers():
         tables = pd.read_html(StringIO(response.text))
         df = tables[0]
         return df['Symbol'].tolist()
+    
+class Strategy():
+    def __init__(self):
+        pass
+    def backtest_mean_reversion(df:pd.Dataframe,window:float,threshold:float):
+        data = df.copy()
+        data['moving_average'] = data['close'].rolling(window=window).mean()
+        data['difference'] = (data['close'] - data['moving_average']) /data['moving_average']
+
+        data['buy_sell'] = 
+
+        return data
+
+
 
