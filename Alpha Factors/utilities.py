@@ -1,6 +1,8 @@
 import pandas as pd 
 import yfinance as yf
 import yaml
+import requests
+from io import StringIO
 
 def read_yaml_file(file_path):
     '''
@@ -35,10 +37,24 @@ class Tickers():
     def __init__(self):
         pass
 
+    # def get_tickers_sp():
+    #     '''
+    #     SP 500 Tickers
+    #     '''
+    #     ticker_list = []
+    #     tickers = pd.read_html(url_sp)[0].Symbol.to_list()
+    #     return tickers
+
     def get_tickers_sp():
-        '''
-        SP 500 Tickers
-        '''
-        ticker_list = []
-        tickers = pd.read_html(url_sp)[0].Symbol.to_list()
-        return tickers
+    
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        } #assign a fake user agent because Wikipedia blocks requests without one
+
+        response = requests.get(url_sp, headers=headers)
+        response.raise_for_status()
+
+        tables = pd.read_html(StringIO(response.text))
+        df = tables[0]
+        return df['Symbol'].tolist()
+
