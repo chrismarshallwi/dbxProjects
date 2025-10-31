@@ -52,17 +52,29 @@ class Tickers():
         df = tables[0]
         return df['Symbol'].tolist()
     
-class Strategy():
-    def __init__(self):
+class Strategy:
+    def __init__(self, data: pd.Dataframe):
+        self.data = data
+
+    def moving_average(self,window:int=200):
+        '''
+        Moving Average
+        Default: 200 Days
+        ''' 
         pass
-    def backtest_mean_reversion(df:pd.Dataframe,window:float,threshold:float):
-        data = df.copy()
-        data['moving_average'] = data['close'].rolling(window=window).mean()
-        data['difference'] = (data['close'] - data['moving_average']) /data['moving_average']
+    def bbands(self,std_dev:float):
+        '''
+        Bollinger Bands
+        '''
+        pass
+    def rsi(self):
+        pass
+    def returns(self,days:int=1):
+        '''
+        Return Calculator
+        '''
+        pass
 
-        data['buy_sell'] = 
-
-        return data
 
 
 
