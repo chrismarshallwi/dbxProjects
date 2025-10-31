@@ -54,7 +54,11 @@ class Tickers():
     
 class Strategy:
     def __init__(self, data: pd.Dataframe):
-        self.data = data
+        #First assert the column names if 
+        columns = ['symbol','date_value','close']
+        if list(df.columns) != columns:
+            raise ValueError(f"Columns must be {columns}")
+        self.data = data #add .copy() later
 
     def moving_average(self,window:int=200):
         '''
