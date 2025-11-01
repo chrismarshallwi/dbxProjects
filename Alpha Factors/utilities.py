@@ -56,7 +56,7 @@ class Factor:
     def __init__(self, data: pd.DataFrame):
         
         columns = ['symbol','date_value','close']
-        if list(self.data.columns) != columns:
+        if list(data.columns) != columns:
             raise ValueError(f"Columns must be {columns}")
 
         self.data = data.copy()
