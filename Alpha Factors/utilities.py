@@ -61,10 +61,6 @@ class Factor:
 
         self.data = data.copy()
 
-    # def data(self):
-
-    #     return self.data
-
     def moving_average(self,window:int=200):
         '''
         Moving Average
