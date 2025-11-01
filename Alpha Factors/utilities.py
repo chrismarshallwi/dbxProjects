@@ -70,7 +70,7 @@ class Factor:
         Default: 200 Days
         ''' 
         data = self.data.copy()
-        data[f'{window}_moving_average'] = data['close']
+        data[f'{window}_moving_average'] = data.groupby('symbol')['close'].transform(lambda x: x.rolling(window=window).mean())
         return data
         
     def bbands(self,std_dev:float):
@@ -86,8 +86,13 @@ class Factor:
         '''
         pass
 
-# class Strategy:
-#     def __init__(self)
+class Strategy:
+    def __init__(self):
+        pass
+    def MeanReversion():
+        pass 
+    def DollarCostAverage():
+        pass
 
 
 
