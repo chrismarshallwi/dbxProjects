@@ -52,13 +52,17 @@ class Tickers():
         df = tables[0]
         return df['Symbol'].tolist()
     
-class Strategy:
+class Factor:
     def __init__(self, data: pd.Dataframe):
-        #First assert the column names if 
+        
         columns = ['symbol','date_value','close']
         if list(df.columns) != columns:
             raise ValueError(f"Columns must be {columns}")
-        self.data = data #add .copy() later
+
+        self.data = data.copy()
+        
+    def data(self):
+        return self.data
 
     def moving_average(self,window:int=200):
         '''
@@ -78,6 +82,9 @@ class Strategy:
         Return Calculator
         '''
         pass
+
+class Strategy:
+    def __init__(self,)
 
 
 
