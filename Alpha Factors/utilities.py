@@ -85,7 +85,8 @@ class Factor:
         '''
         data = self.data.copy()
         data['previous_close'] = data.groupby('symbol')['close'].shift(days)
-
+        return data
+    
 class Strategy:
     def __init__(self):
         pass
