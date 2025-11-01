@@ -83,11 +83,14 @@ class Factor:
         '''
         Return Calculator
         '''
-        #data = self.data.copy()
-        self.data['previous_close'] = self.data.groupby('symbol')['close'].shift(days)
+        # self.data['previous_close'] = (
+        #     self.data.groupby('symbol')['close'].shift(days)
+        # )
 
-        self.data[f'{days}_day_return'] = (self.data['close'] - self.data['previous_close']) / self.data['previous_close']
-        
+        self.data[f'{days}_day_return'] = (
+            self.data['close'] - (self.data.groupby('symbol')['close'].shift(days) )
+            ) / (self.data.groupby('symbol')['close'].shift(days))
+
         return self 
     
     def get_data(self):
