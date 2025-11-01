@@ -58,6 +58,9 @@ class Factor:
         columns = ['symbol','date_value','close']
         if list(data.columns) != columns:
             raise ValueError(f"Columns must be {columns}")
+        
+        data['date_value'] = pd.to_datetime(data['date_value'])
+        data = data.sort_values(by=['symbol','date_value'])
 
         self.data = data.copy()
 
