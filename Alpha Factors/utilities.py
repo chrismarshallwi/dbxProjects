@@ -85,6 +85,9 @@ class Factor:
         '''
         #data = self.data.copy()
         self.data['previous_close'] = self.data.groupby('symbol')['close'].shift(days)
+
+        self.data[f'{days}_day_return'] = (self.data['close'] - self.data['previous_close']) / self.data['previous_close']
+        
         return self 
     
     def get_data(self):
