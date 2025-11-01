@@ -55,15 +55,15 @@ class Tickers():
 class Factor:
     def __init__(self, data: pd.DataFrame):
         
-        # columns = ['symbol','date_value','close']
-        # if list(self.data.columns) != columns:
-        #     raise ValueError(f"Columns must be {columns}")
+        columns = ['symbol','date_value','close']
+        if list(self.data.columns) != columns:
+            raise ValueError(f"Columns must be {columns}")
 
         self.data = data.copy()
 
-    def data(self):
-        #df = pd.DataFrame(self.data)
-        return self.data
+    # def data(self):
+
+    #     return self.data
 
     def moving_average(self,window:int=200):
         '''
