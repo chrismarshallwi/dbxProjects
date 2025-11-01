@@ -53,10 +53,10 @@ class Tickers():
         return df['Symbol'].tolist()
     
 class Factor:
-    def __init__(self, data: pd.Dataframe):
+    def __init__(self, data: pd.DataFrame):
         
         columns = ['symbol','date_value','close']
-        if list(df.columns) != columns:
+        if list(self.data.columns) != columns:
             raise ValueError(f"Columns must be {columns}")
 
         self.data = data.copy()
