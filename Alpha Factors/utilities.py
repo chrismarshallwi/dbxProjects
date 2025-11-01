@@ -59,11 +59,11 @@ class Factor:
         # if list(self.data.columns) != columns:
         #     raise ValueError(f"Columns must be {columns}")
 
-        data = data.copy()
+        self.data = data.copy()
 
     def data(self):
-        df = pd.DataFrame(self.data)
-        return df
+        #df = pd.DataFrame(self.data)
+        return self.data
 
     def moving_average(self,window:int=200):
         '''
