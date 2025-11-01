@@ -69,9 +69,9 @@ class Factor:
         Moving Average
         Default: 200 Days
         ''' 
-        data = self.data.copy()
-        data[f'{window}_moving_average'] = data.groupby('symbol')['close'].transform(lambda x: x.rolling(window=window).mean())
-        return data
+        #data = self.data.copy()
+        self.data[f'{window}_moving_average'] = self.data.groupby('symbol')['close'].transform(lambda x: x.rolling(window=window).mean())
+        return self
         
     def standard_deviation(self,std_dev:float):
         '''
@@ -83,9 +83,12 @@ class Factor:
         '''
         Return Calculator
         '''
-        data = self.data.copy()
-        data['previous_close'] = data.groupby('symbol')['close'].shift(days)
-        return data
+        #data = self.data.copy()
+        self.data['previous_close'] = self.data.groupby('symbol')['close'].shift(days)
+        return self 
+    
+    def get_data(self):
+        return self.data
     
 class Strategy:
     def __init__(self):
