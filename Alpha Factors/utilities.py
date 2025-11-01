@@ -60,7 +60,7 @@ class Factor:
             raise ValueError(f"Columns must be {columns}")
 
         self.data = data.copy()
-        
+
     def data(self):
         return self.data
 
@@ -83,8 +83,8 @@ class Factor:
         '''
         pass
 
-class Strategy:
-    def __init__(self,)
+# class Strategy:
+#     def __init__(self)
 
 
 
