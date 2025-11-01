@@ -69,7 +69,10 @@ class Factor:
         Moving Average
         Default: 200 Days
         ''' 
-        pass
+        data = self.data.copy()
+        data[f'{window}_moving_average'] = data['close']
+        return data
+        
     def bbands(self,std_dev:float):
         '''
         Bollinger Bands
