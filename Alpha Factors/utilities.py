@@ -59,7 +59,7 @@ class Factor:
         # if list(self.data.columns) != columns:
         #     raise ValueError(f"Columns must be {columns}")
 
-        data = self.data.copy()
+        data = data.copy()
 
     def data(self):
         df = pd.DataFrame(self.data)
