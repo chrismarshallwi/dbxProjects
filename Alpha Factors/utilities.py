@@ -73,20 +73,18 @@ class Factor:
         data[f'{window}_moving_average'] = data.groupby('symbol')['close'].transform(lambda x: x.rolling(window=window).mean())
         return data
         
-    def bbands(self,std_dev:float):
+    def standard_deviation(self,std_dev:float):
         '''
-        Bollinger Bands
+        Standard Deviation
         '''
         pass
-    def rsi(self):
-        pass
+
     def returns(self,days:int=1):
         '''
         Return Calculator
         '''
         data = self.data.copy()
         data['previous_close'] = data.groupby('symbol')['close'].shift(days)
-
 
 class Strategy:
     def __init__(self):
@@ -95,6 +93,12 @@ class Strategy:
         pass 
     def DollarCostAverage():
         pass
+
+class Backtest:
+    def __init__(self):
+        pass
+
+
 
 
 
