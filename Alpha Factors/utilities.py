@@ -52,17 +52,64 @@ class Tickers():
         df = tables[0]
         return df['Symbol'].tolist()
     
-class Strategy():
+class Factor:
+    def __init__(self, data: pd.DataFrame):
+        
+        columns = ['symbol','date_value','close']
+        if list(data.columns) != columns:
+            raise ValueError(f"Columns must be {columns}")
+        
+        data['date_value'] = pd.to_datetime(data['date_value'])
+        data = data.sort_values(by=['symbol','date_value'])
+
+        self.data = data.copy()
+
+    def moving_average(self,window:int=200):
+        '''
+        Moving Average
+        Default: 200 Days
+        ''' 
+        #data = self.data.copy()
+        self.data[f'{window}_moving_average'] = self.data.groupby('symbol')['close'].transform(lambda x: x.rolling(window=window).mean())
+        return self
+        
+    def standard_deviation(self,std_dev:float):
+        '''
+        Standard Deviation
+        '''
+        pass
+
+    def returns(self,days:int=1):
+        '''
+        Return Calculator
+        '''
+        # self.data['previous_close'] = (
+        #     self.data.groupby('symbol')['close'].shift(days)
+        # )
+
+        self.data[f'{days}_day_return'] = (
+            self.data['close'] - (self.data.groupby('symbol')['close'].shift(days) )
+            ) / (self.data.groupby('symbol')['close'].shift(days))
+
+        return self 
+    
+    def get_data(self):
+        return self.data
+    
+class Strategy:
     def __init__(self):
         pass
-    def backtest_mean_reversion(df:pd.Dataframe,window:float,threshold:float):
-        data = df.copy()
-        data['moving_average'] = data['close'].rolling(window=window).mean()
-        data['difference'] = (data['close'] - data['moving_average']) /data['moving_average']
+    def MeanReversion():
+        pass 
+    def DollarCostAverage():
+        pass
 
-        data['buy_sell'] = 
+class Backtest:
+    def __init__(self):
+        pass
 
-        return data
+
+
 
 
 
