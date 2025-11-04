@@ -11,7 +11,7 @@ adsh as filing_key
 ,filed as filing_date
 from operations.finance_staging.raw_sub_tbl as sub
 left join (select * from operations.finance_staging.raw_dim_cik) as cik on cik.cik = sub.cik
-inner join (select distinct symbol from operations.finance.fact_price_daily) as price_symbols on price_symbols.symbol = cik.ticker
+--inner join (select distinct symbol from operations.finance.fact_price_daily) as price_symbols on price_symbols.symbol = cik.ticker
 ) 
 
 ,tag as (
@@ -57,14 +57,14 @@ sub.name_of_filing_company
 ,sub.name_of_submitted_form
 ,sub.filing_date
 ,pre.gaap_version
-,sub.reported_period 
+,try_cast(sub.reported_period as bigint) as reported_period
 ,sub.fiscal_year
 ,sub.fiscal_period
 ,pre.financial_statement
 ,pre.report_number
 ,pre.report_line_number
-,num.end_reported_period
-,num.reported_quarters
+,cast(num.end_reported_period as bigint) as end_reported_period
+,cast(num.reported_quarters as bigint) as reported_quarters
 ,num.tag as standard_label
 ,pre.plabel as presented_label
 ,tag.tlabel as terse_label
@@ -81,5 +81,5 @@ left join tag on tag.tag = num.tag and tag.gaap_version  = pre.gaap_version
 select distinct 
 *
 from 
-final 
+final
 
