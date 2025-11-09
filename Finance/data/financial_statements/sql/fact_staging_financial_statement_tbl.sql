@@ -3,7 +3,9 @@ select
 adsh as filing_key
 ,sub.cik as company_identifier
 ,cik.ticker as ticker_symbol
-,name as name_of_filing_company
+,exchange.exchange as exchange_traded_on
+,case when sp.CIK is null then 0 else 1 end as sp_500_indicator
+,sub.name as name_of_filing_company
 ,form as name_of_submitted_form
 ,period as reported_period 
 ,fy as fiscal_year
@@ -11,7 +13,9 @@ adsh as filing_key
 ,filed as filing_date
 from operations.finance_staging.raw_sub_tbl as sub
 left join (select * from operations.finance_staging.raw_dim_cik) as cik on cik.cik = sub.cik
---inner join (select distinct symbol from operations.finance.fact_price_daily) as price_symbols on price_symbols.symbol = cik.ticker
+left join (select * from operations.finance_staging.raw_dim_exchange) as exchange on exchange.cik = sub.cik
+left join (select * from operations.finance_staging.raw_dim_sp_500) as sp on sp.CIK = sub.cik
+
 ) 
 
 ,tag as (
@@ -53,6 +57,8 @@ final as (
 select distinct 
 sub.name_of_filing_company
 ,sub.ticker_symbol
+,sub.exchange_traded_on
+,sub.sp_500_indicator
 ,sub.filing_key
 ,sub.name_of_submitted_form
 ,sub.filing_date
@@ -79,7 +85,7 @@ left join tag on tag.tag = num.tag and tag.gaap_version  = pre.gaap_version
 ) 
 
 select distinct 
-*
+count(*)
 from 
-final
+final where sp_500_indicator = 1
 
