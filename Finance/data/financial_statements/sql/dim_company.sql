@@ -16,7 +16,7 @@ select
   ,dim_sp.gics_sub_industry as company_sub_industry
   ,dim_sp.headquarters_location as company_headquarters_location
   ,dim_sp.date_added as company_date_added_to_sp_500
-  ,dim_sp.Founded as comapny_year_founded
+  ,dim_sp.Founded as company_year_founded
 from 
 dim_cik 
 left join dim_exchange on dim_exchange.cik = dim_cik.cik and dim_exchange.ticker = dim_cik.ticker
