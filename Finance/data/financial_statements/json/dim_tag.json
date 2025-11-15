@@ -1,0 +1,211 @@
+{
+  "Assets": {
+    "Cash & Cash Equivalents": [
+      "Cash and Cash Equivalents, at Carrying Value",
+      "Cash and cash equivalents",
+      "Cash",
+      "Cash, Cash Equivalents, Restricted Cash, and Restricted Cash Equivalents",
+      "Restricted Cash",
+      "Restricted Cash, Current",
+      "Restricted Cash and Cash Equivalents"
+    ],
+    "Investments": [
+      "Investment Owned, Fair Value",
+      "Investment Owned, Cost",
+      "Investment Owned, Net Assets, Percentage",
+      "Equity Method Investments",
+      "Equity Securities, FV-NI",
+      "Equity Securities, FV-NI, Current",
+      "Debt Securities, Available-for-Sale",
+      "Debt Securities, Available-for-Sale, Excluding Accrued Interest",
+      "Debt Securities, Available-for-Sale, Current",
+      "Debt Securities, Available-for-Sale, Amortized Cost",
+      "Debt Securities, Available-for-Sale, Amortized Cost, Excluding Accrued Interest, before Allowance for Credit Loss",
+      "Debt Securities, Available-for-Sale, Allowance for Credit Loss",
+      "Debt Securities, Available-for-Sale, Allowance for Credit Loss, Excluding Accrued Interest",
+      "Debt Securities, Held-to-Maturity, Fair Value",
+      "Debt Securities, Held-to-Maturity, Amortized Cost, before Allowance for Credit Loss",
+      "Debt Securities, Held-to-Maturity, Excluding Accrued Interest, after Allowance for Credit Loss",
+      "Debt Securities, Trading",
+      "Debt Securities, Trading, and Equity Securities, FV-NI",
+      "Loans Receivable, Fair Value Disclosure",
+      "Loan, Held-for-Sale, Fair Value Disclosure",
+
+      "Financing Receivable, before Allowance for Credit Loss",
+      "Financing Receivable, after Allowance for Credit Loss",
+      "Financing Receivable, Excluding Accrued Interest, before Allowance for Credit Loss",
+      "Financing Receivable, Excluding Accrued Interest, after Allowance for Credit Loss",
+      "Financing Receivable, Excluding Accrued Interest, before Allowance for Credit Loss, Fee, and Loan in Process",
+      "Financing Receivable, Held-for-Sale",
+      "Financing Receivable, Held-for-Sale, Not Part of Disposal Group, after Valuation Allowance",
+      "Financing Receivable, Allowance for Credit Loss, Excluding Accrued Interest",
+      "Financing Receivable, Allowance for Credit Loss"
+    ],
+    "Receivables": [
+      "Accounts Receivable, after Allowance for Credit Loss, Current",
+      "Accounts Receivable, after Allowance for Credit Loss",
+      "Accounts Receivable, Allowance for Credit Loss, Current",
+      "Other Receivables, Net, Current",
+      "Other Receivables",
+      "Interest Receivable",
+      "Trade and other current receivables",
+      "Accounts Receivable and Other Accrued Liabilities, Current"
+    ],
+    "Property, Plant, and Equipment": [
+      "Property, Plant and Equipment, Net",
+      "Property, plant and equipment",
+      "Property, plant and equipment including right-of-use assets",
+      "Property, Plant, and Equipment and Finance Lease Right-of-Use Asset, after Accumulated Depreciation and Amortization",
+      "Property, Plant and Equipment, Gross",
+      "Accumulated Depreciation, Depletion and Amortization, Property, Plant, and Equipment"
+    ],
+    "Intangible Assets": [
+      "Goodwill",
+      "Intangible Assets, Net (Excluding Goodwill)",
+      "Intangible assets other than goodwill",
+      "Finite-Lived Intangible Assets, Net",
+      "Finite-Lived Intangible Assets, Accumulated Amortization",
+      "Intangible assets and goodwill"
+    ],
+    "Other Assets": [
+      "Other Assets",
+      "Other Assets, Current",
+      "Other Assets, Noncurrent",
+      "Other Assets, Fair Value Disclosure",
+      "Prepaid Expense and Other Assets, Current",
+      "Prepaid Expense, Current",
+      "Separate Account Asset",
+      "Right-of-use assets",
+      "Asset, Held-in-Trust, Noncurrent",
+      "Non-current portion of non-current borrowings",
+      "Investments in and Advance to Affiliates, Subsidiaries, Associates, and Joint Ventures",
+      "Loans"
+    ],
+    "Real Estate & Property": [
+      "Real Estate Investment Property, Net",
+      "Real Estate Investment Property, at Cost",
+      "Real Estate Investment Property, Accumulated Depreciation"
+    ],
+    "Other Financial Assets": [
+      "Short-Term Investments",
+      "Marketable Securities",
+      "Marketable Securities, Current",
+      "Financial assets",
+      "Financial assets at fair value through profit or loss",
+      "Financial assets at fair value through profit or loss, classified as held for trading",
+      "Financial assets at fair value through profit or loss, mandatorily measured at fair value",
+      "Financial assets at fair value through other comprehensive income",
+      "Loans and advances to customers",
+      "Policyholder Account Balance",
+      "Servicing Asset at Fair Value, Amount",
+      "Securities Sold under Agreements to Repurchase",
+      "Deposits",
+      "Interest-Bearing Deposits in Banks and Other Financial Institutions"
+    ]
+  },
+  "Liabilities": {
+    "Current Liabilities": [
+      "Accounts Payable, Current",
+      "Accounts Payable",
+      "Accrued Liabilities, Current",
+      "Other Liabilities, Current",
+      "Contract with Customer, Liability, Current",
+      "Notes Payable, Current",
+      "Accounts Payable and Accrued Liabilities, Current",
+      "Trade and other current payables",
+      "Accrued Liabilities and Other Liabilities",
+      "Taxes Payable, Current",
+      "Interest Payable, Current",
+      "Deferred Revenue, Current",
+      "Current lease liabilities",
+      "Debt instruments issued",
+      "Redeemable Noncontrolling Interest, Equity, Carrying Amount",
+      "Liability for Future Policy Benefit, before Reinsurance",
+      "Convertible Notes Payable, Current"
+    ],
+    "Noncurrent Liabilities": [
+      "Long-Term Debt",
+      "Long-Term Debt, Excluding Current Maturities",
+      "Long-Term Debt, Current Maturities",
+      "Long-Term Debt, Fair Value",
+      "Long-Term Line of Credit",
+      "Long-Term Debt and Lease Obligation",
+      "Debt, Long-Term and Short-Term, Combined Amount",
+      "Other Liabilities, Noncurrent",
+      "Operating Lease, Liability, Noncurrent",
+      "Finance Lease, Liability, Noncurrent",
+      "Contract with Customer, Liability, Noncurrent",
+      "Non-current lease liabilities",
+      "Liability, Defined Benefit Plan, Noncurrent",
+      "Deferred tax liabilities",
+      "Subordinated liabilities",
+      "Secured Debt"
+    ]
+  },
+  "Equity": {
+    "Common Stock": [
+      "Common Stock, Shares, Outstanding",
+      "Common Stock, Shares, Issued",
+      "Common Stock, Par or Stated Value Per Share",
+      "Common Stock, Value, Issued",
+      "Common Stock, Shares Authorized",
+      "Additional Paid in Capital, Common Stock",
+      "Additional Paid in Capital",
+      "Issued capital"
+    ],
+    "Preferred Stock": [
+      "Preferred Stock, Shares Outstanding",
+      "Preferred Stock, Value, Issued",
+      "Preferred Stock, Shares Authorized",
+      "Preferred Stock, Shares Issued",
+      "Preferred Stock, Par or Stated Value Per Share",
+      "Preferred Stock, Liquidation Preference, Value"
+    ],
+    "Other Equity": [
+      "Equity, Attributable to Parent",
+      "Equity, Including Portion Attributable to Noncontrolling Interest",
+      "Equity, Attributable to Noncontrolling Interest",
+      "Equity and liabilities",
+      "Equity",
+      "Retained Earnings (Accumulated Deficit)",
+      "Temporary Equity, Carrying Amount, Attributable to Parent",
+      "Temporary Equity, Shares Outstanding",
+      "Temporary Equity, Shares Issued",
+      "Temporary Equity, Par or Stated Value Per Share",
+      "Temporary Equity, Shares Authorized",
+      "Temporary Equity, Redemption Price Per Share",
+      "Treasury Stock, Common, Shares",
+      "Treasury Stock, Common, Value",
+      "Treasury Stock, Value",
+      "Net Asset Value Per Share",
+      "Equity attributable to owners of parent",
+      "Non-controlling interests"
+    ]
+  },
+  "Financing & Debt": {
+    "Short-Term Debt": [
+      "Short-Term Debt",
+      "Notes Payable",
+      "Notes Payable, Noncurrent"
+    ],
+    "Derivative Instruments": [
+      "Derivative Asset",
+      "Derivative Liability",
+      "Derivative financial assets",
+      "Derivative financial liabilities",
+      "Derivative Liability, Current",
+      "Derivative Liability, Noncurrent"
+    ]
+  },
+  "Other": {
+    "Commitments & Contingencies": [
+      "Commitments and Contingencies"
+    ],
+    "Operating Leases & Right-of-Use Assets": [
+      "Operating Lease, Right-of-Use Asset",
+      "Operating Lease, Liability",
+      "Operating Lease, Liability, Current"
+    ]
+
+  }
+}
