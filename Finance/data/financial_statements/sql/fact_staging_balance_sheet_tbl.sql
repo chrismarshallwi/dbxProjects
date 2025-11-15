@@ -4,9 +4,10 @@ where stmt = 'BS' and period = ddate
 */
 
 select 
-distinct *
+distinct 
+bs.*
 from 
-operations.finance_staging.fact_staging_financial_statement_tbl 
+operations.finance_staging.fact_staging_financial_statement_tbl bs
 
 where 
 financial_statement = 'BS' 
