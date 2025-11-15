@@ -36,15 +36,10 @@ adsh as filing_key
 ,fy as fiscal_year
 ,fp as fiscal_period
 ,filed as filing_date
-/*,sha2(concat_ws('|', cik.cik, cik.ticker), 256) AS company_key_hash
-,bigint(substr(xxhash64(concat_ws('|', cik.cik, cik.ticker)), 1, 18)) AS company_bigint_key*/
 ,dc.company_key_hash
 ,dc.company_bigint_key
 from operations.finance_staging.raw_sub_tbl as sub
-left join company_main dc on dc.company_identifier_key = sub.cik /*(select * from operations.finance_staging.raw_dim_cik) as cik on cik.cik = sub.cik
-left join (select * from operations.finance_staging.raw_dim_exchange) as exchange on exchange.cik = sub.cik
-left join (select * from operations.finance_staging.raw_dim_sp_500) as sp on sp.CIK = sub.cik*/
-
+left join company_main dc on dc.company_identifier_key = sub.cik
 ) 
 
 ,tag as (
@@ -52,6 +47,8 @@ select
 tag
 ,tlabel
 ,version as gaap_version
+,sha2(concat_ws('|', tlabel), 256) AS tag_key_hash
+,bigint(substr(xxhash64(concat_ws('|', tlabel)), 1, 18)) AS tag_bigint_key
 from 
 operations.finance_staging.raw_tag_tbl
 )
@@ -86,11 +83,13 @@ final as (
 select distinct 
 sub.company_key_hash
 ,sub.company_bigint_key
+,tag.tag_key_hash
+,tag.tag_bigint_key
 ,sub.name_of_filing_company
 ,sub.ticker_symbol
 ,sub.company_identifier
 ,sub.exchange_traded_on
-,sub.sp_500_indicator
+--,sub.sp_500_indicator -- removed because it was definitely incorrect
 ,sub.filing_key
 ,sub.name_of_submitted_form
 ,sub.filing_date
@@ -119,5 +118,5 @@ left join tag on tag.tag = num.tag and tag.gaap_version  = pre.gaap_version
 select distinct 
 *
 from 
-final 
+final
 
