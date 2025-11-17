@@ -1,40 +1,35 @@
 {
   "Assets": {
     "Current Assets": [
-      {
-        "Cash": [
+      {"Cash": [
           "Cash and Cash Equivalents, at Carrying Value",
           "Cash and cash equivalents",
           "Cash",
           "Cash, Cash Equivalents, Restricted Cash, and Restricted Cash Equivalents",
           "Restricted Cash, Current",
           "Restricted Cash and Cash Equivalents"
-        ]
-      },
-      {
-        "Short-Term Investments": [
+        ]},
+
+      {"Short-Term Investments": [
           "Short-Term Investments",
           "Marketable Securities",
           "Marketable Securities, Current",
           "Equity Securities, FV-NI, Current",
           "Debt Securities, Available-for-Sale, Current"
-        ]
-      },
-      {
-        "Accounts Receivable": [
+        ]},
+
+      {"Accounts Receivable": [
           "Accounts Receivable, after Allowance for Credit Loss, Current",
           "Accounts Receivable, Allowance for Credit Loss, Current",
           "Other Receivables, Net, Current",
           "Trade and other current receivables",
           "Accounts Receivable and Other Accrued Liabilities, Current"
-        ]
-      },
+        ]},
+
       { "Prepaid Expenses":[
             "Prepaid Expense, Current",
             "Prepaid Expense and Other Assets, Current",
-            "Other Assets, Current"
-        ]
-      }
+            "Other Assets, Current"]}
       
     ],
     "Noncurrent Assets": [
@@ -51,28 +46,8 @@
           "Investment Owned, Cost",
           "Investment Owned, Net Assets, Percentage",
           "Equity Method Investments",
-          "Debt Securities, Available-for-Sale",
-          "Debt Securities, Available-for-Sale, Excluding Accrued Interest",
-          "Debt Securities, Available-for-Sale, Amortized Cost",
-          "Debt Securities, Available-for-Sale, Amortized Cost, Excluding Accrued Interest, before Allowance for Credit Loss",
-          "Debt Securities, Available-for-Sale, Allowance for Credit Loss",
-          "Debt Securities, Available-for-Sale, Allowance for Credit Loss, Excluding Accrued Interest",
-          "Debt Securities, Held-to-Maturity, Fair Value",
-          "Debt Securities, Held-to-Maturity, Amortized Cost, before Allowance for Credit Loss",
-          "Debt Securities, Held-to-Maturity, Excluding Accrued Interest, after Allowance for Credit Loss",
-          "Debt Securities, Trading",
-          "Debt Securities, Trading, and Equity Securities, FV-NI",
           "Loans Receivable, Fair Value Disclosure",
           "Loan, Held-for-Sale, Fair Value Disclosure",
-          "Financing Receivable, before Allowance for Credit Loss",
-          "Financing Receivable, after Allowance for Credit Loss",
-          "Financing Receivable, Excluding Accrued Interest, before Allowance for Credit Loss",
-          "Financing Receivable, Excluding Accrued Interest, after Allowance for Credit Loss",
-          "Financing Receivable, Excluding Accrued Interest, before Allowance for Credit Loss, Fee, and Loan in Process",
-          "Financing Receivable, Held-for-Sale",
-          "Financing Receivable, Held-for-Sale, Not Part of Disposal Group, after Valuation Allowance",
-          "Financing Receivable, Allowance for Credit Loss, Excluding Accrued Interest",
-          "Financing Receivable, Allowance for Credit Loss",
           "Other Assets",
           "Other Assets, Noncurrent",
           "Other Assets, Fair Value Disclosure",
@@ -84,11 +59,6 @@
           "Real Estate Investment Property, Net",
           "Real Estate Investment Property, at Cost",
           "Real Estate Investment Property, Accumulated Depreciation",
-          "Financial assets",
-          "Financial assets at fair value through profit or loss",
-          "Financial assets at fair value through profit or loss, classified as held for trading",
-          "Financial assets at fair value through profit or loss, mandatorily measured at fair value",
-          "Financial assets at fair value through other comprehensive income",
           "Loans and advances to customers",
           "Policyholder Account Balance",
           "Servicing Asset at Fair Value, Amount",
@@ -96,16 +66,45 @@
           "Deposits",
           "Interest-Bearing Deposits in Banks and Other Financial Institutions",
           "Right-of-use assets",
-          "Operating Lease, Right-of-Use Asset"]
-      },
-      {"PPE":
-        [
+          "Operating Lease, Right-of-Use Asset"]},
+
+      {"Financial Assets":[          
+          "Financial assets",
+          "Financial assets at fair value through profit or loss",
+          "Financial assets at fair value through profit or loss, classified as held for trading",
+          "Financial assets at fair value through profit or loss, mandatorily measured at fair value",
+          "Financial assets at fair value through other comprehensive income"]},    
+
+      {"Debt Securities":[
+          "Debt Securities, Available-for-Sale",
+          "Debt Securities, Available-for-Sale, Excluding Accrued Interest",
+          "Debt Securities, Available-for-Sale, Amortized Cost",
+          "Debt Securities, Available-for-Sale, Amortized Cost, Excluding Accrued Interest, before Allowance for Credit Loss",
+          "Debt Securities, Available-for-Sale, Allowance for Credit Loss",
+          "Debt Securities, Available-for-Sale, Allowance for Credit Loss, Excluding Accrued Interest",
+          "Debt Securities, Held-to-Maturity, Fair Value",
+          "Debt Securities, Held-to-Maturity, Amortized Cost, before Allowance for Credit Loss",
+          "Debt Securities, Held-to-Maturity, Excluding Accrued Interest, after Allowance for Credit Loss",
+          "Debt Securities, Trading",
+          "Debt Securities, Trading, and Equity Securities, FV-NI"]},
+
+      {"Financing Receivable":[          
+          "Financing Receivable, before Allowance for Credit Loss",
+          "Financing Receivable, after Allowance for Credit Loss",
+          "Financing Receivable, Excluding Accrued Interest, before Allowance for Credit Loss",
+          "Financing Receivable, Excluding Accrued Interest, after Allowance for Credit Loss",
+          "Financing Receivable, Excluding Accrued Interest, before Allowance for Credit Loss, Fee, and Loan in Process",
+          "Financing Receivable, Held-for-Sale",
+          "Financing Receivable, Held-for-Sale, Not Part of Disposal Group, after Valuation Allowance",
+          "Financing Receivable, Allowance for Credit Loss, Excluding Accrued Interest",
+          "Financing Receivable, Allowance for Credit Loss"]},
+
+      {"PPE":[
           "Property, Plant and Equipment, Net",
           "Property, plant and equipment",
           "Property, plant and equipment including right-of-use assets",
           "Property, Plant, and Equipment and Finance Lease Right-of-Use Asset, after Accumulated Depreciation and Amortization",
-          "Property, Plant and Equipment, Gross"]
-      }
+          "Property, Plant and Equipment, Gross"]}
         ]
       }
   }
