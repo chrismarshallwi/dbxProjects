@@ -196,16 +196,9 @@
       "Derivative Liability, Current",
       "Derivative Liability, Noncurrent"
     ]
-  },
-  "Other": {
-    "Commitments & Contingencies": [
-      "Commitments and Contingencies"
-    ],
-    "Operating Leases & Right-of-Use Assets": [
-      "Operating Lease, Right-of-Use Asset",
-      "Operating Lease, Liability",
-      "Operating Lease, Liability, Current"
-    ]
+  }
+}
+
 
   }
 }

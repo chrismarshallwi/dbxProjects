@@ -1,0 +1,41 @@
+{
+"Liabilities": {
+    "Current Liabilities": [
+      "Accounts Payable, Current",
+      "Accounts Payable",
+      "Accrued Liabilities, Current",
+      "Other Liabilities, Current",
+      "Contract with Customer, Liability, Current",
+      "Notes Payable, Current",
+      "Accounts Payable and Accrued Liabilities, Current",
+      "Trade and other current payables",
+      "Accrued Liabilities and Other Liabilities",
+      "Taxes Payable, Current",
+      "Interest Payable, Current",
+      "Deferred Revenue, Current",
+      "Current lease liabilities",
+      "Debt instruments issued",
+      "Redeemable Noncontrolling Interest, Equity, Carrying Amount",
+      "Liability for Future Policy Benefit, before Reinsurance",
+      "Convertible Notes Payable, Current"
+    ],
+    "Noncurrent Liabilities": [
+      "Long-Term Debt",
+      "Long-Term Debt, Excluding Current Maturities",
+      "Long-Term Debt, Current Maturities",
+      "Long-Term Debt, Fair Value",
+      "Long-Term Line of Credit",
+      "Long-Term Debt and Lease Obligation",
+      "Debt, Long-Term and Short-Term, Combined Amount",
+      "Other Liabilities, Noncurrent",
+      "Operating Lease, Liability, Noncurrent",
+      "Finance Lease, Liability, Noncurrent",
+      "Contract with Customer, Liability, Noncurrent",
+      "Non-current lease liabilities",
+      "Liability, Defined Benefit Plan, Noncurrent",
+      "Deferred tax liabilities",
+      "Subordinated liabilities",
+      "Secured Debt"
+    ]
+  }
+}
