@@ -5,14 +5,17 @@
       {"Accounts Payable & Trade Payables":[
         "Accounts Payable, Current",
         "Accounts Payable",
+        "Accounts Payable and Accrued Liabilities",
         "Accounts Payable and Accrued Liabilities, Current",
-        "Trade and other current payables"
+        "Trade and other current payables",
+        "Accounts Payable, Trade, Current"
         ]},
       {"Accrued Expenses & Other Current Liabilities":[
         "Accrued Liabilities, Current",
         "Accrued Liabilities and Other Liabilities",
         "Other Liabilities, Current",
         "Interest Payable, Current",
+        "Interest Payable",
         "Taxes Payable, Current"
       ]},
       {"Deferred Revenue & Contract Liabilities":[
@@ -27,7 +30,8 @@
       ]},
       {"Other Current Liabilities":[
           "Redeemable Noncontrolling Interest, Equity, Carrying Amount",
-          "Liability for Future Policy Benefit, before Reinsurance"
+          "Liability for Future Policy Benefit, before Reinsurance",
+          "Dividends Payable, Current"
       ]}
     ],
 

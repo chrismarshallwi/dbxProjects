@@ -3,11 +3,18 @@
     "Current Assets": [
       {"Cash": [
           "Cash and Cash Equivalents, at Carrying Value",
+          "Cash Equivalents, at Carrying Value",
           "Cash and cash equivalents",
+          "Cash and Due from Banks",
+          "Cash and Cash Equivalent",
           "Cash",
           "Cash, Cash Equivalents, Restricted Cash, and Restricted Cash Equivalents",
+          "Cash, Cash Equivalents, Restricted Cash, and Restricted Cash Equivalents, Current",
           "Restricted Cash, Current",
-          "Restricted Cash and Cash Equivalents"
+          "Restricted Cash and Cash Equivalents",
+          "Restricted Cash and Cash Equivalents, Current",
+          "Cash, Cash Equivalents, and Short-Term Investments"
+          
         ]},
 
       {"Short-Term Investments": [
@@ -21,6 +28,12 @@
       {"Accounts Receivable": [
           "Accounts Receivable, after Allowance for Credit Loss, Current",
           "Accounts Receivable, Allowance for Credit Loss, Current",
+          "Accounts Receivable, before Allowance for Credit Loss, Current",
+          "Receivables, Net, Current",
+          "Other Receivables",
+          "Accounts Receivable, after Allowance for Credit Loss",
+          "Accounts and Other Receivables, Net, Current",
+          "Accounts Receivable, Allowance for Credit Loss",
           "Other Receivables, Net, Current",
           "Trade and other current receivables",
           "Accounts Receivable and Other Accrued Liabilities, Current"
@@ -29,12 +42,33 @@
       { "Prepaid Expenses":[
             "Prepaid Expense, Current",
             "Prepaid Expense and Other Assets, Current",
-            "Other Assets, Current"]}
+            "Other Assets, Current",
+            "Prepaid Expense and Other Assets",
+            "Other Prepaid Expense, Current"]}
+
+      { "Inventory":[
+            "Inventory, Net",
+            "Public Utilities, Inventory",
+            "Inventory, Work in Process, Net of Reserves",
+            "Inventory, Finished Goods, Net of Reserves",
+            "Inventory, Raw Materials, Net of Reserves",
+            "Inventory, Raw Materials and Supplies, Gross",
+            "Inventory, Raw Materials and Supplies, Net of Reserves",
+            "Inventory, Finished Goods, Gross",
+            "Inventory, Finished Goods and Work in Process, Net of Reserves",
+            "Inventory, Work in Process and Raw Materials, Net of Reserves",
+            "Inventory, Work in Process, Gross",
+            "Inventory, Work in Process and Raw Materials",
+            "Other Inventory, Raw Materials, Net of Reserves",
+            "Inventory, Gross"
+
+            ]}
       
     ],
     "Noncurrent Assets": [
       {"Noncurrent Assets": [
           "Restricted Cash",
+          "Restricted Cash and Cash Equivalents, Noncurrent",
           "Accumulated Depreciation, Depletion and Amortization, Property, Plant, and Equipment",
           "Goodwill",
           "Intangible Assets, Net (Excluding Goodwill)",
@@ -103,7 +137,10 @@
           "Property, Plant and Equipment, Net",
           "Property, plant and equipment",
           "Property, plant and equipment including right-of-use assets",
+          "Property, Plant, and Equipment and Finance Lease Right-of-Use Asset, before Accumulated Depreciation and Amortization",
           "Property, Plant, and Equipment and Finance Lease Right-of-Use Asset, after Accumulated Depreciation and Amortization",
+          "Property, Plant, and Equipment and Finance Lease Right-of-Use Asset, Accumulated Depreciation and Amortization",
+          "Property, Plant and Equipment, Other, Gross",
           "Property, Plant and Equipment, Gross"]}
         ]
       }
