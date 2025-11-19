@@ -44,7 +44,7 @@
             "Prepaid Expense and Other Assets, Current",
             "Other Assets, Current",
             "Prepaid Expense and Other Assets",
-            "Other Prepaid Expense, Current"]}
+            "Other Prepaid Expense, Current"]},
 
       { "Inventory":[
             "Inventory, Net",
@@ -63,10 +63,13 @@
             "Inventory, Gross"
 
             ]}
+
+      
       
     ],
     "Noncurrent Assets": [
       {"Noncurrent Assets": [
+          "Assets, Noncurrent",
           "Restricted Cash",
           "Restricted Cash and Cash Equivalents, Noncurrent",
           "Accumulated Depreciation, Depletion and Amortization, Property, Plant, and Equipment",
@@ -143,6 +146,8 @@
           "Property, Plant and Equipment, Other, Gross",
           "Property, Plant and Equipment, Gross"]}
         ]
+
+        
       }
   }
 
