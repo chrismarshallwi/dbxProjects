@@ -24,6 +24,58 @@
         "Total Net Assets",
         "Assets, Total"]}
     ]
-      }
+      },
+
+  "Liabilities":{
+    "Current Liabilities":
+    [{"Total Current Liabilities":[
+      "Total current liabilities",
+      "Total Current Liabilities"
+    ]}],
+
+    "Noncurrent Liabilities":
+    [{"Total Noncurrent Liabilities":[
+      "Total noncurrent liabilities",
+      "Total non-current liabilities"
+    ]}],
+
+    "Total Liabilities":
+    [{"Total Liabilities":[
+      "Total liabilities",
+      "Total Liabilities"
+    ]}]
+  },
+
+    "Equity":{
+    "Total Equity":
+    [{"Total Equity":[
+      "Total equity",
+      "Total Equity",
+      "Total shareholders' equity",
+      "Total stockholders equity",
+      "Total shareholders equity",
+      "Total stockholders' equity",
+      "Total Stockholders Equity",
+      "Total Stockholders' Equity",
+      "Total Shareholders Equity"
+    ]}]
+
+  },
+
+      "Liabilities & Equity":{
+        "Total Liabilities & Equity":
+          [{"Total Liabilities & Equity":[
+            "Total liabilities and equity",
+            "Total liabilities and stockholders equity",
+            "Total liabilities and stockholders' equity",
+            "Total Liabilities and Equity",
+            "Total liabilities and shareholders equity",
+            "Total liabilities and shareholders' equity",
+            "Total Liabilities and Stockholders Equity",
+            "Total Liabilities and Stockholders' Equity",
+            "Total Liabilities and Shareholders Equity"
+          ]}]
+    
+  }
   }
 

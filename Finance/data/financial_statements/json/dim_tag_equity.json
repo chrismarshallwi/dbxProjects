@@ -19,28 +19,8 @@
         "Preferred Stock, Shares Issued",
         "Preferred Stock, Par or Stated Value Per Share",
         "Preferred Stock, Liquidation Preference, Value"
-        ]},
-
-      {"Other Equity": [
-        "Equity, Attributable to Parent",
-        "Equity, Including Portion Attributable to Noncontrolling Interest",
-        "Equity, Attributable to Noncontrolling Interest",
-        "Equity and liabilities",
-        "Equity",
-        "Retained Earnings (Accumulated Deficit)",
-        "Temporary Equity, Carrying Amount, Attributable to Parent",
-        "Temporary Equity, Shares Outstanding",
-        "Temporary Equity, Shares Issued",
-        "Temporary Equity, Par or Stated Value Per Share",
-        "Temporary Equity, Shares Authorized",
-        "Temporary Equity, Redemption Price Per Share",
-        "Treasury Stock, Common, Shares",
-        "Treasury Stock, Common, Value",
-        "Treasury Stock, Value",
-        "Net Asset Value Per Share",
-        "Equity attributable to owners of parent",
-        "Non-controlling interests"
-        ]}      
+        ]}
+   
     ]}}
 
 
