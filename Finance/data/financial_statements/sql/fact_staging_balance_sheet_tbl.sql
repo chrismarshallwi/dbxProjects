@@ -9,16 +9,19 @@ bs.company_bigint_key
 ,bs.tag_total_bigint_key
 ,bs.tag_sub_total_bigint_key
 ,bs.reported_period as date_key
---,dc.company_name
---,dc.company_stock_symbol
+,dc.company_name
+,dc.company_stock_symbol
 ,bs.presented_label
 ,bs.terse_label  as terse_label
-,coalesce(dt.tag_level_3,dtx.tag_level_3) as tag_level_3
+,dt.tag_level_3 as terse_label_tag_level_3
+,dtx.tag_level_3 as presented_label_tag_level_3
+,coalesce(dt.tag_level_3,dtx.tag_level_3) as tag_level_3_combined
 
 ,case when bs.presented_label like '%Total%' then 1 
     when bs.presented_label like '%TOTAL' then 1 
     when bs.presented_label like '%total%' then 1 
     else 0 end as total_indicator /*Dont love this solution, but it seems to work for now*/
+
 ,bs.report_number
 ,bs.report_line_number
 ,bs.value
@@ -32,19 +35,30 @@ financial_statement = 'BS'  and value_segment is null
 and 
 reported_period = end_reported_period 
 and 
-dc.sp_500_indicator = 1),
+dc.sp_500_indicator = 1)
 
-pivot_cte AS (
+
+,pivot_cte AS (
     SELECT *
     FROM cte
     PIVOT (
         SUM(value) AS total
-        FOR tag_level_3 IN (
-            'Total Assets' as total_assets
+        FOR tag_level_3_combined IN (
+            'Total Assets' as total_assets,
+            'Total Liabilities' as total_liabilities,
+            'Total Equity' as total_equity,
+            'Total Liabilities & Equity' as total_liabilities_and_equity
         )
     )
 )
-select * from pivot_cte
+select distinct * from pivot_cte 
+
+/*
+select * from cte where company_stock_symbol = 'APA' order by report_number , report_line_number
+*/
+
+
+
 
 
 
