@@ -62,6 +62,8 @@ adsh as filing_key
 ,version as gaap_version
 ,report as report_number
 ,line as report_line_number
+,sha2(concat_ws('|', plabel), 256) AS tag_total_key_hash
+,bigint(substr(xxhash64(concat_ws('|', plabel)), 1, 18)) AS tag_total_bigint_key
 from 
 operations.finance_staging.raw_pre_tbl
 )
@@ -83,8 +85,10 @@ final as (
 select distinct 
 sub.company_key_hash
 ,sub.company_bigint_key
-,tag.tag_key_hash
-,tag.tag_bigint_key
+,tag.tag_key_hash as tag_sub_total_key_hash
+,tag.tag_bigint_key as tag_sub_total_bigint_key
+,pre.tag_total_key_hash
+,pre.tag_total_bigint_key
 ,sub.name_of_filing_company
 ,sub.ticker_symbol
 ,sub.company_identifier
