@@ -12,6 +12,11 @@ def read_yaml_file(file_path):
         data = yaml.safe_load(file)
     return data
 
+def check_available_files():
+    '''
+    check to see what years/quarters are available in Edgar database
+    '''
+
 yaml_path = '/Workspace/Users/chrismarshall.wi@icloud.com/dbxProjects/Alpha Factors/.gitignore/connections.yaml'
 config_data = read_yaml_file(yaml_path)
 url_sp = config_data.get('spurl')
