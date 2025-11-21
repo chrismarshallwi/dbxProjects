@@ -1,0 +1,14 @@
+{
+  "balance_sheet": {
+    "asset": {
+      "total_current_asset": {
+        "presented_labels": [
+          "Total Current Assets",
+          "Total Current assets",
+          "Total current assets"
+        ]
+      }
+    }
+  }
+}
+
