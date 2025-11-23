@@ -62,7 +62,7 @@
   {
     "report": "balance_sheet",
     "report_class": "asset",
-    "report_sub_class": "total_non_current_asset",
+    "report_sub_class": "total_non_current_assets",
     "report_label": "total_non_current_assets"
   },
   {
