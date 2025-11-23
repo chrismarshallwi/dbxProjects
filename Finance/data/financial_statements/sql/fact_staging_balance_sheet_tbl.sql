@@ -2,39 +2,38 @@
 RULES FOR BALANCE SHEET 
 where stmt = 'BS' and period = ddate
 */
+
 with cte as ( 
-select 
-distinct 
-    bs.reported_period as date_key
-    ,dc.company_name
-    ,dc.company_stock_symbol
-
-    ,bs.presented_label as presented_label
-    /*,bs.terse_label  as terse_label
-
-    ,dpl.report_sub_class*/
-    ,dbs.report_sub_class
-    ,dbs.report_label
-
-    /*,bs.report_number
-    ,bs.report_line_number*/
-    ,bs.value
+select distinct 
+    balance_sheet.report_label
+    ,balance_sheet.report_label_bigint_key
+    ,balance_sheet.company_bigint_key
+    ,balance_sheet.date_key
+    ,fact.reported_period
+    ,fact.value
 from 
-    operations.finance_staging.fact_staging_financial_statement_tbl bs
+    operations.finance_staging.dim_balance_sheet_temp balance_sheet 
 left join 
-    operations.finance.dim_company dc on dc.company_bigint_key = bs.company_bigint_key
-left join 
-    operations.finance_staging.dim_presented_labels dpl on dpl.presented_label_bigint_key = bs.presented_label_bigint_key
-left join 
-    operations.finance_staging.dim_balance_sheet dbs on dbs.report_sub_class_bigint_key = dpl.report_sub_class_bigint_key
-where 
-financial_statement = 'BS'  and value_segment is null
-and 
-reported_period = end_reported_period 
-and 
-dc.sp_500_indicator = 1)
 
+    (select 
+    * 
+    from 
+    operations.finance_staging.fact_staging_financial_statement_tbl 
+    where 
+    financial_statement = 'BS'  and value_segment is null
+    and 
+    reported_period = end_reported_period 
+    ) fact on 
+            (fact.company_bigint_key = balance_sheet.company_bigint_key 
+            and 
+            fact.presented_label_bigint_key = balance_sheet.presented_label_bigint_key
+            and 
+            fact.reported_period = balance_sheet.date_key)
+)
 
+select * from cte
+
+/*
 ,pivot_cte AS (
     SELECT *
     FROM cte
@@ -47,15 +46,11 @@ dc.sp_500_indicator = 1)
         )
     )
 )
-select distinct * from pivot_cte 
-
-/*
-select distinct presented_label, count(*) from cte where presented_label like '%Total%' group by presented_label 
-*/
-
-
-
-
-
-
+select distinct 
+company_bigint_key
+,reported_period
+,total_current_assets
+,total_non_current_assets
+,total_assets 
+from pivot_cte  */
 
