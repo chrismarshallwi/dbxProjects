@@ -31,9 +31,9 @@ left join
             fact.reported_period = balance_sheet.date_key)
 )
 
-select * from cte
 
-/*
+
+
 ,pivot_cte AS (
     SELECT *
     FROM cte
@@ -46,11 +46,29 @@ select * from cte
         )
     )
 )
-select distinct 
-company_bigint_key
-,reported_period
-,total_current_assets
-,total_non_current_assets
-,total_assets 
-from pivot_cte  */
+
+
+
+SELECT
+    pivot_cte.company_bigint_key
+    ,dc.company_stock_symbol
+    ,reported_period
+    ,MAX(total_current_assets) AS total_current_assets
+    ,(case when MAX(total_non_current_assets) is null then MAX(total_assets) - MAX(total_current_assets) 
+    else MAX(total_non_current_assets) end) as total_non_current_assets
+    ,MAX(total_assets) AS total_assets
+FROM 
+    pivot_cte
+left join 
+    operations.finance.dim_company dc on dc.company_bigint_key = pivot_cte.company_bigint_key
+where 
+    reported_period is not null
+GROUP BY
+    pivot_cte.company_bigint_key,
+    reported_period,
+    dc.company_stock_symbol
+ORDER BY
+    pivot_cte.company_bigint_key,
+    reported_period;
+
 
