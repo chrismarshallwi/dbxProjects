@@ -14,9 +14,9 @@ cross join
 (
   select distinct 
   reported_period
-  from operations.finance_staging.fact_staging_financial_statement_tbl
+  from operations.finance_staging.fact_staging_financial_statement_tbl) dates
   /*where reported_period in (20241231,20250331)
-) dates
+ dates
 where 
   company.company_stock_symbol in ('AAPL','WMT','AMZN','ABBV','AMD','T','NVDA')*/
 )
