@@ -1,0 +1,74 @@
+[
+  {
+    "report": "balance_sheet",
+    "report_class": "asset",
+    "report_sub_class": "current_asset",
+    "report_label": "cash_and_equivalents"
+  },
+  {
+    "report": "balance_sheet",
+    "report_class": "asset",
+    "report_sub_class": "current_asset",
+    "report_label": "short_term_investment"
+  },
+  {
+    "report": "balance_sheet",
+    "report_class": "asset",
+    "report_sub_class": "current_asset",
+    "report_label": "accounts_receivable"
+  },
+  {
+    "report": "balance_sheet",
+    "report_class": "asset",
+    "report_sub_class": "current_asset",
+    "report_label": "inventory"
+  },
+  {
+    "report": "balance_sheet",
+    "report_class": "asset",
+    "report_sub_class": "current_asset",
+    "report_label": "other_current_assets"
+  },
+  {
+    "report": "balance_sheet",
+    "report_class": "asset",
+    "report_sub_class": "total_current_asset",
+    "report_label": "total_current_asset"
+  },
+  {
+    "report": "balance_sheet",
+    "report_class": "asset",
+    "report_sub_class": "non_current_asset",
+    "report_label": "property_plant_equipment"
+  },
+  {
+    "report": "balance_sheet",
+    "report_class": "asset",
+    "report_sub_class": "non_current_asset",
+    "report_label": "intangible_assets"
+  },
+  {
+    "report": "balance_sheet",
+    "report_class": "asset",
+    "report_sub_class": "non_current_asset",
+    "report_label": "goodwill"
+  },
+  {
+    "report": "balance_sheet",
+    "report_class": "asset",
+    "report_sub_class": "non_current_asset",
+    "report_label": "other_non_current_assets"
+  },
+  {
+    "report": "balance_sheet",
+    "report_class": "asset",
+    "report_sub_class": "total_non_current_assets",
+    "report_label": "total_non_current_assets"
+  },
+  {
+    "report": "balance_sheet",
+    "report_class": "asset",
+    "report_sub_class": "total_assets",
+    "report_label": "total_assets"
+  }
+]

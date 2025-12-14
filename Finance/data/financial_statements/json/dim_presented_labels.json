@@ -1,0 +1,25 @@
+{
+  "balance_sheet": {
+    "asset": {
+      "total_current_asset": {
+        "presented_labels": [
+          "Total Current Assets",
+          "Total Current assets",
+          "Total current assets"
+        ]
+      },
+      "total_non_current_assets": {
+        "presented_labels": [
+          "Total non-current assets",
+          "Total noncurrent assets"
+        ]
+      },
+      "total_assets": {
+        "presented_labels": [
+          "Total assets",
+          "Total Assets"
+        ]
+      }
+    }
+  }
+}
