@@ -5,3 +5,4 @@ plotly
 yfinance
 lxml
 requests
+databricks-connect
