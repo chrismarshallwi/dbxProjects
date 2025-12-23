@@ -1,0 +1,10 @@
+- name: Home
+  pages:
+    - page: pages/welcome_page.py
+      title: Home
+      icon: ":material/home:"
+      default: true
+      header: Home
+      caption: Welcome to the Home page of the Streamlit app
+      help_page: null
+
