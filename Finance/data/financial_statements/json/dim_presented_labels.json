@@ -5,7 +5,8 @@
         "presented_labels": [
           "Total Current Assets",
           "Total Current assets",
-          "Total current assets"
+          "Total current assets",
+          "Current assets"
         ]
       },
       "total_non_current_assets": {
