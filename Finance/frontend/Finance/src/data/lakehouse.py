@@ -40,5 +40,27 @@ def read_table(catalog_name: str, schema_name: str, table_name: str) -> DataFram
     """
     return spark().table(f"{catalog_name}.{schema_name}.{table_name}")
 
+@st.cache_data(ttl=600)
+def get_nation() -> pd.DataFrame:
+    return read_table(settings.OPS_CATALOG, "default", "nation").toPandas()
+
+
+@st.cache_data(ttl=600)
+def get_user_entitlements(id: str) -> dict:
+    result = (
+        read_table(settings.OPS_CATALOG, "utility", "app_users")
+        .where(F.col("app_name") == settings.APP_NAME)
+        .where(F.col("user_id") == id)
+        .limit(1)
+        .collect()
+    )
+    result_dict = result[0].asDict() if result else {}
+    metadata = result_dict.get("metadata", None)
+    return {
+        "id": result_dict.get("user_id", id),
+        "roles": result_dict.get("roles", []),
+        "metadata": metadata.toPython() if metadata else {},
+    }
+
 
 
