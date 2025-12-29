@@ -40,6 +40,21 @@ def read_table(catalog_name: str, schema_name: str, table_name: str) -> DataFram
     """
     return spark().table(f"{catalog_name}.{schema_name}.{table_name}")
 
+def sql_query(sql_query: str) -> pd.DataFrame:
+    """
+    Execute a SQL query using the active Spark session and return the results
+    as a pandas DataFrame.
+
+    Args:
+        sql_query (str): SQL query to execute.
+
+    Returns:
+        pd.DataFrame: Query results as a pandas DataFrame.
+    """
+    spark_df = spark().sql(sql_query)
+    return spark_df.toPandas()
+
+
 @st.cache_data(ttl=600)
 def get_nation() -> pd.DataFrame:
     return read_table(settings.OPS_CATALOG, "default", "nation").toPandas()
