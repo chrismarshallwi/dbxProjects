@@ -4,7 +4,7 @@ from data.lakehouse import sql_query
 
 catalog = 'operations'
 schema = 'finance_staging'
-table = 'fact_staging_financial_statement_tbl'
+table_name = 'fact_staging_financial_statement_tbl'
 
 query = f"""
 select distinct 
