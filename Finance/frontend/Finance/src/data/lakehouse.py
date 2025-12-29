@@ -48,7 +48,7 @@ def get_nation() -> pd.DataFrame:
 @st.cache_data(ttl=600)
 def get_user_entitlements(id: str) -> dict:
     result = (
-        read_table(settings.OPS_CATALOG, "utility", "app_users")
+        read_table("operations", "utility", "app_users")
         .where(F.col("app_name") == settings.APP_NAME)
         .where(F.col("user_id") == id)
         .limit(1)
@@ -61,6 +61,7 @@ def get_user_entitlements(id: str) -> dict:
         "roles": result_dict.get("roles", []),
         "metadata": metadata.toPython() if metadata else {},
     }
+
 
 
 
