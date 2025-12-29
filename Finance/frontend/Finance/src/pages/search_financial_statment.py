@@ -1,6 +1,6 @@
 import streamlit as st
 
-from data.lakehouse import load_table
+from data.lakehouse import sql_query
 
 catalog = 'operations'
 schema = 'finance_staging'
