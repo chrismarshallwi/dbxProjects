@@ -20,5 +20,6 @@ order by report_line_number
 """
 
 
-sql_query(sql_query=query)
+df = sql_query(sql_query=query)
+st.data_editor(df)
 
