@@ -1,4 +1,4 @@
-import streamlit
+import streamlit as st
 
 class WelcomePage:
     def __init__(self):
