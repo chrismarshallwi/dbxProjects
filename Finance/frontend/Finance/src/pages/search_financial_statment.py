@@ -15,11 +15,11 @@ presented_label
 from 
 {catalog}.{schema}.{table_name}
 where ticker_symbol = 'DE'
-and financial_statement = 'BS'
+and financial_statement = 'BS' and value_segment is null and reported_period = end_reported_period
 order by report_line_number
 """
 
 
 df = sql_query(sql_query=query)
-st.data_editor(df)
+st.data_editor(df, width= "content")
 
