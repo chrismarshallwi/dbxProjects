@@ -20,5 +20,5 @@ order by report_line_number
 """
 
 
-sql_query(query=query)
+sql_query(sql_query=query)
 
