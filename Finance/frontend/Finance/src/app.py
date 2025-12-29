@@ -5,7 +5,7 @@ from ui.navigation_config import NavigationPage
 from ui.sidebar import get_global_divider, get_global_region, init_sidebar
 
 apply_custom_styles()
-st.logo("static/img/milwaukeetool.svg", size="small")
+st.logo("static/img/Charging_Bull_statue.jpg", size="small")
 st.set_page_config(
     page_title="Data app template",
     # page_icon=":material/electric_bolt:",
