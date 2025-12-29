@@ -20,17 +20,17 @@ st.set_page_config(
 
 page = init_navigation()
 
-# # Page shell elements
-# page_info: NavigationPage | None = get_page_info(page)
-# if page_info:
-#     init_sidebar(page_info)
-#     st.header(page_info.header, divider=get_global_divider())
-#     st.caption(page_info.caption)
-#     global_region = get_global_region()
-#     if global_region:
-#         with st.container(horizontal=True):
-#             st.text("Global filters:")
-#             st.badge(f"region [{global_region}]", icon=":material/filter_alt:")
+# Page shell elements
+page_info: NavigationPage | None = get_page_info(page)
+if page_info:
+    init_sidebar(page_info)
+    st.header(page_info.header, divider=get_global_divider())
+    st.caption(page_info.caption)
+    global_region = get_global_region()
+    if global_region:
+        with st.container(horizontal=True):
+            st.text("Global filters:")
+            st.badge(f"region [{global_region}]", icon=":material/filter_alt:")
 
 # Run page
 page.run()
