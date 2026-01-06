@@ -85,7 +85,7 @@ def get_tickers():
                      from 
                      operations.finance.dim_company
                      order by 
-                     company_stock_symbol""")["company_stock_symbol"].toList()
+                     company_stock_symbol""")["company_stock_symbol"].tolist()
 
 
 
