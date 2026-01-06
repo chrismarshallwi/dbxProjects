@@ -81,11 +81,11 @@ def get_user_entitlements(id: str) -> dict:
 def get_tickers():
     return sql_query("""
                      select distinct 
-                     ticker_symbol
+                     company_stock_symbol
                      from 
                      operations.finance.dim_company
                      order by 
-                     ticker_symbol""")["ticker_symbol"].toList()
+                     company_stock_symbol""")["company_stock_symbol"].toList()
 
 
 
