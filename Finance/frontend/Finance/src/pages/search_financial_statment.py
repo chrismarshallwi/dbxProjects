@@ -33,8 +33,9 @@ FROM (
 PIVOT (
     MAX(value)
     FOR reported_period IN (
-        '20250430' AS `2025_04_30`,
-        '20250131' AS `2025-01-31`
+        '20241231' AS `2024_12_31`,
+        '20250331' AS `2025-03-31`
+
     )
 )
 ORDER BY report_line_number;
