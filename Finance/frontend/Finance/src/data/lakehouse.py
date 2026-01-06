@@ -77,6 +77,16 @@ def get_user_entitlements(id: str) -> dict:
         "metadata": metadata.toPython() if metadata else {},
     }
 
+@st.cache_data
+def get_tickers():
+    return sql_query("""
+                     select distinct 
+                     ticker_symbol
+                     from 
+                     operations.finance.dim_company
+                     order by 
+                     ticker_symbol""")["ticker_symbol"].toList()
+
 
 
 

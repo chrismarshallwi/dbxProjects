@@ -1,24 +1,20 @@
 import streamlit as st
-
-from data.lakehouse import sql_query
+from data.lakehouse import sql_query, get_tickers
 
 catalog = 'operations'
 schema = 'finance_staging'
 table_name = 'fact_staging_financial_statement_tbl'
 
-# query = f"""
-# select distinct 
-# presented_label
-# ,report_line_number
-# ,reported_period
-# ,value
-# from 
-# {catalog}.{schema}.{table_name}
-# where ticker_symbol = 'DE'
-# and financial_statement = 'BS' and value_segment is null and reported_period = end_reported_period
-# order by report_line_number
-# """
+st.title("Search For Financial Statements")
 
+tickers = get_tickers()
+selected_tickers = st.multiselect("Select Tickers",options=tickers,default=None)
+
+if not selected_tickers:
+    st.info("please select at least one ticker")
+    st.stop()
+
+ticker_filter = ", ".join(f"'{t}'" for t in selected_tickers)
 
 query = f"""
 SELECT *
@@ -29,7 +25,7 @@ FROM (
         reported_period,
         value
     FROM {catalog}.{schema}.{table_name}
-    WHERE ticker_symbol = 'DE'
+    WHERE ticker_symbol in ({ticker_filter})
       AND financial_statement = 'BS'
       AND value_segment IS NULL
       AND reported_period = end_reported_period
@@ -48,5 +44,5 @@ ORDER BY report_line_number;
 
 
 df = sql_query(sql_query=query)
-st.data_editor(df, width= "content")
+st.data_editor(df, use_container_width=True, hide_index=True)
 
