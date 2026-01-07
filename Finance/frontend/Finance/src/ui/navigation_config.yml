@@ -15,4 +15,7 @@
       header: Data
       caption: Search for SEC reported financial statements by company and month. 
       help_page: null
+      roles:
+        - admin
+        - user
 
