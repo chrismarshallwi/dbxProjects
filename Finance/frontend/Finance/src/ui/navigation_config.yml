@@ -13,7 +13,7 @@
       title: Search Financial Statements
       icon: ":material/data_table:"
       default: true 
-      header: ?
+      header: Data
       caption: Search for SEC reported financial statements by company and month. 
       help_page: null
 
