@@ -7,11 +7,12 @@
       header: Home
       caption: Welcome to the Home page of the Streamlit app
       help_page: null
-    # - page: pages/search_financial_statement.py
-    #   title: Search Financial Statements
-    #   icon: ":material/data_table:"
-    #   default: true 
-    #   header: Home
-    #   caption: Search for SEC reported financial statements by company and month. 
-    #   help_page: null
+- name: Data
+  pages:
+    - page: pages/search_financial_statement.py
+      title: Data
+      icon: ":material/data_table:"
+      header: Data
+      caption: Search for SEC reported financial statements by company and month. 
+      help_page: null
 
