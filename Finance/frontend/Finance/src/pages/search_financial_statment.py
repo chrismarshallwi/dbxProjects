@@ -16,6 +16,9 @@ if not selected_tickers:
 
 ticker_filter = ", ".join(f"'{t}'" for t in selected_tickers)
 
+#dont think that sql pivot will be suffice here
+#consider using python in future
+
 query = f"""
 SELECT *
 FROM (

@@ -7,6 +7,8 @@
       header: Home
       caption: Welcome to the Home page of the Streamlit app
       help_page: null
+- name: Data
+  pages:
     - page: pages/search_financial_statement.py
       title: Search Financial Statements
       icon: ":material/data_table:"
