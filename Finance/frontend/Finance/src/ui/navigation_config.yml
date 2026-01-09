@@ -15,9 +15,7 @@
       header: Data
       caption: Search for SEC reported financial statements by company and month. 
       help_page: null
-      roles:
-        - admin
-        - user
+
   pages:
     - page: pages/net_income.py
       title: Investments Input
@@ -25,7 +23,5 @@
       header: Investments 
       caption: Input investments & portfolio percents 
       help_page: null
-      roles:
-        - admin
-        - user
+
 
