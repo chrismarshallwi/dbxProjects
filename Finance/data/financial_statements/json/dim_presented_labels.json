@@ -18,7 +18,27 @@
       "total_assets": {
         "presented_labels": [
           "Total assets",
-          "Total Assets"
+          "Total Assets",
+          "TOTAL ASSETS"
+        ]
+      },
+      "total_current_liabilities":{
+        "presented_labels": [
+          "Total current liabilities",
+          "Total Current Liabilities",
+          "Current liabilities"
+        ]
+      },
+      "total_non_current_liabilities":{
+        "presented_labels":[
+          "Total non-current liabilities"
+        ]
+      },
+      "total_liabilities":{
+        "presented_labels":[
+          "Total liabilities",
+          "Total Liabilities",
+          "TOTAL LIABILITIES"
         ]
       }
     }
