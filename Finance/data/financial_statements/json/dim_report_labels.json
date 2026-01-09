@@ -70,5 +70,25 @@
     "report_class": "asset",
     "report_sub_class": "total_assets",
     "report_label": "total_assets"
+  },
+
+
+    {
+    "report": "balance_sheet",
+    "report_class": "liabilities",
+    "report_sub_class": "total_current_liabilities",
+    "report_label": "total_current_liabilities"
+  },
+  {
+    "report": "balance_sheet",
+    "report_class": "liabiltiies",
+    "report_sub_class": "total_non_current_liabilities",
+    "report_label": "total_non_current_liabilities"
+  },
+  {
+    "report": "balance_sheet",
+    "report_class": "liabilities",
+    "report_sub_class": "total_liabilities",
+    "report_label": "total_liabilities"
   }
 ]

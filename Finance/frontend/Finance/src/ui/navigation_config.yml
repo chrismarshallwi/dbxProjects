@@ -18,4 +18,14 @@
       roles:
         - admin
         - user
+  pages:
+    - page: pages/net_income.py
+      title: Investments Input
+      icon: ":material/finance_mode:"
+      header: Investments 
+      caption: Input investments & portfolio percents 
+      help_page: null
+      roles:
+        - admin
+        - user
 

@@ -15,17 +15,12 @@ cross join
   select distinct 
   reported_period
   from operations.finance_staging.fact_staging_financial_statement_tbl) dates
-  /*where reported_period in (20241231,20250331)
- dates
-where 
-  company.company_stock_symbol in ('AAPL','WMT','AMZN','ABBV','AMD','T','NVDA')*/
 )
 
 ,dim_company_presented_labels as (select distinct
             dpl.report_label_bigint_key
             ,dpl.presented_label_bigint_key
             ,fsm.company_bigint_key
-            /*,fsm.presented_label_bigint_key*/
             ,fsm.company_stock_symbol
             ,fsm.presented_label
           from 
@@ -44,8 +39,6 @@ where
               fsm.financial_statement = 'BS'  and fsm.value_segment is null
               and 
               fsm.reported_period = fsm.end_reported_period 
-              /*and 
-              dc.company_stock_symbol in ('AAPL','WMT','AMZN','ABBV','AMD','T','NVDA')*/
             ) fsm on fsm.presented_label_bigint_key = dpl.presented_label_bigint_key
 
           where 
