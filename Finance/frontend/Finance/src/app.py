@@ -1,13 +1,13 @@
 import streamlit as st
 from ui.custom_css import apply_custom_styles
-from ui.navigation import get_page_info, init_navigation
+from ui.navigation import  init_navigation ,get_page_info
 from ui.navigation_config import NavigationPage
-from ui.sidebar import get_global_divider, get_global_region, init_sidebar
+from ui.sidebar import  init_sidebar,get_global_divider, get_global_region
 
 apply_custom_styles()
 st.logo("static/img/Screenshot 2025-12-29 155010.jpg", size="large")
 st.set_page_config(
-    page_title="Data app template",
+    page_title="Finance",
     # page_icon=":material/electric_bolt:",
     #page_icon="static/img/milwaukeetool.svg",
     layout="wide",
@@ -21,6 +21,7 @@ st.set_page_config(
 page = init_navigation()
 
 # Page shell elements
+# Page shell elements
 page_info: NavigationPage | None = get_page_info(page)
 if page_info:
     init_sidebar(page_info)
@@ -32,5 +33,7 @@ if page_info:
             st.text("Global filters:")
             st.badge(f"region [{global_region}]", icon=":material/filter_alt:")
 
+
 # Run page
 page.run()
+
