@@ -2,6 +2,17 @@ from typing import Any, Callable
 import pandas as pd
 import streamlit as st
 
+def init_session_state():
+    """Initialize session state variables if not set yet."""
+    defaults = {
+        "expense_count": 1,
+        "expenses": [],
+        "income": [],
+        "user_input": ""
+    }
+    for key, value in defaults.items():
+        if key not in st.session_state:
+            st.session_state[key] = value
 
 def init_session_state():
     """Initialize session state variables if not set yet."""
@@ -21,12 +32,10 @@ def init_state_fn(key: str, value_fn: Callable[[], Any]) -> None:
         v = value_fn()
         st.session_state[key] = v
 
-
 def init_state(key: str, value: Any) -> None:
     """Initialize session state key if not exists"""
     if key not in st.session_state:
         st.session_state[key] = value
-
 
 def get_state(key: str, default: Any = None) -> Any:
     """Get value from session state with default"""
