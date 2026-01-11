@@ -15,7 +15,7 @@
       header: Search Financial Statements
       caption: Search for SEC reported financial statements by company and month. 
       help_page: null
-    - page: pages\investment_input.py
+
       title: Investments Input
       icon: ":material/finance_mode:"
       header: Investments 
@@ -27,5 +27,6 @@
       header: Growth
       caption: Growth Analysis of investment inputs
       help_page: null
+
 
 
