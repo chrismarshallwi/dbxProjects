@@ -41,7 +41,7 @@
           "TOTAL LIABILITIES"
         ]
       },
-      "Shareholder Equity":{
+      "total_shareholder_equity":{
         "presented_labels":[
           "Total equity",
           "Total stockholders equity",
