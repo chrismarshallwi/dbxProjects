@@ -90,5 +90,11 @@
     "report_class": "liabilities",
     "report_sub_class": "total_liabilities",
     "report_label": "total_liabilities"
+  },
+  {
+    "report": "balance_sheet",
+    "report_class": "shareholders_equity",
+    "report_sub_class": "total_shareholder_equity",
+    "report_label": "total_shareholder_equity"
   }
 ]
