@@ -52,6 +52,22 @@
           "Total Stockholders Equity"
 
         ]
+      },
+      "total_liabilities_and_shareholder_equity":{
+        "presented_labels":[
+          "Total liabilities and equity",
+          "Total liabilities and stockholders equity",
+          "Total liabilities and stockholders' equity",
+          "Total liabilities and shareholders' equity",
+          "Total liabilities and shareholders equity",
+          "Total Liabilities and Equity",
+          "TOTAL LIABILITIES AND EQUITY",
+          "Total Liabilities and Stockholders Equity",
+          "Total Liabilities and Stockholders' Equity",
+          "TOTAL LIABILITIES AND STOCKHOLDERS EQUITY",
+          "TOTAL LIABILITIES AND SHAREHOLDERS EQUITY",
+          "TOTAL LIABILITIES AND STOCKHOLDERS' EQUITY"
+        ]
       }
     }
   }
