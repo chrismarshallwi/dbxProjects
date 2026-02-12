@@ -1,0 +1,15 @@
+resources:
+  pipelines:
+    example_historical_data:
+      name: example_historical_data
+      configuration:
+        ops_catalog: ${var.ops_catalog}
+        edw_catalog: ${var.edw_catalog}
+        staging_schema: example_staging
+      libraries:
+        - glob:
+            include: ../../src/example_historical_data/transformations/**
+      serverless: true
+      catalog: ${var.target_catalog}
+      schema: example
+      root_path: ../../src/example_historical_data
