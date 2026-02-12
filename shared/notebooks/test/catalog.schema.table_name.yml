@@ -1,0 +1,16 @@
+- criticality: error
+  check:
+    function: is_unique
+    arguments:
+      columns:
+        - item_bigint_key
+        
+- criticality: error
+  check:
+    function: is_not_null_and_not_empty
+    for_each_column:
+      - item
+      - inventory_organization_bigint_key
+      - supplier_bigint_key
+      - hr_location_bigint_key
+      - source_bigint_key

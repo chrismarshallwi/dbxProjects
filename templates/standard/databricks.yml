@@ -1,0 +1,60 @@
+bundle:
+  name: TODO_BUNDLE_NAME
+  uuid: 00000000-0000-0000-0000-000000000000 # generate a new UUID for your bundle: python -c "import uuid; print(uuid.uuid4())"
+
+include:
+  - bundle/*/*.yml
+
+# NOTE: when adding sync paths, the root folder of the bundle will shift to
+# add the first common parent of all sync paths.  For example, if you add ../shared/notebooks,
+# the root folder will become the parent folder of both the current bundle and shared.
+# files/
+# |-- demand/
+# |-- shared/notebooks/
+sync:
+  paths:
+    - . # this bundle
+    - ../shared/notebooks # shared notebooks
+
+artifacts:
+  packout: # packout wheel artifact
+    type: whl
+    build: uv build --wheel
+    path: ../shared/packout
+
+variables:
+  # Service principal ID, must be overridden in targets
+  owner_sp_id:
+    description: Service principal ID
+  warehouse_id:
+    description: The default SQL warehouse
+    lookup:
+      warehouse: operations-small-sql-warehouse
+  target_catalog:
+    description: The catalog where assets are created
+  ops_catalog:
+    description: The operations catalog
+  edw_catalog:
+    description: The EDW catalog
+
+presets:
+  pipelines_development: true # set development to true for pipelines
+  trigger_pause_status: PAUSED # default paused
+  tags:
+    bu: sca
+    project: TODO_PROJECT_NAME
+    domain: TODO_DOMAIN_NAME
+
+targets:
+  # Target 'local' must exist in 'databricks.yml' for workspace authoring
+  local:
+    mode: development
+    default: true
+    workspace:
+      # core-d-cus-adb
+      host: https://adb-4482605715640778.18.azuredatabricks.net
+    variables:
+      target_catalog: dev_operations
+      ops_catalog: dev_operations
+      edw_catalog: dev_edw
+      owner_sp_id: ""
