@@ -1,0 +1,31 @@
+# trigger:
+#   branches:
+#     include:
+#       - main
+#   paths:
+#     include:
+#       - CHANGE_TO_PROJECT_NAME
+#   tags:
+#     include:
+#       - release/CHANGE_TO_PROJECT_NAME/*
+
+# resources:
+#   repositories:
+#     - repository: pipelines
+#       type: git
+#       name: "Supply Chain Analytics/databricks-utils"
+#       ref: main
+
+# extends:
+#   template: dabs/devops_pipelines/pipeline-monorepo.yml@pipelines
+#   parameters:
+#     bundleRoot: CHANGE_TO_PROJECT_NAME
+#     devConfig:
+#       variableGroup: databricks_auth_operations_d
+#       adoEnvironment: databricks_env_operations_d
+#     qcConfig:
+#       variableGroup: databricks_auth_operations_q
+#       adoEnvironment: databricks_env_operations_q
+#     prdConfig:
+#       variableGroup: databricks_auth_operations_p
+#       adoEnvironment: databricks_env_operations_p
