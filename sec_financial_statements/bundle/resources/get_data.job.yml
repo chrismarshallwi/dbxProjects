@@ -12,12 +12,11 @@ resources:
       queue:
         enabled: true
       parameters:
-        - name: edw_catalog
-          default: ${var.edw_catalog}
-        - name: ops_catalog
-          default: ${var.ops_catalog}
+        - name: target_catalog
+          default: ${var.target_catalog}
+
 
       tags:
-        priority: SEC
+        data: SEC
       
 
