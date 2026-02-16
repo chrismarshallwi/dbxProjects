@@ -5,7 +5,7 @@ resources:
       tasks:
         - task_key: run_ddls
           notebook_task:
-            notebook_path: Finance/shared/notebooks/schema_manager/apply.ipynb
+            notebook_path: shared/notebooks/schema_manager/apply.ipynb 
 
       health:
         rules:
