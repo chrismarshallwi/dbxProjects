@@ -5,7 +5,7 @@ resources:
       tasks:
         - task_key: run_ddls
           notebook_task:
-            notebook_path: ../../shared/notebooks/schema_manager/apply.py
+            notebook_path: ../../../shared/notebooks/schema_manager/apply.ipynb
 
       health:
         rules:
@@ -19,8 +19,8 @@ resources:
           default: ${var.warehouse_id}
         - name: target_catalog
           default: ${var.target_catalog}
-        # - name: sql_path
-        #   default: ${workspace.file_path}/${bundle.name}/src/schema_management/sql/
+        - name: sql_path
+          default: ${workspace.file_path}/${bundle.name}/src/schema_management/sql/
 
 
       tags:
