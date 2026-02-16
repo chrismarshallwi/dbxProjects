@@ -6,6 +6,7 @@ resources:
         - task_key: run_ddls
           notebook_task:
             notebook_path: ../../../shared/notebooks/schema_manager/apply.ipynb
+          environment_key: odpenv
 
       health:
         rules:
@@ -22,7 +23,13 @@ resources:
         - name: sql_path
           default: ${workspace.file_path}/${bundle.name}/src/schema_management/sql/
 
-
       tags:
         priority: Schema-Management
+
+      environments:
+        - environment_key: odpenv
+          spec:
+            environment_version: "4"
+            dependencies:
+              - databricks-sql-connector
 
