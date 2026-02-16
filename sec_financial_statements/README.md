@@ -1,33 +1,31 @@
 # 📊 Project Name
-> _A brief one-liner about what this data application does._
+> _Asset Bundle for SEC Financial Statement Data
 
 
 ## 🚀 Overview
-> _Describe the purpose of the application, the problem it solves, and its key features_
+> _Asset Bundle that retreives, organizes and generates raw and cleansed data to be used downstream.
 
 
 ## 🏗️ Architecture
-> _Briefly outline the architecture or include a diagram._
+> _Builds files from several data sources retreived using primarily http requests. 
 
 - **Data Sources**: 
 - **Processing**: 
-- **Storage**: 
+- **Volumes**: Raw data is stored in Volumes, processed later into the operations.finance_staging schema 
 - **Visualization**: 
 
 
 ## 🛠️ Tech Stack
 > _List the main technologies used._
 
-- Language: 
-- Frameworks: 
+- Language: Python, SQL, YAML
+- Frameworks: Databricks framework for Data engineering best practice using Data asset bundles. 
 - Visualization: 
 - Deployment: DAB
 
 ## 📦 Setup Local Environment
 Dependencies:
 - Python 3.10+
-- uv
-- Jdk
 
 ```powershell
 # Clone the repo
