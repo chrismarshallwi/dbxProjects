@@ -6,7 +6,7 @@ resources:
 
         - task_key: get_data
           notebook_task:
-            notebook_path: ../../src/sec_quarterly_statements/notebooks/get_data.ipynb
+            notebook_path: ../../src/sec_quarterly_statements/notebooks/get_data.py
             source: WORKSPACE
 
       queue:
