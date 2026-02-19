@@ -1,31 +1,35 @@
-# resources:
-#   jobs:
-#     schema_management:
-#       name: ${bundle.name}.schema_management
-#       tasks:
-#         - task_key: run_ddls
-#           notebook_task:
-#             notebook_path: /Workspace/operations/data-platform/data_assets/files/src/schema_management/notebooks/apply_v2
-#           environment_key: odpenv
-#       health:
-#         rules:
-#           # Alert when running for more than 5 minutes
-#           - metric: RUN_DURATION_SECONDS
-#             op: GREATER_THAN
-#             value: 300
-#       parameters:
-#         - name: warehouse_id
-#           default: ${var.warehouse_id}
-#         - name: sql_path
-#           default: ${workspace.file_path}/${bundle.name}/src/schema_management/sql/
-#         - name: target_catalog
-#           default: ${var.target_catalog}
+resources:
+  jobs:
+    schema_management:
+      name: ${bundle.name}.schema_management
+      tasks:
+        - task_key: run_ddls
+          notebook_task:
+            notebook_path: ../../../shared/notebooks/schema_manager/apply.ipynb
+          environment_key: odpenv
 
-#       tags:
-#         priority: P1
-#       environments:
-#         - environment_key: odpenv
-#           spec:
-#             environment_version: "4"
-#             dependencies:
-#               - databricks-sql-connector
+      health:
+        rules:
+          # Alert when running for more than 5 minutes
+          - metric: RUN_DURATION_SECONDS
+            op: GREATER_THAN
+            value: 300
+
+      parameters:
+        - name: warehouse_id
+          default: ${var.warehouse_id}
+        - name: target_catalog
+          default: ${var.target_catalog}
+        - name: sql_path
+          default: ${workspace.file_path}/${bundle.name}/src/schema_management/sql/
+
+      tags:
+        priority: Schema-Management
+
+      environments:
+        - environment_key: odpenv
+          spec:
+            environment_version: "4"
+            dependencies:
+              - databricks-sql-connector
+
