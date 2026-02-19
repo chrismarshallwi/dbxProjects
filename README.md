@@ -1,14 +1,14 @@
 # Data Integration
 
-This repository contains all data integration projects.
+This repository contains all finance projects.
 
-## Repository structure
+## Repository structure 
 
 ```bash
 
-data-integration/
+data-integration-finance/
 ├── .azuredevops/                # Azure DevOps configuration and templates
-├── demand/                      # Demand asset bundle
+├── finance/                      # Demand asset bundle
 │   ├── bundle/                  # Reusable notebooks source
 │   ├── src/                     # Reusable notebooks source
 │       ├── topic/               # topic ex. sec quarterly files
