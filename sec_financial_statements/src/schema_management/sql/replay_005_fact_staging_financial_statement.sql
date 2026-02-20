@@ -1,4 +1,4 @@
-CREATE or replace TABLE finance_staging.fact_staging_financial_statement_tbl (
+CREATE or replace TABLE finance_staging.fact_staging_financial_statement (
   company_key_hash STRING,
   company_bigint_key BIGINT,
   presented_label_key_hash STRING,
