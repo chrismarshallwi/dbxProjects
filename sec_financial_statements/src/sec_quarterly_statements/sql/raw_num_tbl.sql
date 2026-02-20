@@ -1,4 +1,4 @@
-INSERT OVERWRITE TABLE IDENTIFIER(:target_catalog || ".demand_staging.raw_num_tbl") 
+INSERT OVERWRITE TABLE IDENTIFIER(:target_catalog || ".finance_staging.raw_num_tbl") 
 select 
 *
 from (
