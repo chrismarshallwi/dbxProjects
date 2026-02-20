@@ -1,0 +1,30 @@
+resources:
+  jobs:
+    finance_quarterly_ingestion:
+      name: finance_quarterly_ingestion
+      tasks:
+
+        - task_key: get_data
+          notebook_task:
+            notebook_path: ../../src/sec_quarterly_statements/notebooks/get_data.py
+            source: WORKSPACE
+        
+        - task_key: build_raw_tables
+          depends_on:
+            - task_key: get_data
+
+          notebook_task:
+            notebook_path: ../../src/sec_quarterly_statements/notebooks/build_raw_tables.py
+            source: WORKSPACE
+
+      queue:
+        enabled: true
+      parameters:
+        - name: target_catalog
+          default: ${var.target_catalog}
+
+
+      tags:
+        data: SEC
+      
+
