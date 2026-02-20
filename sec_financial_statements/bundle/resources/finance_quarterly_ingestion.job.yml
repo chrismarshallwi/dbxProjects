@@ -17,6 +17,15 @@ resources:
             notebook_path: ../../src/sec_quarterly_statements/notebooks/build_raw_tables.py
             source: WORKSPACE
 
+        - task_key: build_raw_num_tbl
+          depends_on:
+            - task_key: build_raw_tables
+          sql_task: 
+            file:
+              path: ../../src/sec_quarterly_statements/sql/raw_num_tbl.sql
+              source: WORKSPACE
+            warehouse_id: ${var.warehouse_id}
+
       queue:
         enabled: true
       parameters:
