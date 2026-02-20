@@ -1,3 +1,4 @@
+INSERT OVERWRITE TABLE IDENTIFIER(:target_catalog || ".finance_staging.raw_sub_tbl") 
 select 
 *
 from (
