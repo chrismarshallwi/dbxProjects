@@ -1,0 +1,31 @@
+resources:
+  jobs:
+    dim_company:
+      name: dim_company
+      tasks:
+
+        - task_key: build_dim_company_exchange_identifier
+          notebook_task:
+            notebook_path: ../../src/dim_company/notebooks/build_dim_company_exchange_identifier.py
+            source: WORKSPACE
+        
+        - task_key: build_dim_company_identifier
+          notebook_task:
+            notebook_path: ../../src/dim_company/notebooks/build_dim_company_identifier.py
+            source: WORKSPACE
+
+        - task_key: build_dim_company_sp_500
+          notebook_task:
+            notebook_path: ../../src/dim_company/notebooks/build_dim_company_sp_500.py
+
+      queue:
+        enabled: true
+      parameters:
+        - name: target_catalog
+          default: ${var.target_catalog}
+
+
+      tags:
+        data: dim_company
+      
+

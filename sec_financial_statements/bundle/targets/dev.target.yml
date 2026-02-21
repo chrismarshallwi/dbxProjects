@@ -1,28 +1,3 @@
-# targets:
-#   d:
-#     mode: production
-#     default: false
-#     workspace:
-#     # core-d-cus-adb
-#       host: https://adb-4482605715640778.18.azuredatabricks.net
-#       root_path: /Workspace/operations/sca/${bundle.name}
-#     variables:
-#       owner_sp_id:
-#         lookup:
-#           service_principal: dna_operations_d_sp
-#       target_catalog: dev_operations
-#       ops_catalog: dev_operations
-#       edw_catalog: dev_edw
-#     permissions:
-#       - service_principal_name: ${var.owner_sp_id}
-#         level: CAN_MANAGE
-#       - group_name: data-operations-contributors
-#         level: CAN_MANAGE
-#       - group_name: data-operations-admins
-#         level: CAN_MANAGE
-#       - group_name: Supply Chain Analytics
-#         level: CAN_MANAGE
-
 targets:
   d:
     mode: production
