@@ -1,6 +1,6 @@
 bundle:
   name: dim_company
-  uuid: 22041e07-71a5-49f5-8d5f-fd993a79eeba# generate a new UUID for your bundle: python -c "import uuid; print(uuid.uuid4())"
+  uuid: 22041e07-71a5-49f5-8d5f-fd993a79eeba # generate a new UUID for your bundle: python -c "import uuid; print(uuid.uuid4())"
 
 include:
   - bundle/*/*.yml
