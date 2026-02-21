@@ -1,0 +1,27 @@
+targets:
+  p:
+    mode: production
+    default: false
+    presets:
+      pipelines_development: false
+      trigger_pause_status: UNPAUSED
+    workspace:
+      # core-p-cus-adb
+      host: https://adb-3423969507737722.2.azuredatabricks.net
+      root_path: /Workspace/operations/sca/${bundle.name}
+    variables:
+      owner_sp_id:
+        lookup:
+          service_principal: dna_operations_p_sp
+      target_catalog: prod_operations
+      ops_catalog: prod_operations
+      edw_catalog: prod_edw
+    permissions:
+      - service_principal_name: ${var.owner_sp_id}
+        level: CAN_MANAGE
+      - group_name: data-operations-admins
+        level: CAN_MANAGE
+      - group_name: data-operations-contributors
+        level: CAN_VIEW
+      - group_name: Supply Chain Analytics
+        level: CAN_VIEW
