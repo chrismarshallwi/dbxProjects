@@ -1,9 +1,9 @@
-# 📊 Project Name
-> _A brief one-liner about what this data application does._
+# 📊 Dim Company
+> _Builds a Dimensional Table describing attributes of publicly traded companies_
 
 
 ## 🚀 Overview
-> _Describe the purpose of the application, the problem it solves, and its key features_
+> _Combines several factors including exchange data, CIKs and SP500 flags as core dimensions in describing CIKs_
 
 
 ## 🏗️ Architecture
