@@ -6,7 +6,7 @@ resources:
 
         - task_key: get_data
           notebook_task:
-            notebook_path: ../../src/sec_quarterly_statements/notebooks/get_data.py
+            notebook_path: ../../src/fact_quarterly_statements/notebooks/get_data.py
             source: WORKSPACE
         
         - task_key: build_raw_tables
@@ -14,7 +14,7 @@ resources:
             - task_key: get_data
 
           notebook_task:
-            notebook_path: ../../src/sec_quarterly_statements/notebooks/build_raw_tables.py
+            notebook_path: ../../src/fact_quarterly_statements/notebooks/build_raw_tables.py
             source: WORKSPACE
 
         - task_key: build_raw_num_tbl
@@ -22,7 +22,7 @@ resources:
             - task_key: build_raw_tables
           sql_task: 
             file:
-              path: ../../src/sec_quarterly_statements/sql/raw_num_tbl.sql
+              path: ../../src/fact_quarterly_statements/sql/raw_num_tbl.sql
               source: WORKSPACE
             warehouse_id: ${var.warehouse_id}
 
@@ -31,7 +31,7 @@ resources:
             - task_key: build_raw_tables
           sql_task: 
             file:
-              path: ../../src/sec_quarterly_statements/sql/raw_pre_tbl.sql
+              path: ../../src/fact_quarterly_statements/sql/raw_pre_tbl.sql
               source: WORKSPACE
             warehouse_id: ${var.warehouse_id}
         
@@ -40,7 +40,7 @@ resources:
             - task_key: build_raw_tables
           sql_task: 
             file:
-              path: ../../src/sec_quarterly_statements/sql/raw_sub_tbl.sql
+              path: ../../src/fact_quarterly_statements/sql/raw_sub_tbl.sql
               source: WORKSPACE
             warehouse_id: ${var.warehouse_id}
         
@@ -49,7 +49,7 @@ resources:
             - task_key: build_raw_tables
           sql_task: 
             file:
-              path: ../../src/sec_quarterly_statements/sql/raw_tag_tbl.sql
+              path: ../../src/fact_quarterly_statements/sql/raw_tag_tbl.sql
               source: WORKSPACE
             warehouse_id: ${var.warehouse_id}
         
@@ -61,7 +61,7 @@ resources:
             - task_key: build_raw_tag_tbl
           sql_task: 
             file:
-              path: ../../src/sec_quarterly_statements/sql/fact_staging_financial_statement.sql
+              path: ../../src/fact_quarterly_statements/sql/fact_staging_financial_statement.sql
               source: WORKSPACE
             warehouse_id: ${var.warehouse_id}
 
