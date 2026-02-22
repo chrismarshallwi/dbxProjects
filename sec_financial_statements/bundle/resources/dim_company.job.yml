@@ -17,6 +17,7 @@ resources:
         - task_key: build_dim_company_sp_500
           notebook_task:
             notebook_path: ../../src/dim_company/notebooks/build_dim_company_sp_500.py
+          environment_key: odpenv
 
         - task_key: dim_company
           depends_on:
