@@ -18,6 +18,17 @@ resources:
           notebook_task:
             notebook_path: ../../src/dim_company/notebooks/build_dim_company_sp_500.py
 
+        - task_key: dim_company
+          depends_on:
+            - task_key: build_dim_company_exchange_identifier
+            - task_key: build_dim_company_identifier
+            - task_key: build_dim_company_sp_500
+          sql_task: 
+            file:
+              path: ../../src/dim_company/sql/dim_company.sql
+              source: WORKSPACE
+            warehouse_id: ${var.warehouse_id}
+
       queue:
         enabled: true
       parameters:
