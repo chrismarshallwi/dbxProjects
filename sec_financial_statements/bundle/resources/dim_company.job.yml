@@ -15,9 +15,6 @@ resources:
             source: WORKSPACE
 
         - task_key: build_dim_company_sp_500
-          libraries:
-            - pypi:
-                package: lxml
           notebook_task:
             notebook_path: ../../src/dim_company/notebooks/build_dim_company_sp_500.py
 
@@ -41,5 +38,12 @@ resources:
 
       tags:
         data: dim_company
+
+      environments:
+        - environment_key: odpenv
+          spec:
+            environment_version: "4"
+            dependencies:
+              - lxml
       
 
