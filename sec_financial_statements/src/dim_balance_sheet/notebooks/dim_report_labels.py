@@ -5,7 +5,7 @@ table_name = 'dim_report_labels'
 
 import json
 
-with open(f"json/dim_report_labels.json","r") as f:
+with open(f"../json/dim_report_labels.json","r") as f:
     qry = json.load(f)
 
 df = spark.createDataFrame(qry).createOrReplaceTempView('totals')

@@ -11,7 +11,7 @@ json_files = ['dim_presented_labels']
 df_x = [] 
 
 for file in json_files:
-    with open(f"json/{file}.json", "r") as f:
+    with open(f"../json/{file}.json", "r") as f:
         qry = json.load(f)
 
     rows = []
