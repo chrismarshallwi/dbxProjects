@@ -15,7 +15,7 @@ cross join
 (
   select distinct 
   reported_period
-  from operations.finance_staging.fact_staging_financial_statement_tbl) dates
+  from operations.finance_staging.fact_staging_financial_statement) dates
 )
 
 ,dim_company_presented_labels as (select distinct
@@ -33,7 +33,7 @@ cross join
               ,dc.company_stock_symbol
               ,dc.company_bigint_key
               from 
-              operations.finance_staging.fact_staging_financial_statement_tbl fsm
+              operations.finance_staging.fact_staging_financial_statement fsm
               left join 
               operations.finance.dim_company dc on dc.company_bigint_key=fsm.company_bigint_key
               where 
