@@ -1,3 +1,4 @@
+# Databricks notebook source
 catalog = 'operations'
 schema = 'finance_staging'
 table_name = 'dim_report_labels'
