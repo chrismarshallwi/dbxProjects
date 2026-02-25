@@ -39,7 +39,7 @@ resources:
 
 
       tags:
-        data: dim_company
+        data: dim_balance_sheet
 
       environments:
         - environment_key: odpenv
