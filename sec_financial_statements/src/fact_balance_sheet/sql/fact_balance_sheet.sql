@@ -20,7 +20,7 @@ left join
     (select 
     * 
     from 
-    operations.finance_staging.fact_staging_financial_statement_tbl 
+    operations.finance_staging.fact_staging_financial_statement
     where 
     financial_statement = 'BS'  and value_segment is null
     and 
