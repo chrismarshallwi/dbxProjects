@@ -1,0 +1,58 @@
+{
+  "balance_sheet": {
+    "asset": {
+      "total_current_asset": {
+        "presented_labels": [
+          "Total Current Assets",
+          "Total Current assets",
+          "Total current assets",
+          "Current assets"
+        ]
+      },
+      "total_non_current_assets": {
+        "presented_labels": [
+          "Total non-current assets",
+          "Total noncurrent assets"
+        ]
+      },
+      "total_assets": {
+        "presented_labels": [
+          "Total assets",
+          "Total Assets",
+          "TOTAL ASSETS"
+        ]
+      },
+      "total_current_liabilities":{
+        "presented_labels": [
+          "Total current liabilities",
+          "Total Current Liabilities",
+          "Current liabilities"
+        ]
+      },
+      "total_non_current_liabilities":{
+        "presented_labels":[
+          "Total non-current liabilities"
+        ]
+      },
+      "total_liabilities":{
+        "presented_labels":[
+          "Total liabilities",
+          "Total Liabilities",
+          "TOTAL LIABILITIES"
+        ]
+      },
+      "total_shareholder_equity":{
+        "presented_labels":[
+          "Total equity",
+          "Total stockholders equity",
+          "Total stockholders' equity",
+          "Total shareholders equity",
+          "Total shareholders' equity",
+          "Total Equity",
+          "Total Stockholders Equity"
+
+        ]
+      }
+    }
+  }
+}

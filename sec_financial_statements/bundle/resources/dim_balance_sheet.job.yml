@@ -1,0 +1,50 @@
+resources:
+  jobs:
+    dim_balance_sheet:
+      name: dim_balance_sheet
+      tasks:
+
+        - task_key: dim_company
+          run_job_task:
+            job_id: ${resources.jobs.dim_company.id}
+        
+        - task_key: dim_presented_labels
+          depends_on:
+            - task_key: dim_company
+          notebook_task:
+            notebook_path: ../../src/dim_balance_sheet/notebooks/dim_presented_labels.py
+            source: WORKSPACE
+
+        - task_key: dim_report_labels
+          depends_on:
+            - task_key: dim_company
+          notebook_task:
+            notebook_path: ../../src/dim_balance_sheet/notebooks/dim_report_labels.py
+
+        - task_key: dim_balance_sheet
+          depends_on:
+            - task_key: dim_presented_labels
+            - task_key: dim_report_labels
+
+          sql_task: 
+            file:
+              path: ../../src/dim_balance_sheet/sql/dim_balance_sheet.sql
+              source: WORKSPACE
+            warehouse_id: ${var.warehouse_id}
+      queue:
+        enabled: true
+      parameters:
+        - name: target_catalog
+          default: ${var.target_catalog}
+
+
+      tags:
+        data: dim_company
+
+      environments:
+        - environment_key: odpenv
+          spec:
+            environment_version: "4"
+
+      
+
