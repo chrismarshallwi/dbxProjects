@@ -1,0 +1,35 @@
+resources:
+  jobs:
+    fact_balance_sheet:
+      name: fact_balance_sheet
+      tasks:
+
+        - task_key: dim_balance_sheet
+          run_job_task:
+            job_id: ${resources.jobs.dim_balance_sheet.id}
+
+        - task_key: fact_balance_sheet
+          depends_on:
+            - task_key: dim_balance_sheet
+          sql_task: 
+            file:
+              path: ../../src/fact_balance_sheet/sql/fact_balance_sheet.sql
+              source: WORKSPACE
+            warehouse_id: ${var.warehouse_id}
+      queue:
+        enabled: true
+      parameters:
+        - name: target_catalog
+          default: ${var.target_catalog}
+
+
+      tags:
+        data: balance_sheet
+
+      environments:
+        - environment_key: odpenv
+          spec:
+            environment_version: "4"
+
+      
+
