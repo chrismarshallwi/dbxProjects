@@ -4,7 +4,13 @@ resources:
       name: fact_master_process
       tasks:
 
+        - task_key: file_ingestion
+          run_job_task:
+            job_id: ${resources.jobs.finance_quarterly_ingestion.id}
+
         - task_key: dim_company
+          depends_on:
+           - task_key: file_ingestion
           run_job_task:
             job_id: ${resources.jobs.dim_company.id}
         
