@@ -46,6 +46,7 @@ left join
             ,'total_non_current_liabilities' as total_non_current_liabilities
             ,'total_liabilities' as total_liabilities
             ,'total_shareholder_equity' as total_shareholder_equity
+            ,'total_liabilities_and_shareholder_equity' as total_liabilities_and_shareholder_equity
             
         )
     )
@@ -70,6 +71,7 @@ SELECT
 
     ,max(total_liabilities) as total_liabilities
     ,max(total_shareholder_equity) as total_shareholder_equity
+    ,max(total_liabilities_and_shareholder_equity) as total_liabilities_and_shareholder_equity
 
 FROM 
     pivot_cte
