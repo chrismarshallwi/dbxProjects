@@ -4,9 +4,9 @@ resources:
       name: dim_balance_sheet
       tasks:
 
-        - task_key: dim_company
-          run_job_task:
-            job_id: ${resources.jobs.dim_company.id}
+        # - task_key: dim_company
+        #   run_job_task:
+        #     job_id: ${resources.jobs.dim_company.id}
         
         - task_key: dim_presented_labels
           depends_on:

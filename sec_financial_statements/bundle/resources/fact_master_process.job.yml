@@ -1,0 +1,27 @@
+resources:
+  jobs:
+    fact_master_process:
+      name: fact_master_process
+      tasks:
+
+        - task_key: dim_company
+          run_job_task:
+            job_id: ${resources.jobs.dim_company.id}
+        
+        - task_key: dim_balance_sheet
+          run_job_task:
+            job_id: ${resources.jobs.dim_balance_sheet.id}
+
+        - task_key: fact_balance_sheet
+          run_job_task:
+            job_id: ${resources.jobs.fact_balance_sheet.id}
+        
+      queue:
+        enabled: true
+      parameters:
+        - name: target_catalog
+          default: ${var.target_catalog}
+
+
+      
+
