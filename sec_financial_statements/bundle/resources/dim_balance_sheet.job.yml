@@ -9,15 +9,15 @@ resources:
         #     job_id: ${resources.jobs.dim_company.id}
         
         - task_key: dim_presented_labels
-          depends_on:
-            - task_key: dim_company
+          # depends_on:
+          #   - task_key: dim_company
           notebook_task:
             notebook_path: ../../src/dim_balance_sheet/notebooks/dim_presented_labels.py
             source: WORKSPACE
 
         - task_key: dim_report_labels
-          depends_on:
-            - task_key: dim_company
+          # depends_on:
+          #   - task_key: dim_company
           notebook_task:
             notebook_path: ../../src/dim_balance_sheet/notebooks/dim_report_labels.py
 
