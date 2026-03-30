@@ -24,7 +24,7 @@ resources:
         - name: target_catalog
           default: ${var.target_catalog}
         - name: year
-          default: ""
+          default: '2024'
 
       tags:
         priority: P1
