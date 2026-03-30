@@ -1,0 +1,38 @@
+resources:
+  jobs:
+    dim_taxonomy:
+      name: dim_taxonomy
+      tasks:
+
+        - task_key: download_taxonomies
+          notebook_task:
+            notebook_path: ../../src/dim_taxonomy/notebooks/download_gaap_taxonomies.ipynb
+            source: WORKSPACE
+          environment_key: odpenv
+        
+        - task_key: build_taxonomies
+          depends_on:
+            - task_key: download_taxonomies
+          notebook_task:
+            notebook_path: ../../src/dim_taxonomy/notebooks/build_gaap_taxonomies.ipynb
+            source: WORKSPACE
+          environment_key: odpenv
+                
+      queue:
+        enabled: true
+      parameters:
+        - name: target_catalog
+          default: ${var.target_catalog}
+        - name: year
+          default: '2024'
+
+      tags:
+        priority: P1
+      
+      environments:
+        - environment_key: odpenv
+          spec:
+            environment_version: "4"
+            dependencies: 
+              - arelle-release
+
