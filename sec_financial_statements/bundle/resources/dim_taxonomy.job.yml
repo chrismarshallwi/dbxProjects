@@ -17,6 +17,16 @@ resources:
             notebook_path: ../../src/dim_taxonomy/notebooks/build_gaap_taxonomies.ipynb
             source: WORKSPACE
           environment_key: odpenv
+
+        - task_key: dim_taxonomy
+          depends_on:
+            - task_key: build_taxonomies
+          notebook_task:
+            notebook_path: ../../src/dim_taxonomy/notebooks/build_gaap_taxonomy_hierarchy.ipynb
+            source: WORKSPACE
+          environment_key: odpenv
+
+        
                 
       queue:
         enabled: true
