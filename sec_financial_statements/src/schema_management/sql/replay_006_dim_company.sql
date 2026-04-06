@@ -10,6 +10,7 @@ CREATE or replace TABLE finance.dim_company (
   company_sub_industry STRING,
   company_headquarters_location STRING,
   company_date_added_to_sp_500 STRING,
-  company_year_founded STRING)
+  company_year_founded STRING,
+  preferred_fasb_linkrole string)
 USING delta
 comment "Dimensional table for attributes pertaining to publicly traded companies"
