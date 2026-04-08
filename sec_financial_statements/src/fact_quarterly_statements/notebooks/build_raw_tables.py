@@ -7,8 +7,8 @@ schema = 'finance_staging'
 
 volume_base = "/Volumes/operations/finance_staging/edgar_data"
 
-years = ['2025']
-quarters = ['q1','q2']
+years = ['2020','2021','2022','2023','2024','2025','2026']
+quarters = ['q1','q2','q3','q4']
 
 files = ['pre','num','sub','tag']
 
