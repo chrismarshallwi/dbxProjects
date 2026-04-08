@@ -75,6 +75,7 @@ WITH cte AS (
       AND name_of_submitted_form = '10-Q'
       AND financial_statement = 'BS'
       AND value_segment IS NULL
+      
 )
 
 SELECT
@@ -87,7 +88,7 @@ SELECT
     MAX(CASE WHEN bs_component = 'Total Liabilities and Equity' THEN value END) AS total_liabilities_and_equity
 
 FROM cte
-WHERE bs_component IS NOT NULL
+WHERE bs_component IS NOT NULL and company_bigint_key is not null
 GROUP BY
     company_bigint_key,
     date_key
