@@ -16,6 +16,13 @@ resources:
               path: ../../src/fact_balance_sheet/sql/fact_balance_sheet.sql
               source: WORKSPACE
             warehouse_id: ${var.warehouse_id}
+
+        - task_key: fact_balance_sheet_version_one
+          sql_task: 
+            file:
+              path: ../../src/fact_balance_sheet/sql/fact_balance_sheet_version_one.sql
+              source: WORKSPACE
+            warehouse_id: ${var.warehouse_id}
       queue:
         enabled: true
       parameters:
