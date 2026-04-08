@@ -1,4 +1,4 @@
-CREATE or replace TABLE operations.finance.fact_balance_sheet_vtwo (
+CREATE or replace TABLE operations.finance_staging.fact_balance_sheet_version_one (
   company_bigint_key BIGINT,
   date_key BIGINT,
   total_assets DOUBLE,
@@ -10,4 +10,5 @@ CREATE or replace TABLE operations.finance.fact_balance_sheet_vtwo (
   total_current_liabilities double,
   total_non_current_liabilities double)
 USING delta
-COMMENT 'The table contains balance sheet data for publicly traded companies as reported to the SEC. It includes information on total assets for specific reporting periods. This data can be used for financial analysis, assessing company liquidity, and understanding asset composition over time.'
+COMMENT 'The table contains balance sheet data for publicly traded companies as reported to the SEC. It includes information on total assets for specific reporting periods. This data can be used for financial analysis, assessing company liquidity, and understanding asset composition over time.';
+
