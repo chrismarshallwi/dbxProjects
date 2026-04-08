@@ -1,4 +1,4 @@
-insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_balance_sheet_vtwo')
+--insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_balance_sheet_vtwo')
 WITH cte AS (
     SELECT DISTINCT
          dc.company_bigint_key
@@ -109,7 +109,7 @@ WITH cte AS (
 
 SELECT
     cte.company_bigint_key,
-    dc.company_name,
+
     date_key,
 
     MAX(CASE WHEN bs_component = 'Total Assets' THEN value END) AS total_assets,
@@ -155,10 +155,10 @@ WHERE bs_component IS NOT NULL
 and cte.company_bigint_key is not null
 GROUP BY
     cte.company_bigint_key,
-    date_key,dc.company_name
+    date_key
 ORDER BY
     cte.company_bigint_key,
-    date_key,dc.company_name
+    date_key
 
 
 
