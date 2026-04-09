@@ -22,7 +22,7 @@ resources:
           depends_on:
             - task_key: build_taxonomies
           notebook_task:
-            notebook_path: ../../src/dim_taxonomy/notebooks/build_gaap_taxonomy_hierarchy.ipynb
+            notebook_path: ../../src/dim_taxonomy/notebooks/build_gaap_taxonomy_hierarchy_with_linkroles.ipynb
             source: WORKSPACE
           environment_key: odpenv
 
@@ -35,6 +35,11 @@ resources:
           default: ${var.target_catalog}
         - name: year
           default: '2024'
+          
+        - name: max_year
+          default: '2024'
+        - name: min_year
+          default: '2019'
 
       tags:
         priority: P1
