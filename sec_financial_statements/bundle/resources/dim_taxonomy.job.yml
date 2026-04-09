@@ -33,9 +33,6 @@ resources:
       parameters:
         - name: target_catalog
           default: ${var.target_catalog}
-        - name: year
-          default: '2024'
-          
         - name: max_year
           default: '2024'
         - name: min_year
