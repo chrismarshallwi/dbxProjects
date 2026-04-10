@@ -17,7 +17,13 @@ resources:
               source: WORKSPACE
             warehouse_id: ${var.warehouse_id}
 
+        - task_key: dim_taxonomy
+          run_job_task:
+            job_id: ${resources.jobs.dim_taxonomy.id}
+
         - task_key: fact_balance_sheet_version_one
+          depends_on:
+            - task_key: dim_taxonomy
           sql_task: 
             file:
               path: ../../src/fact_balance_sheet/sql/fact_balance_sheet_version_one.sql

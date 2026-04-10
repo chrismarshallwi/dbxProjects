@@ -3,8 +3,8 @@ import requests
 import zipfile
 from io import BytesIO
 
-years = ['2025']
-quarters = ['q1','q2']
+years = ['2020','2021','2022','2023','2024','2025']
+quarters = ['q1','q2','q3','q4']
 
 edgar_base_url = "https://www.sec.gov/files/dera/data/financial-statement-data-sets/"
 volume_base_path = "/Volumes/operations/finance_staging/edgar_data"
