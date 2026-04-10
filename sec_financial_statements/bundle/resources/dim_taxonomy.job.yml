@@ -36,7 +36,7 @@ resources:
         - name: max_year
           default: '2024'
         - name: min_year
-          default: '2019'
+          default: '2022'
 
       tags:
         priority: P1
