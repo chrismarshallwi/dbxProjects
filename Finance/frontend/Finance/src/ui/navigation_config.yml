@@ -9,19 +9,21 @@
       help_page: null
 - name: Data
   pages:
-    - page: pages\search_financial_statment.py
+    - page: pages/search_financial_statment.py
       title: Search Financial Statements
       icon: ":material/data_table:"
       header: Search Financial Statements
       caption: Search for SEC reported financial statements by company and month. 
       help_page: null
 
+    - page: pages/investment_input.py
       title: Investments Input
       icon: ":material/finance_mode:"
       header: Investments 
       caption: Input investments & portfolio percents 
       help_page: null
-    - page: pages\growth_analysis.py
+
+    - page: pages/growth_analysis.py
       title: Growth Analysis
       icon: ":material/trending_up:"
       header: Growth
