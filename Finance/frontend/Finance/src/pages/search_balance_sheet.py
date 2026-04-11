@@ -45,19 +45,22 @@ class SearchBalanceSheet:
         # ORDER BY report_line_number;
         # """
 
-        reported_periods = f"""
+        reported_periods_query = f"""
         SELECT DISTINCT reported_period
 FROM operations.finance_staging.fact_staging_financial_statement fa
 LEFT JOIN operations.finance.dim_company dc 
     ON dc.company_bigint_key = fa.company_bigint_key 
-WHERE dc.company_stock_symbol in {{tickers}}
+WHERE dc.company_stock_symbol in ({tickers})
     AND financial_statement = 'BS'
     AND reported_period = end_reported_period
     AND value_segment IS NULL
     AND name_of_submitted_form = '10-Q'
 ORDER BY reported_period
         """
-        periods = [row['reported_period'] for row in reported_periods.collect()]
+
+        periods_df = sql_query(sql_query = reported_periods_query)
+
+        periods = periods_df['reported_period'].tolist()
 
         pivot_list = ", ".join([f"'{p}'" for p in periods])
 
@@ -71,7 +74,7 @@ ORDER BY reported_period
             from operations.finance_staging.fact_staging_financial_statement fa
             left join operations.finance.dim_company dc 
                 on dc.company_bigint_key = fa.company_bigint_key 
-            WHERE dc.company_stock_symbol = 'AAPL'
+            WHERE dc.company_stock_symbol = ({ticker_filter})
                 and financial_statement = 'BS'
                 and reported_period = end_reported_period
                 and value_segment is null
