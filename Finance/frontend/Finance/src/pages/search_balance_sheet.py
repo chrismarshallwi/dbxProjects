@@ -43,8 +43,7 @@ class SearchBalanceSheet:
                 terse_label,
                 reported_period,
                 value
-                ,report_number
-                ,report_line_number
+
             from 
             operations.finance_staging.fact_staging_financial_statement fa
             left join 
