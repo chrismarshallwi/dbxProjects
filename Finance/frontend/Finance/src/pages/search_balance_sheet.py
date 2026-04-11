@@ -20,33 +20,71 @@ class SearchBalanceSheet:
         #dont think that sql pivot will be suffice here
         #consider using python in future
 
+        # query = f"""
+        # SELECT *
+        # FROM (
+        #     SELECT
+        #         presented_label,
+        #         report_line_number,
+        #         reported_period,
+        #         value
+        #     FROM {catalog}.{schema}.{table_name}
+        #     WHERE ticker_symbol in ({ticker_filter})
+        #     AND financial_statement = 'BS'
+        #     AND value_segment IS NULL
+        #     AND reported_period = end_reported_period
+        # )
+        # PIVOT (
+        #     MAX(value)
+        #     FOR reported_period IN (
+        #         '20241231' AS `2024_12_31`,
+        #         '20250331' AS `2025-03-31`
+
+        #     )
+        # )
+        # ORDER BY report_line_number;
+        # """
+
+        reported_periods = f"""
+        SELECT DISTINCT reported_period
+FROM operations.finance_staging.fact_staging_financial_statement fa
+LEFT JOIN operations.finance.dim_company dc 
+    ON dc.company_bigint_key = fa.company_bigint_key 
+WHERE dc.company_stock_symbol in {{tickers}}
+    AND financial_statement = 'BS'
+    AND reported_period = end_reported_period
+    AND value_segment IS NULL
+    AND name_of_submitted_form = '10-Q'
+ORDER BY reported_period
+        """
+        periods = [row['reported_period'] for row in reported_periods.collect()]
+
+        pivot_list = ", ".join([f"'{p}'" for p in periods])
+
         query = f"""
         SELECT *
         FROM (
-            SELECT
-                presented_label,
-                report_line_number,
+            select 
+                terse_label,
                 reported_period,
                 value
-            FROM {catalog}.{schema}.{table_name}
-            WHERE ticker_symbol in ({ticker_filter})
-            AND financial_statement = 'BS'
-            AND value_segment IS NULL
-            AND reported_period = end_reported_period
-        )
+            from operations.finance_staging.fact_staging_financial_statement fa
+            left join operations.finance.dim_company dc 
+                on dc.company_bigint_key = fa.company_bigint_key 
+            WHERE dc.company_stock_symbol = 'AAPL'
+                and financial_statement = 'BS'
+                and reported_period = end_reported_period
+                and value_segment is null
+                and name_of_submitted_form = '10-Q'
+        ) src
         PIVOT (
             MAX(value)
-            FOR reported_period IN (
-                '20241231' AS `2024_12_31`,
-                '20250331' AS `2025-03-31`
-
-            )
+            FOR reported_period IN ({pivot_list})
         )
-        ORDER BY report_line_number;
-
-
+        ORDER BY terse_label
         """
 
+        #spark.sql(query)
 
         df = sql_query(sql_query=query)
         st.data_editor(df, use_container_width=True, hide_index=True)
