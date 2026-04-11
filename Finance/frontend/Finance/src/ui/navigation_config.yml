@@ -1,6 +1,6 @@
 - name: Home
   pages:
-    - page: pages\welcome_page.py
+    - page: pages/welcome_page.py
       title: Home
       icon: ":material/home:"
       default: true
