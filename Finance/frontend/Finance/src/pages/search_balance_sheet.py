@@ -50,7 +50,7 @@ class SearchBalanceSheet:
 FROM operations.finance_staging.fact_staging_financial_statement fa
 LEFT JOIN operations.finance.dim_company dc 
     ON dc.company_bigint_key = fa.company_bigint_key 
-WHERE dc.company_stock_symbol in ({tickers})
+WHERE dc.company_stock_symbol in ({ticker_filter})
     AND financial_statement = 'BS'
     AND reported_period = end_reported_period
     AND value_segment IS NULL
@@ -74,7 +74,7 @@ ORDER BY reported_period
             from operations.finance_staging.fact_staging_financial_statement fa
             left join operations.finance.dim_company dc 
                 on dc.company_bigint_key = fa.company_bigint_key 
-            WHERE dc.company_stock_symbol = ({ticker_filter})
+            WHERE dc.company_stock_symbol in ({ticker_filter})
                 and financial_statement = 'BS'
                 and reported_period = end_reported_period
                 and value_segment is null
