@@ -43,7 +43,7 @@ class SearchBalanceSheet:
                 terse_label,
                 reported_period,
                 value
-
+,report_number, report_line_number
             from 
             operations.finance_staging.fact_staging_financial_statement fa
             left join 
@@ -53,13 +53,13 @@ class SearchBalanceSheet:
                 and reported_period = end_reported_period
                 and value_segment is null
                 and name_of_submitted_form = '10-Q'
-            ORDER BY report_number, report_line_number
+            
         ) src
         PIVOT (
             MAX(value)
             FOR reported_period IN ({pivot_list})
         )
-
+        ORDER BY report_number, report_line_number
         """
 
         df = sql_query(sql_query=query)
