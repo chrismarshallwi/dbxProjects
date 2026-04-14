@@ -218,9 +218,8 @@ WITH cte AS (
 
 SELECT
      cte.company_bigint_key
-     
-    ,date_key
-
+     ,date_key
+     , null as capital_structure_business_key
     -- Top level
     ,MAX(CASE WHEN bs_component = 'Total Assets' THEN value END) AS total_assets
 

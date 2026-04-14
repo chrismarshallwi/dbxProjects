@@ -40,6 +40,7 @@ adsh as filing_key
 ,filed as filing_date
 ,dc.company_key_hash
 ,dc.company_bigint_key
+,sub.sic as standard_industrial_classification
 from operations.finance_staging.raw_sub_tbl as sub
 left join company_main dc on dc.company_identifier_key = sub.cik
 ) 
@@ -102,6 +103,7 @@ sub.company_key_hash
 ,sub.filing_key
 ,sub.name_of_submitted_form
 ,sub.filing_date
+,sub.standard_industrial_code /*Added 4/14 for GICS AI classification Pull request*/
 ,pre.gaap_version
 ,try_cast(sub.reported_period as bigint) as reported_period
 ,sub.fiscal_year

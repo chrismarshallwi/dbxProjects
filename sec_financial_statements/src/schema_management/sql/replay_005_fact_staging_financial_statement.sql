@@ -10,6 +10,7 @@ CREATE or replace TABLE finance_staging.fact_staging_financial_statement (
   filing_key STRING,
   name_of_submitted_form STRING,
   filing_date INT,
+  standard_industrial_code string,
   gaap_version STRING,
   reported_period BIGINT,
   fiscal_year INT,
