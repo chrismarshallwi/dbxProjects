@@ -1,4 +1,4 @@
-create or replace table operations.finance_staging.dim_sector (
+create or replace table operations.finance.dim_sector (
 company_bigint_key bigint
 ,gics_sector string
 ) 
