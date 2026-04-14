@@ -1,6 +1,7 @@
 CREATE or replace TABLE operations.finance_staging.fact_balance_sheet_version_one (
   company_bigint_key BIGINT,
   date_key BIGINT,
+  capital_structure_business_key integer COMMENT "Signifies if financial companies, real estate companies as having different structured balance sheet versus regular companies with normal balance sheet",
   total_assets DOUBLE,
   total_liabilities DOUBLE,
   total_equity DOUBLE,
