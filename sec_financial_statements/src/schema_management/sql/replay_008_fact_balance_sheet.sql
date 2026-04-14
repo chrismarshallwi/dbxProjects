@@ -1,5 +1,5 @@
 
-CREATE or replace TABLE finance.fact_balance_sheet (
+CREATE or replace TABLE operations.finance.fact_balance_sheet (
   company_bigint_key BIGINT,
   date_key BIGINT,
   capital_structure_business_key integer COMMENT "Signifies if financial companies, real estate companies as having different structured balance sheet versus regular companies with normal balance sheet",
