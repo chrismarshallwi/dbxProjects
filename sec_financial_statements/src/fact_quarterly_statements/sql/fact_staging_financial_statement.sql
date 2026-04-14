@@ -40,7 +40,7 @@ adsh as filing_key
 ,filed as filing_date
 ,dc.company_key_hash
 ,dc.company_bigint_key
-,sub.sic as standard_industrial_classification
+,sub.sic as standard_industrial_code
 from operations.finance_staging.raw_sub_tbl as sub
 left join company_main dc on dc.company_identifier_key = sub.cik
 ) 
