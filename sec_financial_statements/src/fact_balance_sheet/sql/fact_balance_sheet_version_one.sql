@@ -5,6 +5,7 @@ WITH cte AS (
         ,reported_period as date_key
         ,value
         ,dt.terse_label
+
         ,CASE
             WHEN fa.terse_label = 'Assets'
                  AND dt.terse_label_level_3 = 'Assets [Abstract]'
@@ -204,8 +205,10 @@ WITH cte AS (
     LEFT JOIN operations.finance.dim_company dc
         ON dc.company_bigint_key = fa.company_bigint_key
         AND dc.preferred_fasb_linkrole = dt.linkrole
-    WHERE sp_500_indicator = 1
-      AND reported_period = end_reported_period
+    WHERE 
+    --sp_500_indicator = 1
+      --AND 
+      reported_period = end_reported_period
       AND name_of_submitted_form = '10-Q'
       AND financial_statement = 'BS'
       AND value_segment IS NULL
@@ -213,11 +216,9 @@ WITH cte AS (
 )
 
 
-
-
 SELECT
      cte.company_bigint_key
-,dc.company_name
+     
     ,date_key
 
     -- Top level
@@ -312,20 +313,20 @@ SELECT
     ,MAX(CASE WHEN bs_component = 'Operating Lease Liabilities' THEN value END) AS operating_lease_liabilities
 */
 
-
-
-
-FROM cte
-LEFT JOIN operations.finance.dim_company dc 
-    ON dc.company_bigint_key = cte.company_bigint_key
-WHERE bs_component IS NOT NULL
+FROM 
+cte  
+LEFT JOIN 
+operations.finance.dim_company dc oN dc.company_bigint_key = cte.company_bigint_key
+WHERE 
+bs_component IS NOT NULL
+and
+cte.company_bigint_key is not null
 GROUP BY
-     cte.company_bigint_key,dc.company_name
-    ,date_key
-
+cte.company_bigint_key
+,date_key
 ORDER BY
-     cte.company_bigint_key,dc.company_name
-    ,date_key
+cte.company_bigint_key
+,date_key
 
 
 
