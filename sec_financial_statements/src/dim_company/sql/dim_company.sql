@@ -1,4 +1,4 @@
---INSERT OVERWRITE TABLE IDENTIFIER(:target_catalog || ".finance.dim_company") 
+INSERT OVERWRITE TABLE IDENTIFIER(:target_catalog || ".finance.dim_company") 
 
 with dim_cik as (select * from operations.finance_staging.raw_dim_cik) 
 
