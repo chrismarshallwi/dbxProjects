@@ -1,5 +1,3 @@
-insert overwrite TABLE IDENTIFIER(:target_catalog || ".finance.dim_sector") 
-
 with base as (
 select distinct
 fa.company_bigint_key
@@ -238,7 +236,9 @@ END AS gics_sub_industry
     -- Default standard statements
     ELSE 'http://fasb.org/us-gaap/role/statement/StatementOfIncome'
 
-END AS preferred_fasb_linkrole_income_statement
+END AS preferred_linkrole_income_statement
+
+
 
 from 
 operations.finance_staging.fact_staging_financial_statement fa
@@ -250,31 +250,7 @@ where fa.company_bigint_key is not null
 select distinct 
 company_bigint_key
 ,date_key
-,standard_industrial_code
 ,gics_sector
 ,gics_sub_industry
-
-
-  ,case
-    -- Financials: sub-industry specific
-    when gics_sub_industry = 'Diversified Banks'                           then 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionUnclassified-DepositBasedOperations'
-    when gics_sub_industry = 'Regional Banks'                              then 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionUnclassified-DepositBasedOperations'
-    when gics_sub_industry = 'Consumer Finance'                            then 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionUnclassified-DepositBasedOperations'
-    when gics_sub_industry = 'Asset Management & Custody Banks'            then 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionUnclassified-InvestmentBasedOperations'
-    when gics_sub_industry = 'Property & Casualty Insurance'               then 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionUnclassified-InvestmentBasedOperations'
-    when gics_sub_industry = 'Life & Health Insurance'                     then 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionUnclassified-InvestmentBasedOperations'
-    when gics_sub_industry = 'Multi-line Insurance'                        then 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionUnclassified-InvestmentBasedOperations'
-    when gics_sub_industry = 'Reinsurance'                                 then 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionUnclassified-InvestmentBasedOperations'
-    when gics_sub_industry = 'Investment Banking & Brokerage'              then 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionUnclassified-SecuritiesBasedOperations'
-    when gics_sub_industry = 'Financial Exchanges & Data'                  then 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionUnclassified-SecuritiesBasedOperations'
-    when gics_sub_industry = 'Transaction & Payment Processing Services'   then 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified'
-    when gics_sub_industry = 'Insurance Brokers'                           then 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified'
-    -- Real Estate: sector level
-    when gics_sector = 'Real Estate'                                       then 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified-RealEstateOperations'
-    -- All other sectors default to Classified
-    else                                                                        'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified'
-  end                                                                              as preferred_fasb_linkrole_balance_sheet
-
-,preferred_fasb_linkrole_income_statement
-
+,preferred_linkrole
  from base
