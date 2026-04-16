@@ -6,9 +6,9 @@ CREATE or replace TABLE finance.dim_company (
   company_name STRING,
   exchange_listed_on STRING,
   sp_500_indicator INT,
-  sp_500_company_sector STRING,
-  sp_500_company_sub_industry STRING,
-  sp_500_company_headquarters_location STRING,
+  headquarter_country string,
+  headquarter_state string, 
+  headquarter_city string,
   sp_500_company_date_added_to_sp_500 STRING,
   sp_500_company_year_founded STRING)
 USING delta
