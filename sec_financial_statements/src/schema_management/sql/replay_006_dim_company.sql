@@ -1,4 +1,4 @@
-CREATE or replace TABLE finance.dim_company (
+CREATE or replace TABLE operations.finance.dim_company (
   company_key_hash STRING,
   company_bigint_key BIGINT,
   company_identifier_key BIGINT,
