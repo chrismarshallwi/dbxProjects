@@ -22,7 +22,7 @@ resources:
 
         - task_key: fact_balance_sheet
           depends_on:
-            - task_key: dim_balance_sheet
+            - task_key: dim_company
           run_job_task:
             job_id: ${resources.jobs.fact_balance_sheet.id}
         
