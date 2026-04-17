@@ -63,7 +63,7 @@ WITH cte AS (
             WHEN fa.terse_label = 'Equity, Including Portion Attributable to Noncontrolling Interest'
                  AND dt.terse_label_level_4 = 'Equity, Including Portion Attributable to Noncontrolling Interest [Abstract]'
                  AND dt.terse_label_level_5 = 'Equity, Including Portion Attributable to Noncontrolling Interest'
-                 AND dt.linkrole = dc.preferred_fasb_linkrole
+                 AND dt.linkrole = dc.preferred_fasb_linkrole_balance_sheet
                  AND fa.value_segment IS NULL
             THEN 'Total Equity'
 
