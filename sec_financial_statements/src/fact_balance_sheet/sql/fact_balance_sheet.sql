@@ -1,4 +1,4 @@
---insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_balance_sheet')
+insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_balance_sheet')
 WITH cte AS (
     SELECT DISTINCT
          dc.company_bigint_key
