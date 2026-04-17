@@ -1,4 +1,4 @@
-insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_balance_sheet')
+--insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_balance_sheet')
 WITH cte AS (
     SELECT DISTINCT
          dc.company_bigint_key
@@ -72,7 +72,7 @@ WITH cte AS (
                  AND fa.value_segment IS NULL
             THEN 'Total Equity'
 
-            WHEN fa.terse_label = 'Limited Partners'' Capital Account'
+            WHEN fa.terse_label = "Limited Partners' Capital Account"
                  AND dt.linkrole = 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified-RealEstateOperations'
                  AND fa.value_segment IS NULL
             THEN 'Total Equity'
@@ -124,7 +124,7 @@ WITH cte AS (
             WHEN fa.terse_label = 'Liabilities, Noncurrent'
                  AND fa.value_segment IS NULL
             THEN 'Total Non Current Liabilities'
-
+/*
             -- Current Assets
             WHEN fa.terse_label = 'Cash and Cash Equivalents, at Carrying Value'
                  AND fa.value_segment IS NULL
@@ -193,7 +193,7 @@ WITH cte AS (
 
             WHEN fa.terse_label = 'Operating Lease, Liability, Noncurrent'
                  AND fa.value_segment IS NULL
-            THEN 'Operating Lease Liabilities'
+            THEN 'Operating Lease Liabilities'*/
 
             ELSE NULL
         END AS bs_component
@@ -225,13 +225,71 @@ SELECT
     -- Top level
     ,MAX(CASE WHEN bs_component = 'Total Assets' THEN value END) AS total_assets
 
-    ,CASE 
+    /*,CASE 
         WHEN MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) IS NULL 
              AND MAX(CASE WHEN bs_component = 'Total Equity' THEN value END) IS NOT NULL 
         THEN MAX(CASE WHEN bs_component = 'Total Assets' THEN value END) 
              - MAX(CASE WHEN bs_component = 'Total Equity' THEN value END)
         ELSE MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) 
-     END AS total_liabilities
+     END AS total_liabilities*/
+
+     /*Solving For total_liabilitiies when current liabiltieis + non current liabilities are both not null*/
+
+     ,case when (CASE 
+        WHEN MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) IS NULL 
+             AND MAX(CASE WHEN bs_component = 'Total Equity' THEN value END) IS NOT NULL 
+        THEN MAX(CASE WHEN bs_component = 'Total Assets' THEN value END) 
+             - MAX(CASE WHEN bs_component = 'Total Equity' THEN value END)
+        ELSE MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) 
+     END) is null  
+     and (MAX(CASE WHEN bs_component = 'Total Current Liabilities' THEN value END)) is not null 
+     and (case when (MAX(CASE WHEN bs_component = 'Total Current Liabilities' THEN value END)) is not null 
+    and 
+    (MAX(CASE WHEN bs_component = 'Total Non Current Liabilities' THEN value END)) is null 
+    then 
+    ( CASE 
+        WHEN MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) IS NULL 
+             AND MAX(CASE WHEN bs_component = 'Total Equity' THEN value END) IS NOT NULL 
+        THEN MAX(CASE WHEN bs_component = 'Total Assets' THEN value END) 
+             - MAX(CASE WHEN bs_component = 'Total Equity' THEN value END)
+        ELSE MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) 
+     END ) - (MAX(CASE WHEN bs_component = 'Total Current Liabilities' THEN value END))
+    else 
+    MAX(CASE WHEN bs_component = 'Total Non Current Liabilities' THEN value END)
+    end) is not null 
+
+     then (MAX(CASE WHEN bs_component = 'Total Current Liabilities' THEN value END)) + (case when (MAX(CASE WHEN bs_component = 'Total Current Liabilities' THEN value END)) is not null 
+    and 
+    (MAX(CASE WHEN bs_component = 'Total Non Current Liabilities' THEN value END)) is null 
+    then 
+    ( CASE 
+        WHEN MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) IS NULL 
+             AND MAX(CASE WHEN bs_component = 'Total Equity' THEN value END) IS NOT NULL 
+        THEN MAX(CASE WHEN bs_component = 'Total Assets' THEN value END) 
+             - MAX(CASE WHEN bs_component = 'Total Equity' THEN value END)
+        ELSE MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) 
+     END ) - (MAX(CASE WHEN bs_component = 'Total Current Liabilities' THEN value END))
+    else 
+    MAX(CASE WHEN bs_component = 'Total Non Current Liabilities' THEN value END)
+    end) 
+
+     else (CASE 
+        WHEN MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) IS NULL 
+             AND MAX(CASE WHEN bs_component = 'Total Equity' THEN value END) IS NOT NULL 
+        THEN MAX(CASE WHEN bs_component = 'Total Assets' THEN value END) 
+             - MAX(CASE WHEN bs_component = 'Total Equity' THEN value END)
+        ELSE MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) 
+     END )
+
+     end as total_liabilities
+
+
+
+
+
+     
+
+     /*Total Equity*/
 
     ,CASE 
         WHEN MAX(CASE WHEN bs_component = 'Total Equity' THEN value END) IS NULL 
@@ -253,6 +311,10 @@ SELECT
         ELSE MAX(CASE WHEN bs_component = 'Total Equity' THEN value END) 
      END AS total_equity
 
+
+
+
+
     ,MAX(CASE WHEN bs_component = 'Total Liabilities and Equity' THEN value END) AS total_liabilities_and_equity
 
     -- Asset subtotals
@@ -270,8 +332,6 @@ SELECT
 
     -- Liability subtotals
     ,MAX(CASE WHEN bs_component = 'Total Current Liabilities' THEN value END) AS total_current_liabilities
-
-
 
     ,case when (MAX(CASE WHEN bs_component = 'Total Current Liabilities' THEN value END)) is not null 
     and 
@@ -321,7 +381,7 @@ operations.finance.dim_company dc oN dc.company_bigint_key = cte.company_bigint_
 WHERE 
 bs_component IS NOT NULL
 and
-cte.company_bigint_key is not null
+dc.company_bigint_key is not null 
 GROUP BY
 cte.company_bigint_key
 ,date_key
