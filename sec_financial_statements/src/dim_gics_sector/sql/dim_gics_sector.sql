@@ -275,6 +275,6 @@ company_bigint_key
     else                                                                        'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified'
   end                                                                              as preferred_fasb_linkrole_balance_sheet
 
-,preferred_fasb_linkrole_income_statement
+, preferred_fasb_linkrole_income_statement
 
  from base
