@@ -63,7 +63,7 @@ WITH cte AS (
             WHEN fa.terse_label = 'Equity, Including Portion Attributable to Noncontrolling Interest'
                  AND dt.terse_label_level_4 = 'Equity, Including Portion Attributable to Noncontrolling Interest [Abstract]'
                  AND dt.terse_label_level_5 = 'Equity, Including Portion Attributable to Noncontrolling Interest'
-                 AND dt.linkrole = dc.preferred_fasb_linkrole
+                 AND dt.linkrole = dc.preferred_fasb_linkrole_balance_sheet
                  AND fa.value_segment IS NULL
             THEN 'Total Equity'
 
@@ -199,20 +199,22 @@ WITH cte AS (
         END AS bs_component
 
     FROM operations.finance_staging.fact_staging_financial_statement fa
-    LEFT JOIN operations.finance.dim_taxonomy dt
-        ON dt.terse_label = fa.terse_label
-        AND dt.gaap_version = fa.gaap_version
-    LEFT JOIN operations.finance.dim_company dc
-        ON dc.company_bigint_key = fa.company_bigint_key
-        AND dc.preferred_fasb_linkrole = dt.linkrole
+    LEFT JOIN operations.finance.dim_taxonomy dt ON dt.terse_label = fa.terse_label AND dt.gaap_version = fa.gaap_version
+    --LEFT JOIN operations.finance.dim_company dc ON dc.company_bigint_key = fa.company_bigint_key AND dc.preferred_fasb_linkrole_balance_sheet = dt.linkrole
+    left join operations.finance.dim_sector dc on 
+    (
+      dc.company_bigint_key = fa.company_bigint_key 
+      and 
+      dc.date_key = fa.reported_period
+      and 
+      dc.preferred_fasb_linkrole_balance_sheet = dt.linkrole
+    )
     WHERE 
-    --sp_500_indicator = 1
-      --AND 
       reported_period = end_reported_period
-      AND name_of_submitted_form = '10-Q'
+      AND name_of_submitted_form = '10-Q' --going to make change soon to include 10-K so that we get continuous reporting periods (4 times per year)
       AND financial_statement = 'BS'
       AND value_segment IS NULL
-      --and dc.company_stock_symbol = "ABT"
+
 )
 
 
