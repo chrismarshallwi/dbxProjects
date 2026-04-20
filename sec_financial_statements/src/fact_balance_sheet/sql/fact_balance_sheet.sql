@@ -5,6 +5,7 @@ WITH cte AS (
         ,reported_period as date_key
         ,value
         ,dt.terse_label
+        ,name_of_submitted_form as name_of_submitted_form
 
         ,CASE
             WHEN fa.terse_label = 'Assets'
@@ -124,77 +125,6 @@ WITH cte AS (
             WHEN fa.terse_label = 'Liabilities, Noncurrent'
                  AND fa.value_segment IS NULL
             THEN 'Total Non Current Liabilities'
-/*
-            -- Current Assets
-            WHEN fa.terse_label = 'Cash and Cash Equivalents, at Carrying Value'
-                 AND fa.value_segment IS NULL
-            THEN 'Cash And Cash Equivalents'
-
-            WHEN fa.terse_label IN (
-                    'Marketable Securities, Current',
-                    'Debt Securities, Available-for-Sale, Current'
-                 )
-                 AND fa.value_segment IS NULL
-            THEN 'Short Term Investments And Marketable Securities'
-
-            WHEN fa.terse_label = 'Accounts Receivable, after Allowance for Credit Loss, Current'
-                 AND fa.value_segment IS NULL
-            THEN 'Accounts Receivable'
-
-            WHEN fa.terse_label = 'Inventory, Net'
-                 AND fa.value_segment IS NULL
-            THEN 'Inventory'
-
-            -- Current Liabilities
-            WHEN fa.terse_label = 'Accounts Payable, Current'
-                 AND fa.value_segment IS NULL
-            THEN 'Accounts Payable'
-
-            WHEN fa.terse_label = 'Accrued Liabilities, Current'
-                 AND fa.value_segment IS NULL
-            THEN 'Accrued Liabilities And Accrued Expenses'
-
-            WHEN fa.terse_label = 'Accounts Payable and Accrued Liabilities, Current'
-                 AND fa.value_segment IS NULL
-            THEN 'Accounts Payable And Accrued Liabilities Combined'
-
-            WHEN fa.terse_label IN (
-                    'Short-Term Debt',
-                    'Long-Term Debt, Current Maturities'
-                 )
-                 AND fa.value_segment IS NULL
-            THEN 'Short Term Debt Including Current Portion Long Term Debt'
-
-            WHEN fa.terse_label = 'Taxes Payable, Current'
-                 AND fa.value_segment IS NULL
-            THEN 'Income Taxes Payable'
-
-            -- Non Current Assets
-            WHEN fa.terse_label = 'Property, Plant and Equipment, Net'
-                 AND fa.value_segment IS NULL
-            THEN 'Property Plant And Equipment'
-
-            WHEN fa.terse_label = 'Intangible Assets, Net (Excluding Goodwill)'
-                 AND fa.value_segment IS NULL
-            THEN 'Intangible Assets'
-
-            WHEN fa.terse_label = 'Goodwill'
-                 AND fa.value_segment IS NULL
-            THEN 'Goodwill'
-
-            WHEN fa.terse_label = 'Long-Term Investments'
-                 AND fa.value_segment IS NULL
-            THEN 'Long Term Investments'
-
-            -- Non Current Liabilities
-            WHEN fa.terse_label = 'Long-Term Debt, Excluding Current Maturities'
-                 AND fa.value_segment IS NULL
-            THEN 'Long Term Debt'
-
-            WHEN fa.terse_label = 'Operating Lease, Liability, Noncurrent'
-                 AND fa.value_segment IS NULL
-            THEN 'Operating Lease Liabilities'*/
-
             ELSE NULL
         END AS bs_component
 
@@ -211,7 +141,7 @@ WITH cte AS (
     )
     WHERE 
       reported_period = end_reported_period
-      AND name_of_submitted_form = '10-Q' --going to make change soon to include 10-K so that we get continuous reporting periods (4 times per year)
+      AND name_of_submitted_form in ('10-Q','10-K') --going to make change soon to include 10-K so that we get continuous reporting periods (4 times per year)
       AND financial_statement = 'BS'
       AND value_segment IS NULL
 
@@ -220,74 +150,19 @@ WITH cte AS (
 
 SELECT
      cte.company_bigint_key
-     ,date_key
-     , null as capital_structure_business_key
-    -- Top level
+     ,cte.date_key
+     ,case when ds.gics_sector in ('Financials', 'Real Estate') then 1 else 0 end as capital_structure_business_key
+     ,case when cte.name_of_submitted_form = '10-Q' then 0 when cte.name_of_submitted_form = '10-K' then 1 else null end as submitted_form_business_key 
+
     ,MAX(CASE WHEN bs_component = 'Total Assets' THEN value END) AS total_assets
 
-    /*,CASE 
+    ,CASE 
         WHEN MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) IS NULL 
              AND MAX(CASE WHEN bs_component = 'Total Equity' THEN value END) IS NOT NULL 
         THEN MAX(CASE WHEN bs_component = 'Total Assets' THEN value END) 
              - MAX(CASE WHEN bs_component = 'Total Equity' THEN value END)
         ELSE MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) 
-     END AS total_liabilities*/
-
-     /*Solving For total_liabilitiies when current liabiltieis + non current liabilities are both not null*/
-
-     ,case when (CASE 
-        WHEN MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) IS NULL 
-             AND MAX(CASE WHEN bs_component = 'Total Equity' THEN value END) IS NOT NULL 
-        THEN MAX(CASE WHEN bs_component = 'Total Assets' THEN value END) 
-             - MAX(CASE WHEN bs_component = 'Total Equity' THEN value END)
-        ELSE MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) 
-     END) is null  
-     and (MAX(CASE WHEN bs_component = 'Total Current Liabilities' THEN value END)) is not null 
-     and (case when (MAX(CASE WHEN bs_component = 'Total Current Liabilities' THEN value END)) is not null 
-    and 
-    (MAX(CASE WHEN bs_component = 'Total Non Current Liabilities' THEN value END)) is null 
-    then 
-    ( CASE 
-        WHEN MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) IS NULL 
-             AND MAX(CASE WHEN bs_component = 'Total Equity' THEN value END) IS NOT NULL 
-        THEN MAX(CASE WHEN bs_component = 'Total Assets' THEN value END) 
-             - MAX(CASE WHEN bs_component = 'Total Equity' THEN value END)
-        ELSE MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) 
-     END ) - (MAX(CASE WHEN bs_component = 'Total Current Liabilities' THEN value END))
-    else 
-    MAX(CASE WHEN bs_component = 'Total Non Current Liabilities' THEN value END)
-    end) is not null 
-
-     then (MAX(CASE WHEN bs_component = 'Total Current Liabilities' THEN value END)) + (case when (MAX(CASE WHEN bs_component = 'Total Current Liabilities' THEN value END)) is not null 
-    and 
-    (MAX(CASE WHEN bs_component = 'Total Non Current Liabilities' THEN value END)) is null 
-    then 
-    ( CASE 
-        WHEN MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) IS NULL 
-             AND MAX(CASE WHEN bs_component = 'Total Equity' THEN value END) IS NOT NULL 
-        THEN MAX(CASE WHEN bs_component = 'Total Assets' THEN value END) 
-             - MAX(CASE WHEN bs_component = 'Total Equity' THEN value END)
-        ELSE MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) 
-     END ) - (MAX(CASE WHEN bs_component = 'Total Current Liabilities' THEN value END))
-    else 
-    MAX(CASE WHEN bs_component = 'Total Non Current Liabilities' THEN value END)
-    end) 
-
-     else (CASE 
-        WHEN MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) IS NULL 
-             AND MAX(CASE WHEN bs_component = 'Total Equity' THEN value END) IS NOT NULL 
-        THEN MAX(CASE WHEN bs_component = 'Total Assets' THEN value END) 
-             - MAX(CASE WHEN bs_component = 'Total Equity' THEN value END)
-        ELSE MAX(CASE WHEN bs_component = 'Total Liabilities' THEN value END) 
-     END )
-
-     end as total_liabilities
-
-
-
-
-
-     
+     END AS total_liabilities
 
      /*Total Equity*/
 
@@ -311,10 +186,6 @@ SELECT
         ELSE MAX(CASE WHEN bs_component = 'Total Equity' THEN value END) 
      END AS total_equity
 
-
-
-
-
     ,MAX(CASE WHEN bs_component = 'Total Liabilities and Equity' THEN value END) AS total_liabilities_and_equity
 
     -- Asset subtotals
@@ -328,7 +199,6 @@ SELECT
     else 
     MAX(CASE WHEN bs_component = 'Total Non Current Assets' THEN value END)
     end AS total_non_current_assets
-
 
     -- Liability subtotals
     ,MAX(CASE WHEN bs_component = 'Total Current Liabilities' THEN value END) AS total_current_liabilities
@@ -348,46 +218,28 @@ SELECT
     MAX(CASE WHEN bs_component = 'Total Non Current Liabilities' THEN value END)
     end AS total_non_current_liabilities
 
-/*Need to add columns for total deposits, total loans and total_investment_securities to give some description to banks*/
-/*
-    -- Current assets
-    ,MAX(CASE WHEN bs_component = 'Cash And Cash Equivalents' THEN value END) AS cash_and_cash_equivalents
-    ,MAX(CASE WHEN bs_component = 'Short Term Investments And Marketable Securities' THEN value END) AS short_term_investments_and_marketable_securities
-    ,MAX(CASE WHEN bs_component = 'Accounts Receivable' THEN value END) AS accounts_receivable
-    ,MAX(CASE WHEN bs_component = 'Inventory' THEN value END) AS inventory
-
-    -- Current liabilities
-    ,MAX(CASE WHEN bs_component = 'Accounts Payable' THEN value END) AS accounts_payable
-    ,MAX(CASE WHEN bs_component = 'Accrued Liabilities And Accrued Expenses' THEN value END) AS accrued_liabilities_and_accrued_expenses
-    ,MAX(CASE WHEN bs_component = 'Accounts Payable And Accrued Liabilities Combined' THEN value END) AS accounts_payable_and_accrued_liabilities_combined
-    ,MAX(CASE WHEN bs_component = 'Short Term Debt Including Current Portion Long Term Debt' THEN value END) AS short_term_debt_including_current_portion_long_term_debt
-    ,MAX(CASE WHEN bs_component = 'Income Taxes Payable' THEN value END) AS income_taxes_payable
-
-    -- Non current assets
-    ,MAX(CASE WHEN bs_component = 'Property Plant And Equipment' THEN value END) AS property_plant_and_equipment
-    ,MAX(CASE WHEN bs_component = 'Intangible Assets' THEN value END) AS intangible_assets
-    ,MAX(CASE WHEN bs_component = 'Goodwill' THEN value END) AS goodwill
-    ,MAX(CASE WHEN bs_component = 'Long Term Investments' THEN value END) AS long_term_investments
-
-    -- Non current liabilities
-    ,MAX(CASE WHEN bs_component = 'Long Term Debt' THEN value END) AS long_term_debt
-    ,MAX(CASE WHEN bs_component = 'Operating Lease Liabilities' THEN value END) AS operating_lease_liabilities
-*/
-
 FROM 
 cte  
 LEFT JOIN 
 operations.finance.dim_company dc oN dc.company_bigint_key = cte.company_bigint_key
+    left join operations.finance.dim_sector ds on 
+    (
+      ds.company_bigint_key = cte.company_bigint_key 
+      and 
+      ds.date_key = cte.date_key
+    )
 WHERE 
 bs_component IS NOT NULL
 and
 dc.company_bigint_key is not null 
 GROUP BY
 cte.company_bigint_key
-,date_key
+,cte.date_key
+,case when ds.gics_sector in ('Financial', 'Real Estate') then 1 else 0 end
+,case when cte.name_of_submitted_form = '10-Q' then 0 when cte.name_of_submitted_form = '10-K' then 1 else null end
 ORDER BY
 cte.company_bigint_key
-,date_key
+,cte.date_key
 
 
 
