@@ -222,12 +222,12 @@ FROM
 cte  
 LEFT JOIN 
 operations.finance.dim_company dc oN dc.company_bigint_key = cte.company_bigint_key
-    left join operations.finance.dim_sector ds on 
-    (
-      ds.company_bigint_key = cte.company_bigint_key 
-      and 
-      ds.date_key = cte.date_key
-    )
+left join operations.finance.dim_sector ds on 
+(
+ds.company_bigint_key = cte.company_bigint_key 
+and 
+ds.date_key = cte.date_key
+)
 WHERE 
 bs_component IS NOT NULL
 and
@@ -235,12 +235,11 @@ dc.company_bigint_key is not null
 GROUP BY
 cte.company_bigint_key
 ,cte.date_key
-,case when ds.gics_sector in ('Financial', 'Real Estate') then 1 else 0 end
+,case when ds.gics_sector in ('Financials', 'Real Estate') then 1 else 0 end
 ,case when cte.name_of_submitted_form = '10-Q' then 0 when cte.name_of_submitted_form = '10-K' then 1 else null end
 ORDER BY
 cte.company_bigint_key
 ,cte.date_key
-
 
 
 
