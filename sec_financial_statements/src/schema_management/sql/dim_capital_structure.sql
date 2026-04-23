@@ -7,6 +7,6 @@ union all
 
 select 
 1 as capital_structure_business_key
-,"Financial % Real Estate" as capital_structure
+,"Financial & Real Estate" as capital_structure
 
 
