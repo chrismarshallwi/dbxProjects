@@ -6,6 +6,8 @@ WITH cte AS (
         ,value
         ,dt.terse_label
         ,name_of_submitted_form as name_of_submitted_form
+        ,fa.fiscal_period as fiscal_period
+        ,fa.fiscal_year as fiscal_year
 
         ,CASE
             WHEN fa.terse_label = 'Assets'
@@ -128,10 +130,12 @@ WITH cte AS (
             ELSE NULL
         END AS bs_component
 
-    FROM operations.finance_staging.fact_staging_financial_statement fa
-    LEFT JOIN operations.finance.dim_taxonomy dt ON dt.terse_label = fa.terse_label AND dt.gaap_version = fa.gaap_version
-    --LEFT JOIN operations.finance.dim_company dc ON dc.company_bigint_key = fa.company_bigint_key AND dc.preferred_fasb_linkrole_balance_sheet = dt.linkrole
-    left join operations.finance.dim_sector dc on 
+    FROM 
+     operations.finance_staging.fact_staging_financial_statement fa
+    LEFT JOIN 
+     operations.finance.dim_taxonomy dt ON dt.terse_label = fa.terse_label AND dt.gaap_version = fa.gaap_version
+    left join 
+     operations.finance.dim_sector dc on 
     (
       dc.company_bigint_key = fa.company_bigint_key 
       and 
@@ -141,16 +145,39 @@ WITH cte AS (
     )
     WHERE 
       reported_period = end_reported_period
-      AND name_of_submitted_form in ('10-Q','10-K') --going to make change soon to include 10-K so that we get continuous reporting periods (4 times per year)
+      AND name_of_submitted_form in ('10-Q','10-K')
       AND financial_statement = 'BS'
       AND value_segment IS NULL
 
 )
 
+,final as (
 
 SELECT
      cte.company_bigint_key
-     ,cte.date_key
+     ,cte.date_key as date_key_reported_period -- reported_period
+     ,cast(concat(cte.fiscal_year, case when (case when fiscal_period = 'Q1' then 1 
+          when fiscal_period = 'Q2' then 2 
+          when fiscal_period = 'Q3' then 3
+          when fiscal_period = 'FY' then 4 
+          end ) = 1 then '03' 
+     when (case when fiscal_period = 'Q1' then 1 
+          when fiscal_period = 'Q2' then 2 
+          when fiscal_period = 'Q3' then 3
+          when fiscal_period = 'FY' then 4 
+          end ) = 2 then '06'
+     when (case when fiscal_period = 'Q1' then 1 
+          when fiscal_period = 'Q2' then 2 
+          when fiscal_period = 'Q3' then 3
+          when fiscal_period = 'FY' then 4 
+          end ) = 3 then '09'
+     when (case when fiscal_period = 'Q1' then 1 
+          when fiscal_period = 'Q2' then 2 
+          when fiscal_period = 'Q3' then 3
+          when fiscal_period = 'FY' then 4 
+          end ) = 4 then '12'
+          end, '01' ) as integer) as date_key_converted_period
+
      ,case when ds.gics_sector in ('Financials', 'Real Estate') then 1 else 0 end as capital_structure_business_key
      ,case when cte.name_of_submitted_form = '10-Q' then 0 when cte.name_of_submitted_form = '10-K' then 1 else null end as submitted_form_business_key 
 
@@ -224,9 +251,9 @@ LEFT JOIN
 operations.finance.dim_company dc oN dc.company_bigint_key = cte.company_bigint_key
 left join operations.finance.dim_sector ds on 
 (
-ds.company_bigint_key = cte.company_bigint_key 
-and 
-ds.date_key = cte.date_key
+     ds.company_bigint_key = cte.company_bigint_key 
+     and 
+     ds.date_key = cte.date_key
 )
 WHERE 
 bs_component IS NOT NULL
@@ -237,9 +264,35 @@ cte.company_bigint_key
 ,cte.date_key
 ,case when ds.gics_sector in ('Financials', 'Real Estate') then 1 else 0 end
 ,case when cte.name_of_submitted_form = '10-Q' then 0 when cte.name_of_submitted_form = '10-K' then 1 else null end
+,cast(concat(cte.fiscal_year, case when (case when fiscal_period = 'Q1' then 1 
+     when fiscal_period = 'Q2' then 2 
+     when fiscal_period = 'Q3' then 3
+     when fiscal_period = 'FY' then 4 
+     end ) = 1 then '03' 
+when (case when fiscal_period = 'Q1' then 1 
+     when fiscal_period = 'Q2' then 2 
+     when fiscal_period = 'Q3' then 3
+     when fiscal_period = 'FY' then 4 
+     end ) = 2 then '06'
+when (case when fiscal_period = 'Q1' then 1 
+     when fiscal_period = 'Q2' then 2 
+     when fiscal_period = 'Q3' then 3
+     when fiscal_period = 'FY' then 4 
+     end ) = 3 then '09'
+when (case when fiscal_period = 'Q1' then 1 
+     when fiscal_period = 'Q2' then 2 
+     when fiscal_period = 'Q3' then 3
+     when fiscal_period = 'FY' then 4 
+     end ) = 4 then '12'
+     end, '01' ) as integer)
 ORDER BY
 cte.company_bigint_key
 ,cte.date_key
+)
+
+select 
+*
+from final
 
 
 
