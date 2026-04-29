@@ -36,15 +36,5 @@ and reported_quarters in (1,4)
 and dc.preferred_fasb_linkrole_income_statement is not null
 and fa.company_bigint_key = 436988458547446346
 
-)
-
-select 
-* 
-/*,case when reported_quarters = 4 then sum(value) over (partition by company_bigint_key,company_stock_symbol,fiscal_year, fiscal_period ,name_of_submitted_form,terse_label) else null end as total_fiscal_year
-,case when reported_quarters = 1 then sum(value) over (partition by company_bigint_key,company_stock_symbol,fiscal_year ,name_of_submitted_form,terse_label) else null end as total_fiscal_year_qtrs
-,case when reported_quarters = 4 then null else value end as value_x*/
-
-from 
-base 
-
+) select * from base
 
