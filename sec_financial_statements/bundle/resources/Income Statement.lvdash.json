@@ -33,8 +33,12 @@
                       "expression": "`company_name`"
                     },
                     {
-                      "name": "Date Key",
-                      "expression": "`Date Key`"
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "quarter",
+                      "expression": "`quarter`"
                     },
                     {
                       "name": "measure(Revenue)",
@@ -52,7 +56,8 @@
                       },
                       {
                         "fieldNames": [
-                          "Date Key"
+                          "year",
+                          "quarter"
                         ]
                       }
                     ]
@@ -73,7 +78,11 @@
                     },
                     {
                       "direction": "ASC",
-                      "expression": "`Date Key`"
+                      "expression": "`year`"
+                    },
+                    {
+                      "direction": "ASC",
+                      "expression": "`quarter`"
                     }
                   ]
                 }
@@ -96,7 +105,10 @@
                 ],
                 "columns": [
                   {
-                    "fieldName": "Date Key"
+                    "fieldName": "year"
+                  },
+                  {
+                    "fieldName": "quarter"
                   }
                 ],
                 "cell": {
@@ -213,6 +225,133 @@
           },
           "position": {
             "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "a6f1cefb",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "688e0a06",
+                  "fields": [
+                    {
+                      "name": "gics_sector",
+                      "expression": "`gics_sector`"
+                    },
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "measure(Revenue)",
+                      "expression": "MEASURE(`Revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(Revenue)",
+                  "format": {
+                    "type": "number-plain",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 2
+                    }
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "gics_sector",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 13,
+            "width": 12,
+            "height": 9
+          }
+        },
+        {
+          "widget": {
+            "name": "b956e909",
+            "queries": [
+              {
+                "name": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_company_name",
+                "query": {
+                  "datasetName": "688e0a06",
+                  "fields": [
+                    {
+                      "name": "company_name",
+                      "expression": "`company_name`"
+                    },
+                    {
+                      "name": "company_name_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "company_name",
+                    "queryName": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_company_name"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 6,
             "y": 0,
             "width": 3,
             "height": 1

@@ -1,6 +1,4 @@
-/*Where I last left off:
-Discovered that interesting for one company (Fortinet) that they report in 2023 GROSS MARGIN as a terse label. This terse label does not show up in the dim taxonomy table. The standard label, is Gross Profit which does correspond to a child label in the Dim taxonomy table. When joining the dim taxonomy table, try joining on Standard Lable = Child and you will have to remove some characters from Child like us-gaap: to get the standard label match. 
-*/
+
 
 insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_income_statement')
 
@@ -99,8 +97,8 @@ select
 company_bigint_key
 ,reported_period as date_key_reported_period
 
-/*,fiscal_period
-,fiscal_year*/
+,fiscal_period
+,fiscal_year
 
      ,cast(concat(fiscal_year, case when (case when fiscal_period = 'Q1' then 1 
           when fiscal_period = 'Q2' then 2 
