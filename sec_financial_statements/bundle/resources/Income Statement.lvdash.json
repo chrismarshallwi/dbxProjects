@@ -1,0 +1,232 @@
+{
+  "datasets": [
+    {
+      "name": "688e0a06",
+      "displayName": "fact_income_statement_metric_view",
+      "asset_name": "operations.finance.fact_income_statement_metric_view"
+    }
+  ],
+  "pages": [
+    {
+      "name": "aaf6a10c",
+      "displayName": "Untitled page",
+      "layout": [
+        {
+          "widget": {
+            "name": "e778e181",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "688e0a06",
+                  "fields": [
+                    {
+                      "name": "gics_sector",
+                      "expression": "`gics_sector`"
+                    },
+                    {
+                      "name": "gics_sub_industry",
+                      "expression": "`gics_sub_industry`"
+                    },
+                    {
+                      "name": "company_name",
+                      "expression": "`company_name`"
+                    },
+                    {
+                      "name": "Date Key",
+                      "expression": "`Date Key`"
+                    },
+                    {
+                      "name": "measure(Revenue)",
+                      "expression": "MEASURE(`Revenue`)"
+                    }
+                  ],
+                  "cubeGroupingSets": {
+                    "sets": [
+                      {
+                        "fieldNames": [
+                          "gics_sector",
+                          "gics_sub_industry",
+                          "company_name"
+                        ]
+                      },
+                      {
+                        "fieldNames": [
+                          "Date Key"
+                        ]
+                      }
+                    ]
+                  },
+                  "disaggregated": false,
+                  "orders": [
+                    {
+                      "direction": "ASC",
+                      "expression": "`gics_sector`"
+                    },
+                    {
+                      "direction": "ASC",
+                      "expression": "`gics_sub_industry`"
+                    },
+                    {
+                      "direction": "ASC",
+                      "expression": "`company_name`"
+                    },
+                    {
+                      "direction": "ASC",
+                      "expression": "`Date Key`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "pivot",
+              "encodings": {
+                "rows": [
+                  {
+                    "fieldName": "gics_sector"
+                  },
+                  {
+                    "fieldName": "gics_sub_industry"
+                  },
+                  {
+                    "fieldName": "company_name"
+                  }
+                ],
+                "columns": [
+                  {
+                    "fieldName": "Date Key"
+                  }
+                ],
+                "cell": {
+                  "type": "multi-cell",
+                  "fields": [
+                    {
+                      "fieldName": "measure(Revenue)",
+                      "cellType": "text",
+                      "format": {
+                        "type": "number-currency",
+                        "currencyCode": "USD",
+                        "abbreviation": "none",
+                        "decimalPlaces": {
+                          "type": "exact",
+                          "places": 0
+                        },
+                        "hideGroupSeparator": false
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 12,
+            "height": 12
+          }
+        },
+        {
+          "widget": {
+            "name": "19fd30fe",
+            "queries": [
+              {
+                "name": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_year",
+                "query": {
+                  "datasetName": "688e0a06",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "year_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "year",
+                    "queryName": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_year"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "f61f552a",
+            "queries": [
+              {
+                "name": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_sp_500_indicator",
+                "query": {
+                  "datasetName": "688e0a06",
+                  "fields": [
+                    {
+                      "name": "sp_500_indicator",
+                      "expression": "`sp_500_indicator`"
+                    },
+                    {
+                      "name": "sp_500_indicator_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "sp_500_indicator",
+                    "queryName": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_sp_500_indicator"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 1
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
