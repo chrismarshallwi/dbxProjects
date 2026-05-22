@@ -25,20 +25,16 @@
                       "expression": "`gics_sector`"
                     },
                     {
-                      "name": "gics_sub_industry",
-                      "expression": "`gics_sub_industry`"
-                    },
-                    {
                       "name": "company_name",
                       "expression": "`company_name`"
                     },
                     {
-                      "name": "year",
-                      "expression": "`year`"
+                      "name": "company_stock_symbol",
+                      "expression": "`company_stock_symbol`"
                     },
                     {
-                      "name": "quarter",
-                      "expression": "`quarter`"
+                      "name": "year_quarter_name",
+                      "expression": "`year_quarter_name`"
                     },
                     {
                       "name": "measure(Revenue)",
@@ -50,14 +46,13 @@
                       {
                         "fieldNames": [
                           "gics_sector",
-                          "gics_sub_industry",
-                          "company_name"
+                          "company_name",
+                          "company_stock_symbol"
                         ]
                       },
                       {
                         "fieldNames": [
-                          "year",
-                          "quarter"
+                          "year_quarter_name"
                         ]
                       }
                     ]
@@ -70,19 +65,15 @@
                     },
                     {
                       "direction": "ASC",
-                      "expression": "`gics_sub_industry`"
-                    },
-                    {
-                      "direction": "ASC",
                       "expression": "`company_name`"
                     },
                     {
                       "direction": "ASC",
-                      "expression": "`year`"
+                      "expression": "`company_stock_symbol`"
                     },
                     {
                       "direction": "ASC",
-                      "expression": "`quarter`"
+                      "expression": "`year_quarter_name`"
                     }
                   ]
                 }
@@ -97,18 +88,24 @@
                     "fieldName": "gics_sector"
                   },
                   {
-                    "fieldName": "gics_sub_industry"
+                    "fieldName": "company_name",
+                    "scale": {
+                      "type": "categorical",
+                      "sort": {
+                        "by": "cell-reversed",
+                        "field": {
+                          "index": 0
+                        }
+                      }
+                    }
                   },
                   {
-                    "fieldName": "company_name"
+                    "fieldName": "company_stock_symbol"
                   }
                 ],
                 "columns": [
                   {
-                    "fieldName": "year"
-                  },
-                  {
-                    "fieldName": "quarter"
+                    "fieldName": "year_quarter_name"
                   }
                 ],
                 "cell": {
@@ -126,9 +123,19 @@
                           "places": 0
                         },
                         "hideGroupSeparator": false
+                      },
+                      "height": 30,
+                      "style": {
+                        "type": "color-scale",
+                        "backgroundColor": {
+                          "scale": {
+                            "type": "quantitative"
+                          }
+                        }
                       }
                     }
-                  ]
+                  ],
+                  "width": 130
                 }
               }
             }
@@ -244,8 +251,8 @@
                       "expression": "`gics_sector`"
                     },
                     {
-                      "name": "year",
-                      "expression": "`year`"
+                      "name": "year_quarter_name",
+                      "expression": "`year_quarter_name`"
                     },
                     {
                       "name": "measure(Revenue)",
@@ -277,7 +284,7 @@
               "widgetType": "line",
               "encodings": {
                 "x": {
-                  "fieldName": "year",
+                  "fieldName": "year_quarter_name",
                   "scale": {
                     "type": "categorical"
                   }

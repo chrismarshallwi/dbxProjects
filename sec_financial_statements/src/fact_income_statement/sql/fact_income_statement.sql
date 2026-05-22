@@ -1,6 +1,6 @@
 
 
-insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_income_statement')
+--insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_income_statement')
 
 with base as (
 select distinct 
@@ -94,9 +94,12 @@ and duplicate_roll_up_ranking = 1
 
 
 select 
-company_bigint_key
-,reported_period as date_key_reported_period
+staging.company_bigint_key
 
+
+
+
+,reported_period as date_key_reported_period
 ,fiscal_period
 ,fiscal_year
 
@@ -123,19 +126,19 @@ company_bigint_key
           end, '01' ) as integer) as date_key_converted_period
 
 ,case when name_of_submitted_form = '10-Q' then 0 when name_of_submitted_form = '10-K' then 1 else null end as submitted_form_business_key 
+,count(dc.company_stock_symbol) over (partition by dc.company_name, dc.company_identifier_key,reported_period, fiscal_period, fiscal_year ) as duplicate_stock_symbol_identifier
 
 ,reported_quarters
---,ins_component
---,value 
 
 ,MAX(CASE WHEN ins_component = 'Revenue' THEN value END) AS total_revenue
 
 from 
 staging 
-where ins_component is not null 
+left join operations.finance.dim_company dc on dc.company_bigint_key = staging.company_bigint_key
+where 
+ins_component is not null 
 group by 
-
-company_bigint_key
+staging.company_bigint_key
 ,reported_period 
 ,name_of_submitted_form
 ,fiscal_period
