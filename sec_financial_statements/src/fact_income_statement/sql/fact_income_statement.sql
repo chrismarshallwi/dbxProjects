@@ -13,6 +13,7 @@ dc.company_name
 ,fa.terse_label
 ,fa.standard_label
 ,fa.name_of_submitted_form
+,fa.filing_date
 ,fa.fiscal_period
 ,fa.fiscal_year
 ,fa.reported_quarters
@@ -95,10 +96,15 @@ and duplicate_roll_up_ranking = 1
 
 select 
 staging.company_bigint_key
+
+,fiscal_year
+,fiscal_period
+,filing_date as date_key_filing
+
+
 ,reported_period as date_key_reported_period
 
-
-     ,cast(concat(fiscal_year, case when (case when fiscal_period = 'Q1' then 1 
+     /*,cast(concat(fiscal_year, case when (case when fiscal_period = 'Q1' then 1 
           when fiscal_period = 'Q2' then 2 
           when fiscal_period = 'Q3' then 3
           when fiscal_period = 'FY' then 4 
@@ -118,11 +124,14 @@ staging.company_bigint_key
           when fiscal_period = 'Q3' then 3
           when fiscal_period = 'FY' then 4 
           end ) = 4 then '12'
-          end, '01' ) as integer) as date_key_converted_period
+          end, '01' ) as integer) as date_key_converted_period*/
 
 ,case when name_of_submitted_form = '10-Q' then 0 when name_of_submitted_form = '10-K' then 1 else null end as submitted_form_business_key 
-,case when (count(dc.company_stock_symbol) over (partition by dc.company_name, dc.company_identifier_key,reported_period,reported_quarters, fiscal_period, fiscal_year ))
-!= 1 then 1 else 0 end as duplicate_stock_symbol_identifier
+/*,case when (count(dc.company_stock_symbol) over (partition by dc.company_name, dc.company_identifier_key,reported_period,reported_quarters, fiscal_period, fiscal_year ))
+!= 1 then 1 else 0 end as duplicate_stock_symbol_identifier*/
+
+,case when (ROW_NUMBER() over (partition by dc.company_name, dc.company_identifier_key, reported_period, reported_quarters, fiscal_period, fiscal_year 
+                               order by dc.company_stock_symbol)) = 1 then 0 else 1 end as duplicate_stock_symbol_identifier
 
 ,reported_quarters
 
@@ -132,14 +141,14 @@ from
 staging 
 left join operations.finance.dim_company dc on dc.company_bigint_key = staging.company_bigint_key
 where 
-ins_component is not null 
+ins_component is not null       --and dc.company_name = 'NVIDIA CORP'            
 group by 
 staging.company_bigint_key,
 dc.company_name
 ,dc.company_identifier_key
 ,dc.company_stock_symbol
 ,reported_period 
-,fiscal_year, fiscal_period
+,fiscal_year, fiscal_period, filing_date
 ,(case when name_of_submitted_form = '10-Q' then 0 when name_of_submitted_form = '10-K' then 1 else null end)
 
 ,reported_quarters
