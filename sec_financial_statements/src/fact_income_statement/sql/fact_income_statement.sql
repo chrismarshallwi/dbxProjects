@@ -1,6 +1,6 @@
 
 
---insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_income_statement')
+insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_income_statement')
 
 with base as (
 select distinct 
@@ -95,13 +95,8 @@ and duplicate_roll_up_ranking = 1
 
 select 
 staging.company_bigint_key
-
-
-
-
 ,reported_period as date_key_reported_period
-,fiscal_period
-,fiscal_year
+
 
      ,cast(concat(fiscal_year, case when (case when fiscal_period = 'Q1' then 1 
           when fiscal_period = 'Q2' then 2 
@@ -126,7 +121,8 @@ staging.company_bigint_key
           end, '01' ) as integer) as date_key_converted_period
 
 ,case when name_of_submitted_form = '10-Q' then 0 when name_of_submitted_form = '10-K' then 1 else null end as submitted_form_business_key 
-,count(dc.company_stock_symbol) over (partition by dc.company_name, dc.company_identifier_key,reported_period, fiscal_period, fiscal_year ) as duplicate_stock_symbol_identifier
+,case when (count(dc.company_stock_symbol) over (partition by dc.company_name, dc.company_identifier_key,reported_period,reported_quarters, fiscal_period, fiscal_year ))
+!= 1 then 1 else 0 end as duplicate_stock_symbol_identifier
 
 ,reported_quarters
 
@@ -138,9 +134,13 @@ left join operations.finance.dim_company dc on dc.company_bigint_key = staging.c
 where 
 ins_component is not null 
 group by 
-staging.company_bigint_key
+staging.company_bigint_key,
+dc.company_name
+,dc.company_identifier_key
+,dc.company_stock_symbol
 ,reported_period 
-,name_of_submitted_form
-,fiscal_period
-,fiscal_year
+,fiscal_year, fiscal_period
+,(case when name_of_submitted_form = '10-Q' then 0 when name_of_submitted_form = '10-K' then 1 else null end)
+
 ,reported_quarters
+
