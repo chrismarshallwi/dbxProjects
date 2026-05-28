@@ -1,6 +1,6 @@
 
 
---insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_income_statement')
+insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_income_statement')
 
 with base as (
 select distinct 
@@ -41,7 +41,6 @@ dc.company_name
 ,coalesce(dt.terse_label_level_18  , dt2.terse_label_level_18  ) as terse_label_level_18 
 ,coalesce(dt.terse_label_level_19 , dt2.terse_label_level_19  ) as terse_label_level_19 
 
-
 from 
 operations.finance_staging.fact_staging_financial_statement fa
 left join 
@@ -77,6 +76,10 @@ and value_segment is null
 and name_of_submitted_form in ('10-Q','10-K')
 and reported_quarters in (1,4)
 
+and dc.company_stock_symbol = 'NVDA'
+
+order by reported_period
+
 ) 
 
 /*Input Logic below that condenses terse label conditions corresponding to highest level leaf node to compose the ins_component (income statement component) field*/
@@ -93,42 +96,16 @@ and duplicate_roll_up_ranking = 1
 )
 
 
-
+,final as (
 select 
 staging.company_bigint_key
-
 ,fiscal_year
 ,fiscal_period
 ,filing_date as date_key_filing
-
-
 ,reported_period as date_key_reported_period
 
-     /*,cast(concat(fiscal_year, case when (case when fiscal_period = 'Q1' then 1 
-          when fiscal_period = 'Q2' then 2 
-          when fiscal_period = 'Q3' then 3
-          when fiscal_period = 'FY' then 4 
-          end ) = 1 then '03' 
-     when (case when fiscal_period = 'Q1' then 1 
-          when fiscal_period = 'Q2' then 2 
-          when fiscal_period = 'Q3' then 3
-          when fiscal_period = 'FY' then 4 
-          end ) = 2 then '06'
-     when (case when fiscal_period = 'Q1' then 1 
-          when fiscal_period = 'Q2' then 2 
-          when fiscal_period = 'Q3' then 3
-          when fiscal_period = 'FY' then 4 
-          end ) = 3 then '09'
-     when (case when fiscal_period = 'Q1' then 1 
-          when fiscal_period = 'Q2' then 2 
-          when fiscal_period = 'Q3' then 3
-          when fiscal_period = 'FY' then 4 
-          end ) = 4 then '12'
-          end, '01' ) as integer) as date_key_converted_period*/
-
 ,case when name_of_submitted_form = '10-Q' then 0 when name_of_submitted_form = '10-K' then 1 else null end as submitted_form_business_key 
-/*,case when (count(dc.company_stock_symbol) over (partition by dc.company_name, dc.company_identifier_key,reported_period,reported_quarters, fiscal_period, fiscal_year ))
-!= 1 then 1 else 0 end as duplicate_stock_symbol_identifier*/
+
 
 ,case when (ROW_NUMBER() over (partition by dc.company_name, dc.company_identifier_key, reported_period, reported_quarters, fiscal_period, fiscal_year 
                                order by dc.company_stock_symbol)) = 1 then 0 else 1 end as duplicate_stock_symbol_identifier
@@ -141,15 +118,58 @@ from
 staging 
 left join operations.finance.dim_company dc on dc.company_bigint_key = staging.company_bigint_key
 where 
-ins_component is not null       --and dc.company_name = 'NVIDIA CORP'            
+ins_component is not null       
 group by 
 staging.company_bigint_key,
 dc.company_name
 ,dc.company_identifier_key
 ,dc.company_stock_symbol
 ,reported_period 
-,fiscal_year, fiscal_period, filing_date
+,fiscal_year
+,fiscal_period
+,filing_date
 ,(case when name_of_submitted_form = '10-Q' then 0 when name_of_submitted_form = '10-K' then 1 else null end)
-
 ,reported_quarters
+order by reported_period asc
+)
 
+,final_with_year_logic as (
+select 
+*
+-- Previous 3 fiscal years
+,lag(fiscal_year,1) over (partition by company_bigint_key order by date_key_reported_period) as prev_fiscal_year_1
+
+,lag(fiscal_year,2) over (partition by company_bigint_key order by date_key_reported_period) as prev_fiscal_year_2
+
+,lag(fiscal_year,3) over (partition by company_bigint_key order by date_key_reported_period) as prev_fiscal_year_3
+
+from final 
+)
+
+
+select 
+company_bigint_key
+,fiscal_year
+,fiscal_period
+,date_key_filing
+,date_key_reported_period 
+,concat(case when fiscal_period = 'FY'
+and fiscal_year < prev_fiscal_year_1
+and fiscal_year < prev_fiscal_year_2
+and fiscal_year < prev_fiscal_year_3
+then fiscal_year + 1
+else fiscal_year
+end,'-',fiscal_period) as date_key_converted_period
+,submitted_form_business_key
+,duplicate_stock_symbol_identifier
+,reported_quarters
+,total_revenue
+from 
+final_with_year_logic 
+
+
+/*
+Note to future self, found example with netflix where there was a reported Q4 results (not common) for the year 2020. 
+Next steps after creating the date_key converted period field is to derive Q4 financials
+In the example of netflix, you will need to create a flag for when count of fiscal years = 5 and there are two fiscal years reported (need to omit the Q4 results provided so that all are standard, and we can then derive the q4 results and apply to all companies uniformly)
+*/

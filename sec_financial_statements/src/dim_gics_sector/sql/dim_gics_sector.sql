@@ -212,7 +212,7 @@ END AS gics_sub_industry
 
 
     -- 🧾 BALANCE SHEET SPECIAL CASES
-
+/*
     -- Deposit-based (banks)
     WHEN gics_sector = 'Financials' AND gics_sub_industry IN (
         'Regional Banks','Diversified Banks'
@@ -227,13 +227,15 @@ END AS gics_sub_industry
 
     -- Real estate balance sheet
     WHEN gics_sector = 'Real Estate'
-        THEN 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified-RealEstateOperations'
+        THEN 'http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified-RealEstateOperations' */
 
 
     -- 🧠 FALLBACKS
 
     WHEN gics_sector IN ('Information Technology','Communication Services')
-        THEN 'http://fasb.org/us-gaap/role/statement/StatementOfIncomeAlternateAggregations'
+        --THEN 'http://fasb.org/us-gaap/role/statement/StatementOfIncomeAlternateAggregations'
+
+        then 'http://fasb.org/us-gaap/role/statement/StatementOfIncome'
 
     -- Default standard statements
     ELSE 'http://fasb.org/us-gaap/role/statement/StatementOfIncome'

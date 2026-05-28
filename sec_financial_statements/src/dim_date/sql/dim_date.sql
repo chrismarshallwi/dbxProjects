@@ -4,6 +4,9 @@ SELECT
     year(d) AS year,
     quarter(d) AS quarter
     ,concat('Q',quarter(d)  ) as quarter_name
+    ,concat(year(d) , '-', quarter(d)) as year_quarter
+    ,concat(year(d), '-', concat('Q',quarter(d)  )) as year_quarter_name
+    ,d AS date_value -- date datatype column based on date_key
 FROM (
     SELECT explode(
         sequence(to_date('2000-01-01'), to_date('2100-12-31'), interval 1 day)
