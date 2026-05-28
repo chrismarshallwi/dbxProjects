@@ -4,6 +4,77 @@
       "name": "688e0a06",
       "displayName": "fact_income_statement_metric_view",
       "asset_name": "operations.finance.fact_income_statement_metric_view"
+    },
+    {
+      "name": "0622190f",
+      "displayName": "testing_fact_income_statement",
+      "queryLines": [
+        "with base as (\r\n",
+        "\r\n",
+        "select \r\n",
+        "\r\n",
+        "    name_of_filing_company\r\n",
+        "    ,name_of_submitted_form\r\n",
+        "    ,reported_period\r\n",
+        "    ,fiscal_year\r\n",
+        "    ,fiscal_period\r\n",
+        "    ,reported_quarters\r\n",
+        "    ,terse_label\r\n",
+        "    ,value\r\n",
+        "\r\n",
+        "    -- Previous 3 fiscal years\r\n",
+        "    ,lag(fiscal_year,1) over (\r\n",
+        "        partition by name_of_filing_company\r\n",
+        "        order by reported_period\r\n",
+        "    ) as prev_fiscal_year_1\r\n",
+        "\r\n",
+        "    ,lag(fiscal_year,2) over (\r\n",
+        "        partition by name_of_filing_company\r\n",
+        "        order by reported_period\r\n",
+        "    ) as prev_fiscal_year_2\r\n",
+        "\r\n",
+        "    ,lag(fiscal_year,3) over (\r\n",
+        "        partition by name_of_filing_company\r\n",
+        "        order by reported_period\r\n",
+        "    ) as prev_fiscal_year_3\r\n",
+        "\r\n",
+        "from operations.finance_staging.fact_staging_financial_statement \r\n",
+        "\r\n",
+        "where name_of_filing_company in ('NVIDIA CORP','INTEL CORP','QUALCOMM INC/DE','ADVANCED MICRO DEVICES INC','WALMART INC.')\r\n",
+        "and financial_statement = 'IS'\r\n",
+        "and reported_period = end_reported_period\r\n",
+        "and value_segment is null\r\n",
+        "and name_of_submitted_form in ('10-Q','10-K')\r\n",
+        "and reported_quarters in (1,4) \r\n",
+        "and terse_label in ('Revenues')--,'Revenue from Contract with Customer, Excluding Assessed Tax') \r\n",
+        "\r\n",
+        ")\r\n",
+        "\r\n",
+        "select\r\n",
+        "\r\n",
+        "    *\r\n",
+        "\r\n",
+        "    -- =====================================================\r\n",
+        "    -- NORMALIZED CALENDAR YEAR\r\n",
+        "    -- =====================================================\r\n",
+        "\r\n",
+        "    ,case\r\n",
+        "\r\n",
+        "        -- NVIDIA-style FY offset\r\n",
+        "        when fiscal_period = 'FY'\r\n",
+        "         and fiscal_year < prev_fiscal_year_1\r\n",
+        "         and fiscal_year < prev_fiscal_year_2\r\n",
+        "         and fiscal_year < prev_fiscal_year_3\r\n",
+        "\r\n",
+        "        then fiscal_year + 1\r\n",
+        "\r\n",
+        "        else fiscal_year\r\n",
+        "\r\n",
+        "    end as calendar_year\r\n",
+        "\r\n",
+        "from base\r\n",
+        "order by reported_period asc"
+      ]
     }
   ],
   "pages": [
@@ -33,8 +104,8 @@
                       "expression": "`company_stock_symbol`"
                     },
                     {
-                      "name": "year_quarter_name",
-                      "expression": "`year_quarter_name`"
+                      "name": "standardized_fiscal_year",
+                      "expression": "`standardized_fiscal_year`"
                     },
                     {
                       "name": "measure(Revenue)",
@@ -52,7 +123,7 @@
                       },
                       {
                         "fieldNames": [
-                          "year_quarter_name"
+                          "standardized_fiscal_year"
                         ]
                       }
                     ]
@@ -73,7 +144,7 @@
                     },
                     {
                       "direction": "ASC",
-                      "expression": "`year_quarter_name`"
+                      "expression": "`standardized_fiscal_year`"
                     }
                   ]
                 }
@@ -109,7 +180,31 @@
                 ],
                 "columns": [
                   {
-                    "fieldName": "year_quarter_name"
+                    "fieldName": "standardized_fiscal_year",
+                    "scale": {
+                      "type": "categorical",
+                      "sort": {
+                        "by": "custom-order",
+                        "orderedValues": [
+                          "2020-FY",
+                          "2021-FY",
+                          "2022-FY",
+                          "2022-Q1",
+                          "2022-Q2",
+                          "2022-Q3",
+                          "2023-FY",
+                          "2023-Q1",
+                          "2023-Q2",
+                          "2023-Q3",
+                          "2024-Q1",
+                          "2024-Q2",
+                          "2024-Q3",
+                          "2025-Q1",
+                          "2025-Q2",
+                          "2025-Q3"
+                        ]
+                      }
+                    }
                   }
                 ],
                 "cell": {
@@ -161,16 +256,16 @@
             "name": "19fd30fe",
             "queries": [
               {
-                "name": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_year",
+                "name": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_standardized_fiscal_year",
                 "query": {
                   "datasetName": "688e0a06",
                   "fields": [
                     {
-                      "name": "year",
-                      "expression": "`year`"
+                      "name": "standardized_fiscal_year",
+                      "expression": "`standardized_fiscal_year`"
                     },
                     {
-                      "name": "year_associativity",
+                      "name": "standardized_fiscal_year_associativity",
                       "expression": "COUNT_IF(`associative_filter_predicate_group`)"
                     }
                   ],
@@ -187,8 +282,8 @@
               "encodings": {
                 "fields": [
                   {
-                    "fieldName": "year",
-                    "queryName": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_year"
+                    "fieldName": "standardized_fiscal_year",
+                    "queryName": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_standardized_fiscal_year"
                   }
                 ]
               }
@@ -360,7 +455,7 @@
               "frame": {
                 "showTitle": true
               },
-              "widgetType": "filter-single-select",
+              "widgetType": "filter-multi-select",
               "encodings": {
                 "fields": [
                   {
@@ -428,51 +523,51 @@
       "layoutVersion": "GRID_V1"
     },
     {
-      "name": "6cf8a525",
-      "displayName": "Untitled page 1",
+      "name": "0609bd7f",
+      "displayName": "REVENUE ANALYSIS (Claude Solution)",
       "layout": [
         {
           "widget": {
-            "name": "b35c3729",
+            "name": "9be39aa7",
             "queries": [
               {
                 "name": "main_query",
                 "query": {
-                  "datasetName": "688e0a06",
+                  "datasetName": "0622190f",
                   "fields": [
                     {
-                      "name": "gics_sector",
-                      "expression": "`gics_sector`"
+                      "name": "name_of_filing_company",
+                      "expression": "`name_of_filing_company`"
                     },
                     {
-                      "name": "company_name",
-                      "expression": "`company_name`"
+                      "name": "terse_label",
+                      "expression": "`terse_label`"
                     },
                     {
-                      "name": "company_stock_symbol",
-                      "expression": "`company_stock_symbol`"
+                      "name": "calendar_year",
+                      "expression": "`calendar_year`"
                     },
                     {
-                      "name": "year_quarter_name",
-                      "expression": "`year_quarter_name`"
+                      "name": "fiscal_period",
+                      "expression": "`fiscal_period`"
                     },
                     {
-                      "name": "measure(Revenue)",
-                      "expression": "MEASURE(`Revenue`)"
+                      "name": "sum(value)",
+                      "expression": "SUM(`value`)"
                     }
                   ],
                   "cubeGroupingSets": {
                     "sets": [
                       {
                         "fieldNames": [
-                          "gics_sector",
-                          "company_name",
-                          "company_stock_symbol"
+                          "name_of_filing_company",
+                          "terse_label"
                         ]
                       },
                       {
                         "fieldNames": [
-                          "year_quarter_name"
+                          "calendar_year",
+                          "fiscal_period"
                         ]
                       }
                     ]
@@ -481,19 +576,19 @@
                   "orders": [
                     {
                       "direction": "ASC",
-                      "expression": "`gics_sector`"
+                      "expression": "`name_of_filing_company`"
                     },
                     {
                       "direction": "ASC",
-                      "expression": "`company_name`"
+                      "expression": "`terse_label`"
                     },
                     {
                       "direction": "ASC",
-                      "expression": "`company_stock_symbol`"
+                      "expression": "`calendar_year`"
                     },
                     {
                       "direction": "ASC",
-                      "expression": "`year_quarter_name`"
+                      "expression": "`fiscal_period`"
                     }
                   ]
                 }
@@ -509,34 +604,37 @@
               "encodings": {
                 "rows": [
                   {
-                    "fieldName": "gics_sector"
+                    "fieldName": "name_of_filing_company"
                   },
                   {
-                    "fieldName": "company_name",
-                    "scale": {
-                      "type": "categorical",
-                      "sort": {
-                        "by": "cell-reversed",
-                        "field": {
-                          "index": 0
-                        }
-                      }
-                    }
-                  },
-                  {
-                    "fieldName": "company_stock_symbol"
+                    "fieldName": "terse_label"
                   }
                 ],
                 "columns": [
                   {
-                    "fieldName": "year_quarter_name"
+                    "fieldName": "calendar_year"
+                  },
+                  {
+                    "fieldName": "fiscal_period",
+                    "scale": {
+                      "type": "categorical",
+                      "sort": {
+                        "by": "custom-order",
+                        "orderedValues": [
+                          "Q1",
+                          "Q2",
+                          "Q3",
+                          "FY"
+                        ]
+                      }
+                    }
                   }
                 ],
                 "cell": {
                   "type": "multi-cell",
                   "fields": [
                     {
-                      "fieldName": "measure(Revenue)",
+                      "fieldName": "sum(value)",
                       "cellType": "text",
                       "format": {
                         "type": "number-currency",
@@ -548,7 +646,6 @@
                         },
                         "hideGroupSeparator": false
                       },
-                      "height": 30,
                       "style": {
                         "type": "color-scale",
                         "backgroundColor": {
@@ -559,7 +656,7 @@
                       }
                     }
                   ],
-                  "width": 130
+                  "width": 120
                 }
               }
             },
@@ -578,145 +675,7 @@
         },
         {
           "widget": {
-            "name": "company-name",
-            "queries": [
-              {
-                "name": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_company_name",
-                "query": {
-                  "datasetName": "688e0a06",
-                  "fields": [
-                    {
-                      "name": "company_name",
-                      "expression": "`company_name`"
-                    },
-                    {
-                      "name": "company_name_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
-                    }
-                  ],
-                  "disaggregated": false
-                }
-              }
-            ],
-            "spec": {
-              "version": 2,
-              "frame": {
-                "showTitle": true,
-                "title": "COMPANY NAME"
-              },
-              "widgetType": "filter-single-select",
-              "encodings": {
-                "fields": [
-                  {
-                    "fieldName": "company_name",
-                    "queryName": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_company_name"
-                  }
-                ]
-              }
-            }
-          },
-          "position": {
-            "x": 6,
-            "y": 0,
-            "width": 3,
-            "height": 1
-          }
-        },
-        {
-          "widget": {
-            "name": "duplicate-ids",
-            "queries": [
-              {
-                "name": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_duplicate_company_stock_symbol_id",
-                "query": {
-                  "datasetName": "688e0a06",
-                  "fields": [
-                    {
-                      "name": "duplicate_company_stock_symbol_id",
-                      "expression": "`duplicate_company_stock_symbol_id`"
-                    },
-                    {
-                      "name": "duplicate_company_stock_symbol_id_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
-                    }
-                  ],
-                  "disaggregated": false
-                }
-              }
-            ],
-            "spec": {
-              "version": 2,
-              "frame": {
-                "showTitle": true,
-                "title": "DUPLICATE IDS"
-              },
-              "widgetType": "filter-single-select",
-              "encodings": {
-                "fields": [
-                  {
-                    "fieldName": "duplicate_company_stock_symbol_id",
-                    "queryName": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_duplicate_company_stock_symbol_id"
-                  }
-                ]
-              }
-            }
-          },
-          "position": {
-            "x": 9,
-            "y": 0,
-            "width": 3,
-            "height": 1
-          }
-        },
-        {
-          "widget": {
-            "name": "sp500-indicator",
-            "queries": [
-              {
-                "name": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_sp_500_indicator",
-                "query": {
-                  "datasetName": "688e0a06",
-                  "fields": [
-                    {
-                      "name": "sp_500_indicator",
-                      "expression": "`sp_500_indicator`"
-                    },
-                    {
-                      "name": "sp_500_indicator_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
-                    }
-                  ],
-                  "disaggregated": false
-                }
-              }
-            ],
-            "spec": {
-              "version": 2,
-              "frame": {
-                "showTitle": true,
-                "title": "SP500 INDICATOR"
-              },
-              "widgetType": "filter-single-select",
-              "encodings": {
-                "fields": [
-                  {
-                    "fieldName": "sp_500_indicator",
-                    "queryName": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_sp_500_indicator"
-                  }
-                ]
-              }
-            }
-          },
-          "position": {
-            "x": 3,
-            "y": 0,
-            "width": 3,
-            "height": 1
-          }
-        },
-        {
-          "widget": {
-            "name": "year",
+            "name": "5fe62813",
             "queries": [
               {
                 "name": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_year",
@@ -739,10 +698,9 @@
             "spec": {
               "version": 2,
               "frame": {
-                "showTitle": true,
-                "title": "YEAR"
+                "showTitle": true
               },
-              "widgetType": "filter-single-select",
+              "widgetType": "filter-multi-select",
               "encodings": {
                 "fields": [
                   {
@@ -755,6 +713,228 @@
           },
           "position": {
             "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "3a15b178",
+            "queries": [
+              {
+                "name": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_sp_500_indicator",
+                "query": {
+                  "datasetName": "688e0a06",
+                  "fields": [
+                    {
+                      "name": "sp_500_indicator",
+                      "expression": "`sp_500_indicator`"
+                    },
+                    {
+                      "name": "sp_500_indicator_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "sp_500_indicator",
+                    "queryName": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_sp_500_indicator"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "93498d7e",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "688e0a06",
+                  "fields": [
+                    {
+                      "name": "gics_sector",
+                      "expression": "`gics_sector`"
+                    },
+                    {
+                      "name": "year_quarter_name",
+                      "expression": "`year_quarter_name`"
+                    },
+                    {
+                      "name": "measure(Revenue)",
+                      "expression": "MEASURE(`Revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "year_quarter_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(Revenue)",
+                  "format": {
+                    "type": "number-plain",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 2
+                    }
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "gics_sector",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#EEEEEE"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 13,
+            "width": 12,
+            "height": 9
+          }
+        },
+        {
+          "widget": {
+            "name": "223636df",
+            "queries": [
+              {
+                "name": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_company_name",
+                "query": {
+                  "datasetName": "688e0a06",
+                  "fields": [
+                    {
+                      "name": "company_name",
+                      "expression": "`company_name`"
+                    },
+                    {
+                      "name": "company_name_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "company_name",
+                    "queryName": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_company_name"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 3,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "6d9135d6",
+            "queries": [
+              {
+                "name": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_duplicate_company_stock_symbol_id",
+                "query": {
+                  "datasetName": "688e0a06",
+                  "fields": [
+                    {
+                      "name": "duplicate_company_stock_symbol_id",
+                      "expression": "`duplicate_company_stock_symbol_id`"
+                    },
+                    {
+                      "name": "duplicate_company_stock_symbol_id_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "duplicate_company_stock_symbol_id",
+                    "queryName": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_duplicate_company_stock_symbol_id"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 9,
             "y": 0,
             "width": 3,
             "height": 1
