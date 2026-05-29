@@ -76,7 +76,8 @@ and value_segment is null
 and name_of_submitted_form in ('10-Q','10-K')
 and reported_quarters in (1,4)
 
-and dc.company_stock_symbol = 'NVDA'
+--and dc.company_stock_symbol = 'CBIO'
+--and dc.company_stock_symbol = 'NFLX'
 
 order by reported_period
 
@@ -147,6 +148,7 @@ from final
 )
 
 
+,quarter_four_logic as (
 select 
 company_bigint_key
 ,fiscal_year
@@ -164,8 +166,31 @@ end,'-',fiscal_period) as date_key_converted_period
 ,duplicate_stock_symbol_identifier
 ,reported_quarters
 ,total_revenue
+/*,count(fiscal_period) over (partition by company_bigint_key, fiscal_year)
+,row_number() over (partition by company_bigint_key, fiscal_year order by date_key_reported_period)*/
+
+,case when (count(fiscal_period) over (partition by company_bigint_key, fiscal_year)) = 5 and (row_number() over (partition by company_bigint_key, fiscal_year order by date_key_reported_period)) = 4 then 1 else 0 end as quarter_four_report_flag
 from 
 final_with_year_logic 
+
+) 
+
+
+select 
+company_bigint_key
+,fiscal_year
+,fiscal_period
+,date_key_filing
+,date_key_reported_period 
+,date_key_converted_period
+,submitted_form_business_key
+,duplicate_stock_symbol_identifier
+,reported_quarters
+,total_revenue
+from quarter_four_logic
+where 
+quarter_four_report_flag != 1
+
 
 
 /*
