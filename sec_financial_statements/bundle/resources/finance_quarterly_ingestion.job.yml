@@ -14,7 +14,7 @@ resources:
             - task_key: get_data
 
           notebook_task:
-            notebook_path: ../../src/fact_quarterly_statements/notebooks/build_raw_tables_optimized.py
+            notebook_path: ../../src/fact_quarterly_statements/notebooks/build_raw_tables_optimized.ipynb
             source: WORKSPACE
 
         # - task_key: build_raw_num_tbl
