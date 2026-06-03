@@ -6,7 +6,7 @@ resources:
 
         - task_key: get_data
           notebook_task:
-            notebook_path: ../../src/fact_quarterly_statements/notebooks/get_data.py
+            notebook_path: ../../src/fact_quarterly_statements/notebooks/get_data_optimized.ipynb
             source: WORKSPACE
         
         - task_key: build_raw_tables
