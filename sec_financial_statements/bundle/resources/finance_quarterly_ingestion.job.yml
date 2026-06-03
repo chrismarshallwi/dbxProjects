@@ -55,10 +55,7 @@ resources:
         
         - task_key: fact_staging_financial_statement
           depends_on:
-            - task_key: build_raw_num_tbl
-            - task_key: build_raw_pre_tbl
-            - task_key: build_raw_sub_tbl
-            - task_key: build_raw_tag_tbl
+            - task_key: build_raw_tables
           sql_task: 
             file:
               path: ../../src/fact_quarterly_statements/sql/fact_staging_financial_statement.sql
