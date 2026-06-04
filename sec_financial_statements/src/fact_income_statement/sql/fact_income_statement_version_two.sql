@@ -1,6 +1,6 @@
 
 
-insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_income_statement')
+--insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_income_statement')
 
 with base as (
 select distinct 
@@ -77,7 +77,7 @@ and name_of_submitted_form in ('10-Q','10-K')
 and reported_quarters in (1,4)
 
 --and dc.company_stock_symbol = 'CBIO'
---and dc.company_stock_symbol = 'NFLX'
+and dc.company_stock_symbol = 'MCK'
 
 order by reported_period
 

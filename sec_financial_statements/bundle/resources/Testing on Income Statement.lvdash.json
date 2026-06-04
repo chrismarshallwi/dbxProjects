@@ -186,6 +186,22 @@
                       "sort": {
                         "by": "custom-order",
                         "orderedValues": [
+                          "2019-Q1",
+                          "2019-Q2",
+                          "2019-Q3",
+                          "2019-FY",
+                          "2020-Q1",
+                          "2020-Q2",
+                          "2020-Q3",
+                          "2020-FY",
+                          "2021-Q1",
+                          "2021-Q2",
+                          "2021-Q3",
+                          "2021-FY",
+                          "2022-Q1",
+                          "2022-Q2",
+                          "2022-Q3",
+                          "2022-FY",
                           "2023-Q1",
                           "2023-Q2",
                           "2023-Q3",
@@ -193,7 +209,15 @@
                           "2024-Q1",
                           "2024-Q2",
                           "2024-Q3",
-                          "2024-FY"
+                          "2024-FY",
+                          "2025-Q1",
+                          "2025-Q2",
+                          "2025-Q3",
+                          "2025-FY",
+                          "2026-Q1",
+                          "2026-Q2",
+                          "2026-Q3",
+                          "2026-FY"
                         ]
                       }
                     }
@@ -425,16 +449,16 @@
             "name": "b956e909",
             "queries": [
               {
-                "name": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_company_name",
+                "name": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_company_stock_symbol",
                 "query": {
                   "datasetName": "688e0a06",
                   "fields": [
                     {
-                      "name": "company_name",
-                      "expression": "`company_name`"
+                      "name": "company_stock_symbol",
+                      "expression": "`company_stock_symbol`"
                     },
                     {
-                      "name": "company_name_associativity",
+                      "name": "company_stock_symbol_associativity",
                       "expression": "COUNT_IF(`associative_filter_predicate_group`)"
                     }
                   ],
@@ -451,8 +475,8 @@
               "encodings": {
                 "fields": [
                   {
-                    "fieldName": "company_name",
-                    "queryName": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_company_name"
+                    "fieldName": "company_stock_symbol",
+                    "queryName": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_company_stock_symbol"
                   }
                 ]
               }
