@@ -104,8 +104,8 @@
                       "expression": "`company_stock_symbol`"
                     },
                     {
-                      "name": "standardized_fiscal_year",
-                      "expression": "`standardized_fiscal_year`"
+                      "name": "year_quarter_name",
+                      "expression": "`year_quarter_name`"
                     },
                     {
                       "name": "measure(Revenue)",
@@ -123,7 +123,7 @@
                       },
                       {
                         "fieldNames": [
-                          "standardized_fiscal_year"
+                          "year_quarter_name"
                         ]
                       }
                     ]
@@ -144,7 +144,7 @@
                     },
                     {
                       "direction": "ASC",
-                      "expression": "`standardized_fiscal_year`"
+                      "expression": "`year_quarter_name`"
                     }
                   ]
                 }
@@ -180,47 +180,7 @@
                 ],
                 "columns": [
                   {
-                    "fieldName": "standardized_fiscal_year",
-                    "scale": {
-                      "type": "categorical",
-                      "sort": {
-                        "by": "custom-order",
-                        "orderedValues": [
-                          "2019-Q1",
-                          "2019-Q2",
-                          "2019-Q3",
-                          "2019-FY",
-                          "2020-Q1",
-                          "2020-Q2",
-                          "2020-Q3",
-                          "2020-FY",
-                          "2021-Q1",
-                          "2021-Q2",
-                          "2021-Q3",
-                          "2021-FY",
-                          "2022-Q1",
-                          "2022-Q2",
-                          "2022-Q3",
-                          "2022-FY",
-                          "2023-Q1",
-                          "2023-Q2",
-                          "2023-Q3",
-                          "2023-FY",
-                          "2024-Q1",
-                          "2024-Q2",
-                          "2024-Q3",
-                          "2024-FY",
-                          "2025-Q1",
-                          "2025-Q2",
-                          "2025-Q3",
-                          "2025-FY",
-                          "2026-Q1",
-                          "2026-Q2",
-                          "2026-Q3",
-                          "2026-FY"
-                        ]
-                      }
-                    }
+                    "fieldName": "year_quarter_name"
                   }
                 ],
                 "cell": {
@@ -262,7 +222,7 @@
           },
           "position": {
             "x": 0,
-            "y": 1,
+            "y": 2,
             "width": 12,
             "height": 12
           }
@@ -439,7 +399,7 @@
           },
           "position": {
             "x": 0,
-            "y": 13,
+            "y": 14,
             "width": 12,
             "height": 9
           }
@@ -530,6 +490,51 @@
           "position": {
             "x": 9,
             "y": 0,
+            "width": 3,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "be26226a",
+            "queries": [
+              {
+                "name": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_year",
+                "query": {
+                  "datasetName": "688e0a06",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "year_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "year",
+                    "queryName": "dashboards/01f14e3cfcd41ea0b008c87143452073/datasets/01f14e3d47251c6693000475bd14b57e_year"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
             "width": 3,
             "height": 1
           }
