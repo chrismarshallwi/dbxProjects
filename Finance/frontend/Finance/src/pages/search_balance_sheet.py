@@ -45,7 +45,7 @@ WITH base AS (
         fa.total_liabilities,
         fa.total_liabilities_and_equity
     FROM {catalog}.{schema}.{table_name} fa
-    LEFT JOIN {operations}.{schema}.dim_company dc ON dc.company_bigint_key = fa.company_bigint_key
+    LEFT JOIN {catalog}.{schema}.dim_company dc ON dc.company_bigint_key = fa.company_bigint_key
     WHERE dc.ticker_symbol in ({ticker_filter})
 ),
 unpivoted AS (
