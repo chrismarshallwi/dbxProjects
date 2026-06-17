@@ -37,29 +37,47 @@ class SearchBalanceSheet:
         pivot_list = ", ".join([f"'{p}'" for p in periods])
 
         query = f"""
-        SELECT *
-        FROM (
-            select 
-                terse_label,
-                reported_period,
-                value
-,report_number, report_line_number
-            from 
-            operations.finance_staging.fact_staging_financial_statement fa
-            left join 
-            operations.finance.dim_company dc  on dc.company_bigint_key = fa.company_bigint_key 
-            WHERE dc.company_stock_symbol in ({ticker_filter})
-                and financial_statement = 'BS'
-                and reported_period = end_reported_period
-                and value_segment is null
-                and name_of_submitted_form = '10-Q'
-            
-        ) src
-        PIVOT (
-            MAX(value)
-            FOR reported_period IN ({pivot_list})
+ 
+WITH base AS (
+    SELECT 
+        fa.date_key_converted_period,
+        fa.total_assets,
+        fa.total_liabilities,
+        fa.total_liabilities_and_equity
+    FROM {catalog}.{schema}.{table_name} fa
+    LEFT JOIN {operations}.{schema}.dim_company dc ON dc.company_bigint_key = fa.company_bigint_key
+    WHERE dc.ticker_symbol in ({ticker_filter})
+),
+unpivoted AS (
+    SELECT 
+        date_key_converted_period,
+        metric,
+        value
+    FROM base
+    UNPIVOT (
+        value FOR metric IN (
+            total_assets,
+            total_liabilities,
+            total_liabilities_and_equity
         )
-        ORDER BY report_number, report_line_number
+    )
+)
+SELECT *
+FROM unpivoted
+PIVOT (
+    MAX(value)
+    FOR date_key_converted_period IN (
+        20240301 AS `2024_03`,
+        20240601 AS `2024_06`,
+        20240901 AS `2024_09`,
+        20241201 AS `2024_12`,
+        20250301 AS `2025_03`,
+        20250601 AS `2025_06`,
+        20250901 AS `2025_09`,
+        20251201 AS `2025_12`
+    )
+)
+ORDER BY metric;
         """
 
         df = sql_query(sql_query=query)
