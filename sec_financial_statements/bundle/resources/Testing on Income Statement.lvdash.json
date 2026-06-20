@@ -75,6 +75,65 @@
         "from base\r\n",
         "order by reported_period asc"
       ]
+    },
+    {
+      "name": "company_revenue_totals",
+      "displayName": "Company Revenue Totals",
+      "queryLines": [
+        "SELECT\n",
+        "  dc.company_name,\n",
+        "  dc.company_stock_symbol,\n",
+        "  SUM(fa.total_revenue) as total_revenue\n",
+        "FROM\n",
+        "  operations.finance.fact_income_statement fa\n",
+        "    LEFT JOIN operations.finance.dim_company dc\n",
+        "      ON dc.company_bigint_key = fa.company_bigint_key\n",
+        "GROUP BY\n",
+        "  dc.company_name,\n",
+        "  dc.company_stock_symbol\n",
+        "ORDER BY\n",
+        "  total_revenue DESC"
+      ]
+    },
+    {
+      "name": "lowest_revenue_company",
+      "displayName": "Lowest Revenue Company",
+      "queryLines": [
+        "SELECT\n",
+        "  dc.company_name,\n",
+        "  dc.company_stock_symbol,\n",
+        "  SUM(fa.total_revenue) as total_revenue\n",
+        "FROM\n",
+        "  operations.finance.fact_income_statement fa\n",
+        "    LEFT JOIN operations.finance.dim_company dc\n",
+        "      ON dc.company_bigint_key = fa.company_bigint_key\n",
+        "GROUP BY\n",
+        "  dc.company_name,\n",
+        "  dc.company_stock_symbol\n",
+        "ORDER BY\n",
+        "  total_revenue ASC\n",
+        "LIMIT 1"
+      ]
+    },
+    {
+      "name": "highest_revenue_company",
+      "displayName": "Highest Revenue Company",
+      "queryLines": [
+        "SELECT\n",
+        "  dc.company_name,\n",
+        "  dc.company_stock_symbol,\n",
+        "  SUM(fa.total_revenue) as total_revenue\n",
+        "FROM\n",
+        "  operations.finance.fact_income_statement fa\n",
+        "    LEFT JOIN operations.finance.dim_company dc\n",
+        "      ON dc.company_bigint_key = fa.company_bigint_key\n",
+        "GROUP BY\n",
+        "  dc.company_name,\n",
+        "  dc.company_stock_symbol\n",
+        "ORDER BY\n",
+        "  total_revenue DESC\n",
+        "LIMIT 1"
+      ]
     }
   ],
   "pages": [

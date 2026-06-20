@@ -1,6 +1,6 @@
 
 
-insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_income_statement')
+--insert overwrite IDENTIFIER(:target_catalog || '.finance.fact_income_statement')
 
 with base as (
 select distinct 
@@ -76,7 +76,6 @@ and value_segment is null
 and name_of_submitted_form in ('10-Q','10-K')
 and reported_quarters in (1,4)
 
---and dc.company_stock_symbol = 'CBIO'
 and dc.company_stock_symbol = 'MCK'
 
 order by reported_period
@@ -175,26 +174,30 @@ final_with_year_logic
 
 ) 
 
+select * from quarter_four_logic 
 
+
+/*
 select 
 company_bigint_key
 ,fiscal_year
 ,fiscal_period
 ,date_key_filing
 ,date_key_reported_period 
-,date_key_converted_period
+,dd.year
+,dd.year_quarter_name
+--,date_key_converted_period
 ,submitted_form_business_key
 ,duplicate_stock_symbol_identifier
 ,reported_quarters
 ,total_revenue
+,sum(total_revenue) over (partition by dd.year_quarter_name, company_bigint_key)
+,sum(total_revenue) over (partition by dd.year, company_bigint_key)
+
+--,(sum(total_revenue) over (partition by dd.year_quarter_name, company_bigint_key)) / (sum(total_revenue) over (parition by dd.year)) as percent_of_yearly_revenue
 from quarter_four_logic
+left join operations.finance.dim_date dd on dd.date_key = date_key_reported_period
 where 
 quarter_four_report_flag != 1
-
-
-
-/*
-Note to future self, found example with netflix where there was a reported Q4 results (not common) for the year 2020. 
-Next steps after creating the date_key converted period field is to derive Q4 financials
-In the example of netflix, you will need to create a flag for when count of fiscal years = 5 and there are two fiscal years reported (need to omit the Q4 results provided so that all are standard, and we can then derive the q4 results and apply to all companies uniformly)
 */
+
