@@ -6,7 +6,7 @@ resources:
 
         - task_key: get_data
           notebook_task:
-            notebook_path: ../../src/fact_quarterly_statements/notebooks/get_data.py
+            notebook_path: ../../src/fact_quarterly_statements/notebooks/get_data_optimized.ipynb
             source: WORKSPACE
         
         - task_key: build_raw_tables
@@ -14,51 +14,48 @@ resources:
             - task_key: get_data
 
           notebook_task:
-            notebook_path: ../../src/fact_quarterly_statements/notebooks/build_raw_tables.py
+            notebook_path: ../../src/fact_quarterly_statements/notebooks/build_raw_tables_optimized.ipynb
             source: WORKSPACE
 
-        - task_key: build_raw_num_tbl
-          depends_on:
-            - task_key: build_raw_tables
-          sql_task: 
-            file:
-              path: ../../src/fact_quarterly_statements/sql/raw_num_tbl.sql
-              source: WORKSPACE
-            warehouse_id: ${var.warehouse_id}
+        # - task_key: build_raw_num_tbl
+        #   depends_on:
+        #     - task_key: build_raw_tables
+        #   sql_task: 
+        #     file:
+        #       path: ../../src/fact_quarterly_statements/sql/raw_num_tbl.sql
+        #       source: WORKSPACE
+        #     warehouse_id: ${var.warehouse_id}
 
-        - task_key: build_raw_pre_tbl
-          depends_on:
-            - task_key: build_raw_tables
-          sql_task: 
-            file:
-              path: ../../src/fact_quarterly_statements/sql/raw_pre_tbl.sql
-              source: WORKSPACE
-            warehouse_id: ${var.warehouse_id}
+        # - task_key: build_raw_pre_tbl
+        #   depends_on:
+        #     - task_key: build_raw_tables
+        #   sql_task: 
+        #     file:
+        #       path: ../../src/fact_quarterly_statements/sql/raw_pre_tbl.sql
+        #       source: WORKSPACE
+        #     warehouse_id: ${var.warehouse_id}
         
-        - task_key: build_raw_sub_tbl
-          depends_on:
-            - task_key: build_raw_tables
-          sql_task: 
-            file:
-              path: ../../src/fact_quarterly_statements/sql/raw_sub_tbl.sql
-              source: WORKSPACE
-            warehouse_id: ${var.warehouse_id}
+        # - task_key: build_raw_sub_tbl
+        #   depends_on:
+        #     - task_key: build_raw_tables
+        #   sql_task: 
+        #     file:
+        #       path: ../../src/fact_quarterly_statements/sql/raw_sub_tbl.sql
+        #       source: WORKSPACE
+        #     warehouse_id: ${var.warehouse_id}
         
-        - task_key: build_raw_tag_tbl
-          depends_on:
-            - task_key: build_raw_tables
-          sql_task: 
-            file:
-              path: ../../src/fact_quarterly_statements/sql/raw_tag_tbl.sql
-              source: WORKSPACE
-            warehouse_id: ${var.warehouse_id}
+        # - task_key: build_raw_tag_tbl
+        #   depends_on:
+        #     - task_key: build_raw_tables
+        #   sql_task: 
+        #     file:
+        #       path: ../../src/fact_quarterly_statements/sql/raw_tag_tbl.sql
+        #       source: WORKSPACE
+        #     warehouse_id: ${var.warehouse_id}
         
         - task_key: fact_staging_financial_statement
           depends_on:
-            - task_key: build_raw_num_tbl
-            - task_key: build_raw_pre_tbl
-            - task_key: build_raw_sub_tbl
-            - task_key: build_raw_tag_tbl
+            - task_key: build_raw_tables
           sql_task: 
             file:
               path: ../../src/fact_quarterly_statements/sql/fact_staging_financial_statement.sql
