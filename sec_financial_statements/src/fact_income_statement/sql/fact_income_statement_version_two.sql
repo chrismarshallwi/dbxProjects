@@ -77,7 +77,7 @@ and name_of_submitted_form in ('10-Q','10-K')
 and reported_quarters in (1,4)
 
 --and dc.company_stock_symbol = 'CBIO'
-and dc.company_stock_symbol = 'MCK'
+--and dc.company_stock_symbol = 'MCK'
 
 order by reported_period
 
