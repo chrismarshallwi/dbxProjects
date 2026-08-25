@@ -30,7 +30,7 @@ dc.company_name
 ,coalesce(dt.terse_label_level_8  , dt2.terse_label_level_8  ) as terse_label_level_8 
 ,coalesce(dt.terse_label_level_9 , dt2.terse_label_level_9  ) as terse_label_level_9 
 ,coalesce(dt.terse_label_level_10  , dt2.terse_label_level_10  ) as terse_label_level_10 
-,coalesce(dt.linkrole, dt2.linkrole) as linkrole
+--,coalesce(dt.linkrole, dt2.linkrole) as linkrole
 ,coalesce(dt.terse_label_level_11 , dt2.terse_label_level_11  ) as terse_label_level_11 
 ,coalesce(dt.terse_label_level_12 , dt2.terse_label_level_12  ) as terse_label_level_12
 ,coalesce(dt.terse_label_level_13  , dt2.terse_label_level_13  ) as terse_label_level_13 
@@ -75,10 +75,6 @@ and reported_period = end_reported_period
 and value_segment is null
 and name_of_submitted_form in ('10-Q','10-K')
 and reported_quarters in (1,4)
-
---and dc.company_stock_symbol = 'CBIO'
---and dc.company_stock_symbol = 'MCK'
-
 order by reported_period
 
 ) 
@@ -166,8 +162,6 @@ end,'-',fiscal_period) as date_key_converted_period
 ,duplicate_stock_symbol_identifier
 ,reported_quarters
 ,total_revenue
-/*,count(fiscal_period) over (partition by company_bigint_key, fiscal_year)
-,row_number() over (partition by company_bigint_key, fiscal_year order by date_key_reported_period)*/
 
 ,case when (count(fiscal_period) over (partition by company_bigint_key, fiscal_year)) = 5 and (row_number() over (partition by company_bigint_key, fiscal_year order by date_key_reported_period)) = 4 then 1 else 0 end as quarter_four_report_flag
 from 
@@ -190,11 +184,3 @@ company_bigint_key
 from quarter_four_logic
 where 
 quarter_four_report_flag != 1
-
-
-
-/*
-Note to future self, found example with netflix where there was a reported Q4 results (not common) for the year 2020. 
-Next steps after creating the date_key converted period field is to derive Q4 financials
-In the example of netflix, you will need to create a flag for when count of fiscal years = 5 and there are two fiscal years reported (need to omit the Q4 results provided so that all are standard, and we can then derive the q4 results and apply to all companies uniformly)
-*/
