@@ -6,7 +6,7 @@ resources:
 
         - task_key: ingest_daily_stock_price
           notebook_task:
-            notebook_path: ../../src/dim_company/notebooks/fact_price_daily
+            notebook_path: ../../src/fact_daily_stock_price/notebooks/fact_price_daily
             source: WORKSPACE
         
       queue:
