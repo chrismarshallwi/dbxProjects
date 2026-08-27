@@ -1,4 +1,6 @@
 import streamlit as st
+import pandas as pd 
+import plotly.express as px
 from data.lakehouse import sql_query, get_tickers
 
 class SearchDailyStockPrice:
@@ -19,44 +21,100 @@ class SearchDailyStockPrice:
 
         ticker_filter = ", ".join(f"'{t}'" for t in selected_tickers)
 
-        min_value_on_dataset = spark.sql(f"""
+        min_value_on_dataset = sql_query(f"""
         select 
         min(dd.date_value) as min_date
         from 
         {catalog}.{schema}.{table_name} fa 
         left join {catalog}.{schema}.{table_name_dd} dd on dd.date_key = fa.date_key 
         left join {catalog}.{schema}.{table_name_dc} dc on dc.company_bigint_key = fa.company_bigint_key
-        where dc.company_stock_symbol in ({ticker_filter}) """).first()['min_date']
+        where dc.company_stock_symbol in ({ticker_filter}) """).iloc[0]['min_date']
 
-        max_value_on_dataset = spark.sql(f"""
+        max_value_on_dataset = sql_query(f"""
         select 
-        max(dd.date_value) as max_value
+        max(dd.date_value) as max_date
         from 
         {catalog}.{schema}.{table_name} fa 
         left join {catalog}.{schema}.{table_name_dd} dd on dd.date_key = fa.date_key 
         left join {catalog}.{schema}.{table_name_dc} dc on dc.company_bigint_key = fa.company_bigint_key
-        where dc.company_stock_symbol in ({ticker_filter}) """).first()['max_date']
+        where dc.company_stock_symbol in ({ticker_filter}) """).iloc[0]['max_date']
 
         date_range = st.date_input(
-            'Select Date Range', 
-            value=None, 
-            min_value=min_value_on_dataset, 
+            "Select Date Range",
+            value=(min_value_on_dataset, max_value_on_dataset),
+            min_value=min_value_on_dataset,
             max_value=max_value_on_dataset
-            )
+        )
 
-        query = f"""
-        select 
-        dd.date_value,
-        fa.adj_close
-        from 
-        {catalog}.{schema}.{table_name} fa
-        left join 
-        {catalog}.{schema}.{table_name_dc} dc on dc.company_bigint_key = fa.company_bigint_key
-        left join 
-        {catalog}.{schema}.{table_name_dd} dd on dd.date_key = fa.date_key
-        where dc.company_stock_symbol in ({ticker_filter})
-        """
+        ma = st.number_input(
+            label="Moving Average",
+            min_value=1,
+            max_value=1000,
+            value=None,
+            step=1,
+            placeholder="e.g. 200"
+        )
 
-        df = sql_query(sql_query=query)
-        st.line_chart(df, x= 'date_value', y= 'adj_close')
-        #st.data_editor(df, use_container_width=True, hide_index=True)
+        if len(date_range) == 2:
+
+
+            start_date = date_range[0]
+            end_date = date_range[1]
+
+            if ma is not None:
+                query = f"""
+                select 
+                dd.date_value,
+                fa.adj_close,
+                avg(fa.adj_close) over (order by dd.date_value rows between {int(ma)-1} preceding and current row) as moving_avg
+
+                --,case when avg(fa.adj_close) over (order by dd.date_value rows between {int(ma)-1} preceding and current row) > fa.adj_close
+                from 
+                {catalog}.{schema}.{table_name} fa
+                left join 
+                {catalog}.{schema}.{table_name_dc} dc on dc.company_bigint_key = fa.company_bigint_key
+                left join 
+                {catalog}.{schema}.{table_name_dd} dd on dd.date_key = fa.date_key
+                where dc.company_stock_symbol in ({ticker_filter})
+                and 
+                dd.date_value >= '{start_date}' and dd.date_value <= '{end_date}'
+                """
+            
+            else:
+                query = f"""
+                select 
+                dd.date_value,
+                fa.adj_close
+                from 
+                {catalog}.{schema}.{table_name} fa
+                left join 
+                {catalog}.{schema}.{table_name_dc} dc on dc.company_bigint_key = fa.company_bigint_key
+                left join 
+                {catalog}.{schema}.{table_name_dd} dd on dd.date_key = fa.date_key
+                where dc.company_stock_symbol in ({ticker_filter})
+                and 
+                dd.date_value >= '{start_date}' and dd.date_value <= '{end_date}'
+                """
+            
+
+            df = sql_query(sql_query=query)
+
+            df['date_value'] = pd.to_datetime(df['date_value'])
+            df['adj_close'] = pd.to_numeric(df['adj_close'], errors = "coerce")
+
+
+            y_min = df['adj_close'].min()
+            y_max = df['adj_close'].max()
+            padding = (y_max - y_min)*0.01
+
+            fig = px.line(df, x = 'date_value', y = 'adj_close',labels={'date_value':"Date","adj_close":"Adjusted Close Price"})
+            
+            if ma is not None:
+                fig.add_scatter(x=df['date_value'], y=df['moving_avg'],mode='lines',name=f"{int(ma)}-Day Moving Average")
+
+            fig.update_yaxes(range= [y_min-padding, y_max-padding], title= 'Adjusted Close Price')
+            fig.update_xaxes(title = 'Date')
+            st.plotly_chart(fig, use_container_width=True)
+
+            #st.line_chart(df, x= 'date_value', y= 'adj_close')
+            #st.data_editor(df, use_container_width=True, hide_index=True)
