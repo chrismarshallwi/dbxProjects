@@ -20,6 +20,7 @@
       title: Search Daily Stock Prices
       icon: ":material/data_table:"
       header: Search Stock Prices
+      caption: Search for stock prices
       help_page: null
     
     - page: pages\investment_input.py
@@ -28,7 +29,7 @@
       header: Investments 
       caption: Input investments & portfolio percents 
       help_page: null
-      
+
     - page: pages\growth_analysis.py
       title: Growth Analysis
       icon: ":material/trending_up:"
