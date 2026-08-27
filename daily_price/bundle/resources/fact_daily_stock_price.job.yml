@@ -1,0 +1,25 @@
+resources:
+  jobs:
+    fact_daily_stock_price:
+      name: fact_daily_stock_price
+      tasks:
+
+        - task_key: ingest_daily_stock_price
+          notebook_task:
+            notebook_path: ../../src/fact_daily_stock_price/notebooks/fact_price_daily.ipynb
+            source: WORKSPACE
+        
+      queue:
+        enabled: true
+      parameters:
+        - name: target_catalog
+          default: ${var.target_catalog}
+
+      environments:
+        - environment_key: odpenv
+          spec:
+            environment_version: "4"
+            dependencies:
+              - pandas-datareader
+      
+

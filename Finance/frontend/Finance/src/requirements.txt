@@ -6,3 +6,4 @@ yfinance
 lxml
 requests
 databricks-connect
+pydantic

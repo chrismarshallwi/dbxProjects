@@ -1,0 +1,14 @@
+targets:
+  d:
+    mode: production
+    default: false
+    workspace:
+    # core-d-cus-adb
+      host: https://dbc-d1866d54-256f.cloud.databricks.com
+      root_path: /Workspace/Users/data-integration/${bundle.name}
+    variables:
+      target_catalog: operations
+    permissions:
+      - service_principal_name: chrismarshall.wi@icloud.com
+        level: CAN_MANAGE
+
