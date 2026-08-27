@@ -22,12 +22,13 @@
       header: Search Stock Prices
       help_page: null
     
-
+    - page: pages\investment_input.py
       title: Investments Input
       icon: ":material/finance_mode:"
       header: Investments 
       caption: Input investments & portfolio percents 
       help_page: null
+      
     - page: pages\growth_analysis.py
       title: Growth Analysis
       icon: ":material/trending_up:"
