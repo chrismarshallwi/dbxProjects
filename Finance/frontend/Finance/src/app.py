@@ -3,8 +3,11 @@ from ui.custom_css import apply_custom_styles
 from ui.navigation import  init_navigation ,get_page_info
 from ui.navigation_config import NavigationPage
 from ui.sidebar import  init_sidebar,get_global_divider, get_global_region
+from ui.session_manager import initialize_sessions
 
+initialize_sessions()
 apply_custom_styles()
+
 st.logo("static/img/Screenshot 2025-12-29 155010.jpg", size="large")
 st.set_page_config(
     page_title="Finance",
